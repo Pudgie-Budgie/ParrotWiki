@@ -1,0 +1,617 @@
+:root {
+    --primary: #2c7744;
+    --secondary: #f0f7f4;
+    --accent: #d35400;
+    --text: #333;
+    --bg: #c5d4ff;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--secondary);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+/* Header - Final fix for height and centering */
+.hero {
+    /* 背景图设置保持不变：半透明遮罩 + 图片路径 */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('./assets/header-bg.jpg');
+    /* 确保图片铺满 */
+    background-size: cover;
+    /* 图片居中对齐，保证左右平衡 */
+    background-position: center center;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+    margin-bottom: 40px;
+
+    /* --- 【核心修改区域 Start】 --- */
+    
+    /* 1. 强制设定一个最小高度 */
+    /* 500px 能确保大部分宽幅图片的主体内容都被包含进去 */
+    min-height: 400px; 
+    /* 如果你觉得还不够高，可以试着改成 600px，或者用相对单位比如 55vh (屏幕高度的55%) */
+    /* min-height: 55vh; */ 
+
+    /* 2. 使用 Flexbox 布局来让文字垂直居中 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 垂直方向居中 */
+    align-items: center;     /* 水平方向居中 */
+    
+    /* 3. 减少 padding，因为现在靠 Flexbox 居中，不需要 huge padding 了 */
+    padding: 20px; 
+    text-align: center;
+    
+    /* --- 【核心修改区域 End】 --- */
+}
+
+/* 稍微调整一下文字样式，让它们更紧凑一些 */
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* Grid Layout */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    padding-bottom: 60px;
+}
+
+/* Card Style */
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-wrapper {
+    height: 200px;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.bird-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.bird-scientific {
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+}
+
+.price-tag {
+    background-color: var(--secondary);
+    color: var(--primary);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.spec-item strong {
+    display: block;
+    color: #555;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.rating-box {
+    background-color: #fff8e1;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border-left: 4px solid #f1c40f;
+}
+
+.rating-score {
+    font-weight: bold;
+    color: #d35400;
+}
+
+.notes {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #555;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 5px;
+    background: #e0e0e0;
+}
+.badge.male { background: #e3f2fd; color: #1565c0; }
+.badge.female { background: #fce4ec; color: #c2185b; }
+
+footer {
+    text-align: center;
+    padding: 40px 0;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* --- New Tab Styles --- */
+
+/* Tab Navigation Bar */
+.tab-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0;
+}
+
+.tab-link {
+    background: none;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab-link:hover {
+    color: var(--primary);
+    background-color: rgba(44, 119, 68, 0.05);
+}
+
+.tab-link.active {
+    color: var(--primary);
+    border-bottom: 4px solid var(--primary);
+}
+
+/* Tab Content Visibility Logic */
+.tab-content {
+    display: none; /* 默认隐藏所有 Tab 内容 */
+    animation: fadeIn 0.5s;
+}
+
+.tab-content.active {
+    display: block; /* 只显示带有 active 类的 Tab */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Care Section Styles */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.info-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--primary);
+}
+
+.info-card h3 {
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.info-card ul {
+    padding-left: 20px;
+    color: #555;
+}
+
+.info-card li {
+    margin-bottom: 8px;
+}
+
+/* Warning Card Specifics */
+.info-card.warning {
+    border-left-color: #d32f2f;
+    background-color: #fff5f5;
+}
+
+.info-card.warning h3 {
+    color: #d32f2f;
+}
+
+/* 确保这些样式存在 */
+.info-card.health {
+    border-left-color: #e74c3c;
+    background-color: #fdfefe;
+}
+
+.info-card.health h3 {
+    color: #c0392b;
+}
+
+.fact-card {
+    background-color: #e3f2fd;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid #2196f3;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* 1. 列表容器：垂直排列，卡片之间有间距 */
+.care-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* 2. 卡片基础样式：白色背景，圆角，阴影 */
+.care-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* 手机端默认：上图下文 */
+    border-left: 6px solid #2c7744; /* 默认绿色边框 */
+    transition: transform 0.2s;
+}
+
+/* 3. 桌面端响应式：屏幕宽度大于 768px 时，变为左图右文 */
+@media (min-width: 768px) {
+    .care-card {
+        flex-direction: row; /* 横向排列 */
+        align-items: stretch; /* 等高 */
+    }
+    
+    .care-card-img {
+        width: 300px; /* 固定图片宽度 */
+        flex-shrink: 0; /* 防止图片被压缩 */
+        min-height: 100%;
+    }
+}
+
+/* 4. 图片区域样式 */
+.care-card-img {
+    height: 250px; /* 手机端图片高度 */
+    background-color: #eee;
+    position: relative;
+}
+
+/* 桌面端图片高度设为自动，填满容器 */
+@media (min-width: 768px) {
+    .care-card-img {
+        height: auto;
+    }
+}
+
+.care-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 保持比例填充，不拉伸 */
+    display: block;
+}
+
+/* 5. 文字内容区域 */
+.care-content {
+    padding: 25px;
+    flex-grow: 1;
+}
+
+.care-content h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+/* 6. 分类标签小药丸样式 */
+.care-category {
+    font-size: 0.8rem;
+    background: #f1f2f6;
+    padding: 4px 10px;
+    border-radius: 15px;
+    color: #57606f;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 7. 正文排版 */
+.care-text {
+    line-height: 1.7;
+    color: #444;
+    font-size: 1rem;
+}
+
+.care-text strong {
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+/* 8. 针对“健康/疾病”类的特殊红色警告样式 */
+.care-card.health {
+    border-left-color: #e74c3c; /* 红色左边框 */
+}
+
+.care-card.health .care-category {
+    background: #ffebee; /* 浅红背景 */
+    color: #c62828;     /* 深红文字 */
+}
+
+/* 9. 简单的列表样式修正 */
+.care-text ul {
+    margin: 10px 0 10px 20px;
+    padding-left: 0;
+}
+.care-text li {
+    margin-bottom: 5px;
+}
+
+/* --- Video Gallery Styles --- */
+
+.video-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+}
+
+/* 这是一个经典的 CSS 技巧，用于保持 16:9 的视频比例 */
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    background-color: #000;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.video-info {
+    padding: 15px;
+}
+
+.video-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.video-info p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* --- 1. 左侧大图交互样式 (Main Image) --- */
+
+/* 当图片配置了链接时 */
+.care-card-img.clickable {
+    cursor: pointer;
+    display: block; /* 确保 a 标签填满区域 */
+    text-decoration: none;
+    position: relative;
+}
+
+/* 鼠标悬停时，图片微放大 */
+.care-card-img.clickable:hover img {
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
+}
+
+/* 购买提示遮罩层 (黑色半透明条) */
+.shop-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    opacity: 0; /* 默认隐藏 */
+    transition: opacity 0.3s;
+    z-index: 2;
+}
+
+/* 悬停时显示遮罩 */
+.care-card-img.clickable:hover .shop-overlay {
+    opacity: 1;
+}
+
+/* 手机端始终显示，提示可点 */
+@media (max-width: 768px) {
+    .shop-overlay {
+        opacity: 1;
+        padding: 5px;
+        font-size: 0.8rem;
+    }
+}
+
+
+/* --- 2. 底部迷你商品画廊 (Mini Gallery) --- */
+
+.product-section {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px dashed #eee;
+}
+
+.product-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #e67e22; /* 亚马逊橙 */
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 容器：横向滚动 */
+.product-list {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto; /* 允许横向滑动 */
+    padding-bottom: 5px;
+    scrollbar-width: none; /* Firefox 隐藏滚动条 */
+}
+.product-list::-webkit-scrollbar {
+    display: none; /* Chrome/Safari 隐藏滚动条 */
+}
+
+/* 单个迷你方块 */
+.mini-product {
+    position: relative;
+    width: 90px;   /* 固定小尺寸 */
+    height: 90px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.mini-product img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: white;
+    transition: transform 0.3s ease;
+}
+
+/* 悬停特效 */
+.mini-product:hover img {
+    transform: scale(1.1);
+}
+
+/* 迷你浮层：显示商品名称 */
+.mini-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 3px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 0.6rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.mini-product:hover .mini-overlay,
+.mini-product:active .mini-overlay {
+    opacity: 1;
+}

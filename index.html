@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feathered Friends: The Ultimate Parrot Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Feathered Friends</h1>
+            <p>Your guide to Parrots, Care, and Culture.</p>
+        </div>
+    </header>
+
+	<nav class="tab-nav container">
+		<button class="tab-link active" data-tab="tab-birds">🦜 Bird Profiles</button>
+		<button class="tab-link" data-tab="tab-care">🛠️ Care & Health</button>
+		<button class="tab-link" data-tab="tab-videos">🎬 Videos</button>
+		<button class="tab-link" data-tab="tab-culture">🎨 Comics & Lit</button>
+		<button class="tab-link" data-tab="tab-facts">💡 Fun Facts</button>
+	</nav>
+
+    <main class="container">
+        <section id="tab-birds" class="tab-content active">
+            
+            <div style="text-align: center; max-width: 800px; margin: 0 auto 30px; padding: 0 20px;">
+                <h2 style="margin-bottom: 15px; color: #2c7744;">Meet Your New Best Friend</h2>
+                <p style="color: #555; font-size: 1.1rem; line-height: 1.6;">
+Parrots are intelligent, social, and long-lived companions. Some are talented talkers, while others are beautiful singers. They can form strong bonds with humans and become wonderful little buddies. However, the more intelligent the parrot, the more human-like they are in their need for interaction. Without ample companionship, loneliness can lead to depression and behavioral issues like feather plucking. Choosing the right bird is a lifelong commitment. Browse our guide below to compare personality, lifespan, and care requirements. Whether you’re looking for a gentle beginner bird or a challenging lifelong partner, you’ll find it here.
+                </p>
+            </div>
+            
+            <div id="bird-grid" class="grid-layout"></div>
+        </section>
+        <section id="tab-birds" class="tab-content active">
+            <div class="controls">
+                <button class="filter-btn active" data-filter="all">All Birds</button>
+                <button class="filter-btn" data-filter="beginner">Beginner Friendly</button>
+                <button class="filter-btn" data-filter="talker">Good Talkers</button>
+            </div>
+            <div id="bird-grid" class="grid-layout"></div>
+        </section>
+
+		<section id="tab-care" class="tab-content">
+            <div class="care-section">
+                
+                <div style="margin-bottom: 50px;">
+                    <h2 style="color: #2c7744; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                        🦜 Daily Care & Essentials
+                    </h2>
+                    <div id="care-grid-general" class="care-list-container"></div>
+                </div>
+
+                <div>
+                    <h2 style="color: #c0392b; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                        🏥 Health & Common Diseases
+                    </h2>
+                    
+                    <div style="background: #fff3cd; color: #856404; padding: 15px; border-left: 5px solid #ffeeba; margin-bottom: 25px; border-radius: 4px;">
+                        <strong>🏥 Medical Disclaimer:</strong> The information below is for educational purposes only. If you suspect your bird is sick, <strong>seek a board-certified avian vet immediately</strong>. Birds hide illness until it is critical.
+                    </div>
+
+                    <div id="care-grid-health" class="care-list-container"></div>
+                </div>
+
+            </div>
+        </section>
+		
+		<section id="tab-videos" class="tab-content">
+			<div style="text-align:center; margin-bottom:30px;">
+				<h2>Parrot Cinema</h2>
+				<p>Watch them dance, talk, and cause chaos.</p>
+			</div>
+			<div id="video-grid" class="grid-layout">
+				</div>
+		</section>
+
+        <section id="tab-culture" class="tab-content">
+             <h2>Comics & Literature</h2>
+             <div class="grid-layout" id="culture-grid"></div>
+        </section>
+
+        <section id="tab-facts" class="tab-content">
+            <div style="text-align:center; margin-bottom:30px;">
+                <h2>Did You Know?</h2>
+            </div>
+            <div id="facts-grid" class="grid-layout"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Feathered Friends Wiki. All content for educational purposes.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c3880523d3f74de598453c3d8a77f017"}'></script><!-- End Cloudflare Web Analytics -->
+
+</html>
