@@ -11,7 +11,7 @@ const staticData = {
         price: "$20 - $50",
         lifespan: "5 - 10 (though some have reached 20+)", 
         intelligence: "Medium",
-        talking: "Varies, requires training (Males are more talkative), holds the record for most words memorized by an individual (Puck the budgie, vocabulary  of about 1,728 words)",
+        talking: "Varies, requires training. Males are more talkative.",
         personality: "Playful, energetic, social",
         gender_id: "Cere color (Blue = Male, Brown/White = Female)",
         health: "Prone to tumors and fatty liver disease. Diet is key.",
@@ -276,19 +276,37 @@ const staticData = {
         }
     ],
 
-    // 3. 文化与文学
+// 3. 文化与文学
     culture: [
         {
-            title: "Budgies' Minecraft Adventures",
-            type: "Literature",
-            image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80",
-            description: "Written by a 12 year old budgie lover."
+            title: "FORUM COMING SOON",
+            type: "Forum Space",
+            image: null,
+            description: "We will soon have a forum and merch shop. Note: Merch is not open for sale yet."
         },
         {
             title: "Life with a Bird (Comic)",
             type: "Comic",
             image: null,
             description: "Anyone who owns a parrot knows: you don't own the bird, the bird owns you. <br><i>(Placeholder for comic strip)</i>"
+        },
+        {
+            title: "Budgie Tote Bag!",
+            type: "Merch",
+            image: null,
+            description: "A perfect tote bag for daily usage, complete with the budgie spirit!"
+        },
+        {
+            title: "Budgie Stickers!",
+            type: "Merch",
+            image: null,
+            description: "Buy in 25-packs. Usage: You cut out a sticker and stick it on the standard way, then go over the budgie and the text with your hand to make sure it is extra sturdy, and slowly peel off the clear part of the sticker to leave just the design. <i>Note: Do not remove the clear layer if the sticker is used on something that can easily rip, and make sure to go over the border of the design carefully.</i>"
+        },
+        {
+            title: "Parrot Stuffed Animals!",
+            type: "Merch",
+            image: null,
+            description: "No matter your parrot preference, you can always have fun with one of our fuzzy companions. Multiple sizes and species are available for sale!"
         }
     ],
 
@@ -346,10 +364,25 @@ const staticData = {
             videoId: "tf_W5hSL-hk"
         },
 		{
+            title: "Ranking the Best Parrot Singing Moments",
+            desc: "A compilation of different parrots beatboxing, singing, and mimicking sounds.",
+            videoId: "YqBPXLw4JSA"
+        },
+        {
+            title: "America's Got Talent: Echo",
+            desc: "A 15-year-old double yellow-headed Amazon parrot named Echo performs animal impressions and sings.",
+            videoId: "lCYB4oGF53M"
+        },
+		{
             title: "Monk Parakeet Having Fun",
             desc: "Monk Parakeets have strong talking and playing abilities.",
             videoId: "WTXPfc0L0ko"
-        }
+        },
+		{
+			title: "Disco the Budgie",
+			desc: "With over 1,700 words, Disco the budgie rivaled Puck (also a budgie) - who holds the Guinness world record for the largest vocabulary of a bird (1,728 words) — but was uniquely creative in inventing his own phrases.",
+			videoId: "jXc9ylCXqCw"
+		}
     ]
 };
 
