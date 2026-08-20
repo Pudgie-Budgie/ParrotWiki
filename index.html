@@ -23,7 +23,8 @@
 		<button class="tab-link active" data-tab="tab-birds">🦜 Bird Profiles</button>
 		<button class="tab-link" data-tab="tab-care">🛠️ Care & Health</button>
 		<button class="tab-link" data-tab="tab-videos">🎬 Videos</button>
-		<button class="tab-link" data-tab="tab-culture">💬 COMING SOON! Forum</button>
+		<button class="tab-link" data-tab="tab-merch">🛍️ Merch</button>
+		<button class="tab-link" data-tab="tab-forum">💬 Forum</button>
 		<button class="tab-link" data-tab="tab-facts">💡 Fun Facts</button>
 	</nav>
 
@@ -80,9 +81,71 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
 				</div>
 		</section>
 
-        <section id="tab-culture" class="tab-content">
-             <h2>Forum & Merch Shop</h2>
-             <div class="grid-layout" id="culture-grid"></div>
+        <section id="tab-merch" class="tab-content">
+            <div class="tab-corner-auth" id="merch-auth-corner"></div>
+            <div style="text-align:center; margin-bottom:20px;">
+                <h2>🛍️ Feathered Friends Merch Shop</h2>
+                <p style="color: #555;">Check out our parrot-themed gear and accessories! <em>(Note: Products are currently preview items)</em></p>
+            </div>
+            <div id="merch-guest-alert" class="merch-guest-alert" style="display: none;">
+                <span>🔒 You must be signed in to purchase merchandise.</span>
+                <button id="merch-sign-in-btn" class="mini-auth-btn">Sign In / Register</button>
+            </div>
+            <div class="grid-layout" id="merch-grid"></div>
+        </section>
+
+        <section id="tab-forum" class="tab-content">
+            <div class="tab-corner-auth" id="forum-auth-corner"></div>
+            <div class="forum-container">
+                <div class="forum-header">
+                    <h2>💬 Feathered Friends Community Forum</h2>
+                    <p>Chat with fellow bird lovers! Safe, friendly, and family-friendly.</p>
+                </div>
+
+                <!-- Guest Locked Prompt -->
+                <div id="forum-guest-banner" class="forum-guest-lock-banner" style="display: none;">
+                    <div class="lock-icon">🔒</div>
+                    <div class="lock-info">
+                        <h4>You are viewing as a Guest</h4>
+                        <p>Sign in or register an account to receive your unique Parrot ID and join the chat!</p>
+                    </div>
+                    <button id="forum-guest-auth-btn" class="auth-trigger-btn">Sign In / Register</button>
+                </div>
+
+                <!-- Post Creator Box (For Registered Members & Host) -->
+                <div id="forum-input-box" class="forum-input-box" style="display: none;">
+                    <div class="input-row">
+                        <input type="text" id="forum-input" placeholder="Write something here..." autocomplete="off">
+                        <button id="forum-submit-btn" class="forum-post-btn">New Post</button>
+                        <div class="forum-settings-wrapper">
+                            <button id="forum-settings-toggle" class="forum-settings-btn" title="Post Settings" aria-label="Post Settings">⚙️</button>
+                            <div id="forum-settings-menu" class="forum-settings-menu" style="display: none;">
+                                <div class="settings-menu-header">⚙️ Post Settings</div>
+                                <div class="settings-group">
+                                    <label class="settings-label">Mode:</label>
+                                    <label class="settings-option">
+                                        <input type="radio" name="post-type" value="normal" checked>
+                                        <span>📝 Post Something</span>
+                                    </label>
+                                    <label class="settings-option">
+                                        <input type="radio" name="post-type" value="test">
+                                        <span>🧪 Test Message</span>
+                                    </label>
+                                </div>
+                                <hr class="settings-divider">
+                                <div class="settings-group" id="host-controls-group">
+                                    <!-- Populated dynamically via JS based on device authentication -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="forum-error-msg" class="forum-error-message" style="display: none;"></div>
+                </div>
+
+                <div id="forum-posts-container" class="forum-posts-list">
+                    <!-- Posts will be rendered here dynamically -->
+                </div>
+            </div>
         </section>
 
         <section id="tab-facts" class="tab-content">
@@ -93,6 +156,58 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
         </section>
 
     </main>
+
+    <!-- User Registration & Sign In Modal -->
+    <div id="auth-modal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="auth-modal-title">🦜 Feathered Friends Account</h3>
+                <button id="auth-modal-close-btn" class="modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="auth-tab-switch">
+                <button id="tab-auth-signin" class="auth-tab-btn active">Sign In</button>
+                <button id="tab-auth-register" class="auth-tab-btn">Register</button>
+            </div>
+            <div class="modal-body">
+                <form id="auth-form" onsubmit="return false;">
+                    <div class="auth-field-group">
+                        <label for="auth-email-input">Email Address</label>
+                        <input type="email" id="auth-email-input" placeholder="name@example.com" autocomplete="email" required>
+                        <small class="field-hint">Used for account recovery and login</small>
+                    </div>
+                    <div class="auth-field-group" style="margin-top: 14px;">
+                        <label for="auth-password-input">Password</label>
+                        <input type="password" id="auth-password-input" placeholder="Enter your password..." autocomplete="current-password" required>
+                    </div>
+                    <div id="auth-error-msg" class="auth-error-alert" style="display: none;"></div>
+                    <div id="auth-success-msg" class="auth-success-alert" style="display: none;"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="auth-cancel-btn" class="modal-btn-secondary">Cancel</button>
+                <button id="auth-submit-btn" class="modal-btn-primary">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Host Authentication Modal -->
+    <div id="host-auth-modal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>👑 Website Host Unlock</h3>
+                <button id="modal-close-btn" class="modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 12px; color: #555; font-size: 0.95rem;">Enter the master passphrase to unlock verified host posting privileges on this device.</p>
+                <input type="password" id="host-pass-input" placeholder="Enter master passphrase..." autocomplete="off">
+                <div id="host-auth-error" class="host-error-alert" style="display: none;">❗ Incorrect passphrase. Access denied.</div>
+            </div>
+            <div class="modal-footer">
+                <button id="host-cancel-btn" class="modal-btn-secondary">Cancel</button>
+                <button id="host-login-btn" class="modal-btn-primary">Unlock Host</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
