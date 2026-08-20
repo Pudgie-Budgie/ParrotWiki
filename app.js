@@ -607,14 +607,14 @@ function renderVideos(data) {
 // ==========================================
 
 // Complete Hard Reset: Log out host, wipe all account creation history, and reset to clean Guest state
-if (!localStorage.getItem('parrot_hard_reset_v4_done')) {
+if (!localStorage.getItem('parrot_hard_reset_v5_done')) {
     localStorage.removeItem('parrot_host_authenticated');
     localStorage.removeItem('parrot_forum_host_mode');
     localStorage.removeItem('parrot_forum_user_id');
     localStorage.removeItem('parrot_wiki_users');
     localStorage.removeItem('parrot_wiki_current_user');
     localStorage.removeItem('parrot_forum_posts');
-    localStorage.setItem('parrot_hard_reset_v4_done', 'true');
+    localStorage.setItem('parrot_hard_reset_v5_done', 'true');
 }
 
 const PARROT_SPECIES = [
