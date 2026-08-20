@@ -272,21 +272,25 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
         </div>
     </div>
 
-    <!-- Host Authentication Modal -->
-    <div id="host-auth-modal" class="modal-backdrop" style="display: none;">
+    <!-- Staff (Owner & Admin) Authentication Modal -->
+    <div id="staff-auth-modal" class="modal-backdrop" style="display: none;">
         <div class="modal-card">
             <div class="modal-header">
-                <h3>👑 Website Host Unlock</h3>
-                <button id="modal-close-btn" class="modal-close" aria-label="Close">&times;</button>
+                <h3 id="staff-modal-title">🔐 Staff Role Unlock</h3>
+                <button id="staff-modal-close-btn" class="modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="auth-tab-switch">
+                <button id="tab-staff-host" class="auth-tab-btn active">👑 Owner / Host</button>
+                <button id="tab-staff-admin" class="auth-tab-btn">🛡️ Forum Admin</button>
             </div>
             <div class="modal-body">
-                <p style="margin-bottom: 12px; color: #555; font-size: 0.95rem;">Enter the master passphrase to unlock verified host posting privileges on this device.</p>
-                <input type="password" id="host-pass-input" placeholder="Enter master passphrase..." autocomplete="off">
-                <div id="host-auth-error" class="host-error-alert" style="display: none;">❗ Incorrect passphrase. Access denied.</div>
+                <p id="staff-modal-desc" style="margin-bottom: 12px; color: #555; font-size: 0.95rem;">Enter the master passphrase to unlock verified host posting privileges.</p>
+                <input type="password" id="staff-pass-input" placeholder="Enter passphrase..." autocomplete="off">
+                <div id="staff-auth-error" class="host-error-alert" style="display: none;">❗ Incorrect passphrase. Access denied.</div>
             </div>
             <div class="modal-footer">
-                <button id="host-cancel-btn" class="modal-btn-secondary">Cancel</button>
-                <button id="host-login-btn" class="modal-btn-primary">Unlock Host</button>
+                <button id="staff-cancel-btn" class="modal-btn-secondary">Cancel</button>
+                <button id="staff-login-btn" class="modal-btn-primary">Unlock Role</button>
             </div>
         </div>
     </div>

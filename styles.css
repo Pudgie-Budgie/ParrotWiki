@@ -904,6 +904,18 @@ footer {
     gap: 4px;
 }
 
+.post-author-tag.admin-badge {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    color: #1565c0;
+    padding: 3px 10px;
+    border-radius: 14px;
+    font-weight: 700;
+    border: 1px solid #90caf9;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
 .post-test-tag {
     background: #f3e5f5;
     color: #8e24aa;
@@ -925,7 +937,7 @@ footer {
     box-shadow: 0 0 0 3px rgba(186, 104, 200, 0.2);
 }
 
-/* --- Host Unlock & Modal Styles --- */
+/* --- Staff Unlock & Modal Styles --- */
 .host-unlock-btn {
     width: 100%;
     padding: 7px 10px;
@@ -955,6 +967,15 @@ footer {
     padding: 8px 10px;
     font-size: 0.85rem;
     color: #856404;
+}
+
+.admin-status-box {
+    background: #e8f4fd;
+    border: 1px solid #b3e5fc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    color: #0277bd;
 }
 
 .host-status-title {
@@ -1142,6 +1163,12 @@ footer {
     font-size: 0.9rem;
     color: #2c7744;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.auth-user-pill.admin-pill {
+    background: #e3f2fd;
+    border-color: #bbdefb;
+    color: #1565c0;
 }
 
 .auth-user-pill .parrot-tag {

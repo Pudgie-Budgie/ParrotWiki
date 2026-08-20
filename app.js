@@ -665,9 +665,13 @@ function setCurrentUser(user) {
     }
 }
 
-// 58-character Master Host Passphrase SHA-256 Hash
+// 58-character Master Host Passphrase SHA-256 Hash (Owner)
 // Passphrase: FeatheredFriends2025!SuperSecretParrotMasterHostKey#9982
 const HOST_PASSWORD_HASH = "7b8676fa1f18ffbbad4906c1fc33b6b18b460caf267aa4583d5be146ae6c4878";
+
+// 53-character Admin Passphrase SHA-256 Hash (Admin)
+// Passphrase: ParrotAdminSecurity2025!FeatheredGuardianPassKey#4418
+const ADMIN_PASSWORD_HASH = "4238c3309c4e49353a17cb7268049e7b6c0b0bbab81ae357fc0ba8dc8b561002";
 
 async function sha256Hex(text) {
     const msgBuffer = new TextEncoder().encode(text);
@@ -680,9 +684,28 @@ function isHostAuthenticated() {
     return localStorage.getItem('parrot_host_authenticated') === 'true';
 }
 
+function isAdminAuthenticated() {
+    return localStorage.getItem('parrot_admin_authenticated') === 'true';
+}
+
+function getInitialForumIdentity() {
+    const hostMode = localStorage.getItem('parrot_forum_host_mode');
+    if (isHostAuthenticated()) {
+        if (hostMode === 'host' || hostMode === 'true') return 'host';
+        if (hostMode === 'admin') return 'admin';
+        if (hostMode === 'user') return 'user';
+        return 'host';
+    }
+    if (isAdminAuthenticated()) {
+        if (hostMode === 'admin' || hostMode === 'true') return 'admin';
+        return 'user';
+    }
+    return 'user';
+}
+
 const forumState = {
     mode: 'normal', // 'normal' | 'test'
-    identity: (isHostAuthenticated() && localStorage.getItem('parrot_forum_host_mode') === 'true') ? 'host' : 'user'
+    identity: getInitialForumIdentity()
 };
 
 function escapeHtml(text) {
@@ -740,6 +763,7 @@ function getStoredPosts() {
         id: 1,
         author: "👑 Website Host",
         isHost: true,
+        isAdmin: false,
         isTest: false,
         text: "Welcome to the Feathered Friends Forum! 🦜 Share your parrot stories, care tips, questions, or just say hello!",
         timestamp: "Community Host"
@@ -774,16 +798,17 @@ function savePosts(posts) {
     localStorage.setItem('parrot_forum_posts', JSON.stringify(posts));
 }
 
-// Render Host Controls in Settings Menu
+// Render Staff (Host & Admin) Controls in Settings Menu
 function renderHostControls() {
     const groupEl = document.getElementById('host-controls-group');
     if (!groupEl) return;
 
     const currentUser = getCurrentUser();
     const currentId = currentUser ? currentUser.parrotId : 'Guest';
-    const authenticated = isHostAuthenticated();
+    const isHost = isHostAuthenticated();
+    const isAdmin = isAdminAuthenticated();
 
-    if (authenticated) {
+    if (isHost) {
         groupEl.innerHTML = `
             <label class="settings-label">Author Identity:</label>
             <label class="settings-option">
@@ -792,96 +817,177 @@ function renderHostControls() {
             </label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="host" ${forumState.identity === 'host' ? 'checked' : ''}>
-                <span>👑 Website Host</span>
+                <span>👑 Website Host (Owner)</span>
+            </label>
+            <label class="settings-option">
+                <input type="radio" name="author-identity" value="admin" ${forumState.identity === 'admin' ? 'checked' : ''}>
+                <span>🛡️ Forum Admin</span>
             </label>
             <div class="host-status-box" style="margin-top:6px;">
-                <div class="host-status-title">👑 Verified Host Device</div>
-                <button id="host-lock-action" class="host-lock-link">🔒 Lock / Log Out Host</button>
+                <div class="host-status-title">👑 Verified Owner Device</div>
+                <button id="staff-lock-action" class="host-lock-link">🔒 Lock / Log Out</button>
             </div>
         `;
-
-        const identityRadios = groupEl.querySelectorAll('input[name="author-identity"]');
-        identityRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                forumState.identity = e.target.value;
-                localStorage.setItem('parrot_forum_host_mode', e.target.value === 'host');
-                updateAuthUI();
-                renderForum();
-            });
-        });
-
-        const lockBtn = document.getElementById('host-lock-action');
-        if (lockBtn) {
-            lockBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                localStorage.removeItem('parrot_host_authenticated');
-                localStorage.setItem('parrot_forum_host_mode', 'false');
-                forumState.identity = 'user';
-                updateAuthUI();
-                renderForum();
-            });
-        }
+    } else if (isAdmin) {
+        groupEl.innerHTML = `
+            <label class="settings-label">Author Identity:</label>
+            <label class="settings-option">
+                <input type="radio" name="author-identity" value="user" ${forumState.identity === 'user' ? 'checked' : ''}>
+                <span>👤 Member (<span class="mini-id">${currentId}</span>)</span>
+            </label>
+            <label class="settings-option">
+                <input type="radio" name="author-identity" value="admin" ${forumState.identity === 'admin' ? 'checked' : ''}>
+                <span>🛡️ Forum Admin</span>
+            </label>
+            <div class="admin-status-box" style="margin-top:6px;">
+                <div class="host-status-title" style="color:#0277bd;">🛡️ Verified Admin Device</div>
+                <button id="staff-lock-action" class="host-lock-link">🔒 Lock / Log Out</button>
+            </div>
+        `;
     } else {
         groupEl.innerHTML = `
-            <button id="host-unlock-trigger" class="host-unlock-btn">
-                <span>🔒</span> <span>Host Unlock</span>
-            </button>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <button id="host-unlock-trigger" class="host-unlock-btn">
+                    <span>👑</span> <span>Owner / Host Unlock</span>
+                </button>
+                <button id="admin-unlock-trigger" class="host-unlock-btn">
+                    <span>🛡️</span> <span>Admin Unlock</span>
+                </button>
+            </div>
         `;
+    }
 
-        const unlockTrigger = document.getElementById('host-unlock-trigger');
-        if (unlockTrigger) {
-            unlockTrigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openHostModal();
-            });
-        }
+    const identityRadios = groupEl.querySelectorAll('input[name="author-identity"]');
+    identityRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            forumState.identity = e.target.value;
+            localStorage.setItem('parrot_forum_host_mode', e.target.value);
+            updateAuthUI();
+            renderForum();
+        });
+    });
+
+    const lockBtn = document.getElementById('staff-lock-action');
+    if (lockBtn) {
+        lockBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            localStorage.removeItem('parrot_host_authenticated');
+            localStorage.removeItem('parrot_admin_authenticated');
+            localStorage.removeItem('parrot_forum_host_mode');
+            forumState.identity = 'user';
+            updateAuthUI();
+            renderForum();
+        });
+    }
+
+    const hostTrigger = document.getElementById('host-unlock-trigger');
+    if (hostTrigger) {
+        hostTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openStaffModal('host');
+        });
+    }
+
+    const adminTrigger = document.getElementById('admin-unlock-trigger');
+    if (adminTrigger) {
+        adminTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openStaffModal('admin');
+        });
     }
 }
 
-// Master Host Modal Handlers
-function openHostModal() {
-    const modal = document.getElementById('host-auth-modal');
-    const input = document.getElementById('host-pass-input');
-    const errorEl = document.getElementById('host-auth-error');
+// Staff (Owner & Admin) Modal Handlers
+let currentStaffModalTab = 'host'; // 'host' | 'admin'
+
+function openStaffModal(tab = 'host') {
+    const modal = document.getElementById('staff-auth-modal');
+    const input = document.getElementById('staff-pass-input');
+    const errorEl = document.getElementById('staff-auth-error');
     if (!modal) return;
 
     if (errorEl) errorEl.style.display = 'none';
     if (input) input.value = '';
+
+    setStaffModalTab(tab);
     modal.style.display = 'flex';
     if (input) input.focus();
 }
 
-function closeHostModal() {
-    const modal = document.getElementById('host-auth-modal');
+function closeStaffModal() {
+    const modal = document.getElementById('staff-auth-modal');
     if (modal) modal.style.display = 'none';
 }
 
-async function verifyAndUnlockHost() {
-    const input = document.getElementById('host-pass-input');
-    const errorEl = document.getElementById('host-auth-error');
+function setStaffModalTab(tab) {
+    currentStaffModalTab = tab;
+    const tabHost = document.getElementById('tab-staff-host');
+    const tabAdmin = document.getElementById('tab-staff-admin');
+    const descEl = document.getElementById('staff-modal-desc');
+    const titleEl = document.getElementById('staff-modal-title');
+    const submitBtn = document.getElementById('staff-login-btn');
+    const errorEl = document.getElementById('staff-auth-error');
+
+    if (errorEl) errorEl.style.display = 'none';
+
+    if (tab === 'host') {
+        if (tabHost) tabHost.classList.add('active');
+        if (tabAdmin) tabAdmin.classList.remove('active');
+        if (titleEl) titleEl.textContent = '👑 Owner / Host Unlock';
+        if (descEl) descEl.textContent = 'Enter the master passphrase to unlock verified Owner / Host posting privileges on this device.';
+        if (submitBtn) submitBtn.textContent = 'Unlock Owner';
+    } else {
+        if (tabHost) tabHost.classList.remove('active');
+        if (tabAdmin) tabAdmin.classList.add('active');
+        if (titleEl) titleEl.textContent = '🛡️ Forum Admin Unlock';
+        if (descEl) descEl.textContent = 'Enter the admin passphrase to unlock verified Admin moderator privileges on this device.';
+        if (submitBtn) submitBtn.textContent = 'Unlock Admin';
+    }
+}
+
+async function verifyAndUnlockStaff() {
+    const input = document.getElementById('staff-pass-input');
+    const errorEl = document.getElementById('staff-auth-error');
     if (!input) return;
 
     const val = input.value.trim();
     if (!val) {
         if (errorEl) {
-            errorEl.textContent = '❗ Please enter the master passphrase.';
+            errorEl.textContent = '❗ Please enter the passphrase.';
             errorEl.style.display = 'block';
         }
         return;
     }
 
     const hashed = await sha256Hex(val);
-    if (hashed === HOST_PASSWORD_HASH) {
-        localStorage.setItem('parrot_host_authenticated', 'true');
-        localStorage.setItem('parrot_forum_host_mode', 'true');
-        forumState.identity = 'host';
-        closeHostModal();
-        updateAuthUI();
-        renderForum();
+
+    if (currentStaffModalTab === 'host') {
+        if (hashed === HOST_PASSWORD_HASH) {
+            localStorage.setItem('parrot_host_authenticated', 'true');
+            localStorage.setItem('parrot_forum_host_mode', 'host');
+            forumState.identity = 'host';
+            closeStaffModal();
+            updateAuthUI();
+            renderForum();
+        } else {
+            if (errorEl) {
+                errorEl.textContent = '❗ Incorrect Owner passphrase. Access denied.';
+                errorEl.style.display = 'block';
+            }
+        }
     } else {
-        if (errorEl) {
-            errorEl.textContent = '❗ Incorrect passphrase. Access denied.';
-            errorEl.style.display = 'block';
+        if (hashed === ADMIN_PASSWORD_HASH) {
+            localStorage.setItem('parrot_admin_authenticated', 'true');
+            localStorage.setItem('parrot_forum_host_mode', 'admin');
+            forumState.identity = 'admin';
+            closeStaffModal();
+            updateAuthUI();
+            renderForum();
+        } else {
+            if (errorEl) {
+                errorEl.textContent = '❗ Incorrect Admin passphrase. Access denied.';
+                errorEl.style.display = 'block';
+            }
         }
     }
 }
@@ -953,7 +1059,8 @@ function showAuthError(message, isUnavailable = false) {
 function handleLogout() {
     setCurrentUser(null);
     localStorage.removeItem('parrot_host_authenticated');
-    localStorage.setItem('parrot_forum_host_mode', 'false');
+    localStorage.removeItem('parrot_admin_authenticated');
+    localStorage.removeItem('parrot_forum_host_mode');
     forumState.identity = 'user';
     updateAuthUI();
     renderForum();
@@ -1042,14 +1149,23 @@ function updateAuthUI() {
     const merchAuthCorner = document.getElementById('merch-auth-corner');
     const forumAuthCorner = document.getElementById('forum-auth-corner');
     const currentUser = getCurrentUser();
-    const hostActive = isHostAuthenticated() && forumState.identity === 'host';
+    const isHost = isHostAuthenticated();
+    const isAdmin = isAdminAuthenticated();
 
     const renderCornerHTML = () => {
-        if (hostActive) {
+        if (isHost && forumState.identity === 'host') {
             return `
                 <div class="auth-user-pill">
                     <span>👑</span>
                     <span class="parrot-tag">Website Host</span>
+                    <button class="auth-logout-btn btn-logout-action">Log Out</button>
+                </div>
+            `;
+        } else if ((isHost || isAdmin) && forumState.identity === 'admin') {
+            return `
+                <div class="auth-user-pill admin-pill">
+                    <span>🛡️</span>
+                    <span class="parrot-tag">Forum Admin</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
                 </div>
             `;
@@ -1083,7 +1199,7 @@ function updateAuthUI() {
     const guestBanner = document.getElementById('forum-guest-banner');
     const inputBox = document.getElementById('forum-input-box');
 
-    const canPost = hostActive || currentUser !== null;
+    const canPost = isHost || isAdmin || currentUser !== null;
 
     if (guestBanner && inputBox) {
         if (canPost) {
@@ -1127,9 +1243,12 @@ function renderForum() {
         const postCard = document.createElement('div');
         postCard.className = 'forum-post-card';
         
-        const authorHTML = post.isHost
-            ? `<span class="post-author-tag host-badge">👑 Website Host</span>`
-            : `<span class="post-author-tag">${escapeHtml(post.author)}</span>`;
+        let authorHTML = `<span class="post-author-tag">${escapeHtml(post.author)}</span>`;
+        if (post.isHost) {
+            authorHTML = `<span class="post-author-tag host-badge">👑 Website Host</span>`;
+        } else if (post.isAdmin) {
+            authorHTML = `<span class="post-author-tag admin-badge">🛡️ Forum Admin</span>`;
+        }
 
         const testTagHTML = post.isTest
             ? `<span class="post-test-tag">🧪 Test Message</span>`
@@ -1168,9 +1287,10 @@ function clearForumError() {
 
 function submitForumPost() {
     const currentUser = getCurrentUser();
-    const isHost = (forumState.identity === 'host' && isHostAuthenticated());
+    const isHostActive = (forumState.identity === 'host' && isHostAuthenticated());
+    const isAdminActive = (forumState.identity === 'admin' && (isHostAuthenticated() || isAdminAuthenticated()));
 
-    if (!currentUser && !isHost) {
+    if (!currentUser && !isHostActive && !isAdminActive) {
         openAuthModal('signin');
         return;
     }
@@ -1203,12 +1323,15 @@ function submitForumPost() {
     const timeFormatted = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + now.toLocaleDateString([], { month: 'short', day: 'numeric' });
 
     const isTest = forumState.mode === 'test';
-    const authorHandle = isHost ? '👑 Website Host' : currentUser.parrotId;
+    let authorHandle = currentUser ? currentUser.parrotId : 'Guest';
+    if (isHostActive) authorHandle = '👑 Website Host';
+    if (isAdminActive) authorHandle = '🛡️ Forum Admin';
 
     const newPost = {
         id: nextId,
         author: authorHandle,
-        isHost: isHost,
+        isHost: isHostActive,
+        isAdmin: isAdminActive,
         isTest: isTest,
         text: trimmed,
         timestamp: timeFormatted
@@ -1335,27 +1458,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Host Modal Listeners
-    const modalCloseBtn = document.getElementById('modal-close-btn');
-    const hostCancelBtn = document.getElementById('host-cancel-btn');
-    const hostLoginBtn = document.getElementById('host-login-btn');
-    const hostPassInput = document.getElementById('host-pass-input');
-    const hostModal = document.getElementById('host-auth-modal');
+    // Staff (Host & Admin) Modal Listeners
+    const staffModalCloseBtn = document.getElementById('staff-modal-close-btn');
+    const staffCancelBtn = document.getElementById('staff-cancel-btn');
+    const staffLoginBtn = document.getElementById('staff-login-btn');
+    const tabStaffHost = document.getElementById('tab-staff-host');
+    const tabStaffAdmin = document.getElementById('tab-staff-admin');
+    const staffPassInput = document.getElementById('staff-pass-input');
+    const staffModal = document.getElementById('staff-auth-modal');
 
-    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeHostModal);
-    if (hostCancelBtn) hostCancelBtn.addEventListener('click', closeHostModal);
-    if (hostLoginBtn) hostLoginBtn.addEventListener('click', verifyAndUnlockHost);
-    if (hostPassInput) {
-        hostPassInput.addEventListener('keydown', (e) => {
+    if (staffModalCloseBtn) staffModalCloseBtn.addEventListener('click', closeStaffModal);
+    if (staffCancelBtn) staffCancelBtn.addEventListener('click', closeStaffModal);
+    if (staffLoginBtn) staffLoginBtn.addEventListener('click', verifyAndUnlockStaff);
+    if (tabStaffHost) tabStaffHost.addEventListener('click', () => setStaffModalTab('host'));
+    if (tabStaffAdmin) tabStaffAdmin.addEventListener('click', () => setStaffModalTab('admin'));
+    if (staffPassInput) {
+        staffPassInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                verifyAndUnlockHost();
+                verifyAndUnlockStaff();
             }
         });
     }
-    if (hostModal) {
-        hostModal.addEventListener('click', (e) => {
-            if (e.target === hostModal) closeHostModal();
+    if (staffModal) {
+        staffModal.addEventListener('click', (e) => {
+            if (e.target === staffModal) closeStaffModal();
         });
     }
 
