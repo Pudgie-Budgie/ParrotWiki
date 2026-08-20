@@ -603,18 +603,43 @@ function renderVideos(data) {
 }
 
 // ==========================================
+// SUPABASE REALTIME CLOUD DATABASE SETUP
+// ==========================================
+
+const SUPABASE_URL = "https://nnosxtdwjcygkyzzrmag.supabase.co";
+const SUPABASE_KEY = "sb_publishable_ZilAYQB-RMD4DHyXTdbkFg_cd0xaHxw";
+
+let supabaseClient = null;
+try {
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+} catch (e) {
+    console.warn("Supabase client init note:", e);
+}
+
+function initSupabaseRealtime() {
+    if (!supabaseClient) return;
+    try {
+        supabaseClient
+            .channel('public-forum-posts')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'forum_posts' }, () => {
+                renderForum();
+            })
+            .subscribe();
+    } catch (err) {
+        console.error("Realtime sync subscription error:", err);
+    }
+}
+
+// ==========================================
 // USER AUTHENTICATION & PARROT ID SYSTEM
 // ==========================================
 
-// Complete Hard Reset: Log out host, wipe all account creation history, and reset to clean Guest state
-if (!localStorage.getItem('parrot_hard_reset_v5_done')) {
-    localStorage.removeItem('parrot_host_authenticated');
-    localStorage.removeItem('parrot_forum_host_mode');
-    localStorage.removeItem('parrot_forum_user_id');
-    localStorage.removeItem('parrot_wiki_users');
-    localStorage.removeItem('parrot_wiki_current_user');
+// Complete Hard Reset: Clear extra posts down to Post #1
+if (!localStorage.getItem('parrot_hard_reset_v6_done')) {
     localStorage.removeItem('parrot_forum_posts');
-    localStorage.setItem('parrot_hard_reset_v5_done', 'true');
+    localStorage.setItem('parrot_hard_reset_v6_done', 'true');
 }
 
 const PARROT_SPECIES = [
@@ -757,8 +782,8 @@ function containsInappropriateContent(text) {
     return false;
 }
 
-// Retrieve posts from localStorage, ensure Welcome Host post is present
-function getStoredPosts() {
+// Retrieve posts from Supabase with Local Fallback
+async function getStoredPosts() {
     const welcomePost = {
         id: 1,
         author: "👑 Website Host",
@@ -768,6 +793,32 @@ function getStoredPosts() {
         text: "Welcome to the Feathered Friends Forum! 🦜 Share your parrot stories, care tips, questions, or just say hello!",
         timestamp: "Community Host"
     };
+
+    if (supabaseClient) {
+        try {
+            const { data, error } = await supabaseClient
+                .from('forum_posts')
+                .select('*')
+                .order('id', { ascending: true });
+
+            if (!error && data && data.length > 0) {
+                return data.map(p => {
+                    let timeFormatted = p.created_at ? (new Date(p.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + new Date(p.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })) : "Community Host";
+                    return {
+                        id: p.id,
+                        author: p.author,
+                        isHost: !!p.is_host,
+                        isAdmin: !!p.is_admin,
+                        isTest: !!p.is_test,
+                        text: p.text,
+                        timestamp: timeFormatted
+                    };
+                });
+            }
+        } catch (e) {
+            console.warn("Supabase fetch note, using local posts:", e);
+        }
+    }
 
     const saved = localStorage.getItem('parrot_forum_posts');
     let posts = [];
@@ -1086,35 +1137,96 @@ async function handleAuthSubmit() {
         return;
     }
 
-    const users = getRegisteredUsers();
     const passHash = await sha256Hex(password);
 
     if (currentAuthTab === 'register') {
-        // 1. Check if email is already registered
-        const emailExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
-        if (emailExists) {
-            showAuthError('❗ An account with this email already exists. Please Sign In.');
-            return;
-        }
-
-        // 2. Check for profanity in password
+        // 1. Check for profanity in password
         if (containsInappropriateContent(password)) {
             showAuthError('❗ PASSWORD NOT ALLOWED! ❗');
             return;
         }
 
-        // 3. Check if password is unavailable / taken by another user
-        const passwordTaken = users.some(u => u.passwordHash === passHash);
-        if (passwordTaken) {
+        const speciesSelect = document.getElementById('auth-species-select');
+        const chosenSpecies = speciesSelect ? speciesSelect.value : 'Budgie';
+
+        // 2. Try Supabase Cloud Registration
+        if (supabaseClient) {
+            try {
+                // Check if email already exists
+                const { data: existingEmail } = await supabaseClient
+                    .from('user_accounts')
+                    .select('email')
+                    .eq('email', email)
+                    .maybeSingle();
+
+                if (existingEmail) {
+                    showAuthError('❗ An account with this email already exists. Please Sign In.');
+                    return;
+                }
+
+                // Check if password hash already taken
+                const { data: existingPass } = await supabaseClient
+                    .from('user_accounts')
+                    .select('password_hash')
+                    .eq('password_hash', passHash)
+                    .maybeSingle();
+
+                if (existingPass) {
+                    showAuthError('❗ PASSWORD UNAVAILABLE! ❗', true);
+                    return;
+                }
+
+                // Generate collision-free ID with cloud check
+                let newParrotId;
+                let idTaken = true;
+                do {
+                    const randomNum = String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+                    newParrotId = `#${chosenSpecies}-${randomNum}`;
+                    const { data: idCheck } = await supabaseClient
+                        .from('user_accounts')
+                        .select('parrot_id')
+                        .eq('parrot_id', newParrotId)
+                        .maybeSingle();
+                    idTaken = !!idCheck;
+                } while (idTaken);
+
+                // Insert into Supabase
+                const { data: inserted, error: insertError } = await supabaseClient
+                    .from('user_accounts')
+                    .insert([{
+                        email: email,
+                        password_hash: passHash,
+                        parrot_id: newParrotId
+                    }])
+                    .select()
+                    .single();
+
+                if (!insertError && inserted) {
+                    const userObj = { email: inserted.email, parrotId: inserted.parrot_id };
+                    setCurrentUser(userObj);
+                    closeAuthModal();
+                    updateAuthUI();
+                    await renderForum();
+                    alert(`🎉 Welcome! You have successfully registered with ID: ${newParrotId}`);
+                    return;
+                }
+            } catch (err) {
+                console.warn("Supabase auth note, using local fallback:", err);
+            }
+        }
+
+        // Local Storage Fallback
+        const users = getRegisteredUsers();
+        if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+            showAuthError('❗ An account with this email already exists. Please Sign In.');
+            return;
+        }
+        if (users.some(u => u.passwordHash === passHash)) {
             showAuthError('❗ PASSWORD UNAVAILABLE! ❗', true);
             return;
         }
 
-        // 4. Create new registered user with chosen parrot species
-        const speciesSelect = document.getElementById('auth-species-select');
-        const chosenSpecies = speciesSelect ? speciesSelect.value : 'Budgie';
         const newParrotId = generateParrotId(chosenSpecies);
-        
         const newUser = {
             email: email,
             passwordHash: passHash,
@@ -1128,16 +1240,42 @@ async function handleAuthSubmit() {
 
         closeAuthModal();
         updateAuthUI();
-        renderForum();
+        await renderForum();
         alert(`🎉 Welcome! You have successfully registered with ID: ${newParrotId}`);
     } else {
-        // Sign In Flow
+        // Sign In Flow (Cloud & Local)
+        if (supabaseClient) {
+            try {
+                const { data: userRecord } = await supabaseClient
+                    .from('user_accounts')
+                    .select('*')
+                    .eq('email', email)
+                    .eq('password_hash', passHash)
+                    .maybeSingle();
+
+                if (userRecord) {
+                    const userObj = { email: userRecord.email, parrotId: userRecord.parrot_id };
+                    setCurrentUser(userObj);
+                    closeAuthModal();
+                    updateAuthUI();
+                    await renderForum();
+                    return;
+                } else {
+                    showAuthError('❗ Invalid email or password. Please check your credentials.');
+                    return;
+                }
+            } catch (err) {
+                console.warn("Supabase signin note, using local fallback:", err);
+            }
+        }
+
+        const users = getRegisteredUsers();
         const matchedUser = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.passwordHash === passHash);
         if (matchedUser) {
             setCurrentUser(matchedUser);
             closeAuthModal();
             updateAuthUI();
-            renderForum();
+            await renderForum();
         } else {
             showAuthError('❗ Invalid email or password. Please check your credentials.');
         }
@@ -1220,11 +1358,11 @@ function updateAuthUI() {
 }
 
 // Render Forum Feed
-function renderForum() {
+async function renderForum() {
     const postsContainer = document.getElementById('forum-posts-container');
     if (!postsContainer) return;
 
-    const posts = getStoredPosts();
+    const posts = await getStoredPosts();
     postsContainer.innerHTML = '';
 
     if (posts.length === 0) {
@@ -1285,7 +1423,7 @@ function clearForumError() {
     }
 }
 
-function submitForumPost() {
+async function submitForumPost() {
     const currentUser = getCurrentUser();
     const isHostActive = (forumState.identity === 'host' && isHostAuthenticated());
     const isAdminActive = (forumState.identity === 'admin' && (isHostAuthenticated() || isAdminAuthenticated()));
@@ -1316,16 +1454,39 @@ function submitForumPost() {
     // 3. Clear any active error
     clearForumError();
 
-    // 4. Create new post with ascending sequence number
-    const posts = getStoredPosts();
-    const nextId = posts.length > 0 ? posts[posts.length - 1].id + 1 : 1;
-    const now = new Date();
-    const timeFormatted = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + now.toLocaleDateString([], { month: 'short', day: 'numeric' });
-
     const isTest = forumState.mode === 'test';
     let authorHandle = currentUser ? currentUser.parrotId : 'Guest';
     if (isHostActive) authorHandle = '👑 Website Host';
     if (isAdminActive) authorHandle = '🛡️ Forum Admin';
+
+    // 4. Try Supabase insert
+    if (supabaseClient) {
+        try {
+            const { error } = await supabaseClient
+                .from('forum_posts')
+                .insert([{
+                    author: authorHandle,
+                    text: trimmed,
+                    is_host: isHostActive,
+                    is_admin: isAdminActive,
+                    is_test: isTest
+                }]);
+
+            if (!error) {
+                inputEl.value = '';
+                await renderForum();
+                return;
+            }
+        } catch (err) {
+            console.warn("Supabase post error, using local fallback:", err);
+        }
+    }
+
+    // Local Storage Fallback
+    const posts = await getStoredPosts();
+    const nextId = posts.length > 0 ? posts[posts.length - 1].id + 1 : 1;
+    const now = new Date();
+    const timeFormatted = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + now.toLocaleDateString([], { month: 'short', day: 'numeric' });
 
     const newPost = {
         id: nextId,
@@ -1341,7 +1502,7 @@ function submitForumPost() {
     savePosts(posts);
 
     inputEl.value = '';
-    renderForum();
+    await renderForum();
 }
 
 function updateForumInputMode() {
@@ -1372,6 +1533,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderVideos(staticData.videos); 
     renderForum();
     updateAuthUI();
+    initSupabaseRealtime();
 
     // Forum post listeners
     const submitBtn = document.getElementById('forum-submit-btn');
