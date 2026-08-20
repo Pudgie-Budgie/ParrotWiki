@@ -1198,7 +1198,8 @@ footer {
     color: #444;
 }
 
-.auth-field-group input {
+.auth-field-group input,
+.auth-field-group select {
     width: 100%;
     padding: 10px 14px;
     border: 2px solid #ddd;
@@ -1207,9 +1208,11 @@ footer {
     outline: none;
     transition: border-color 0.2s;
     font-family: inherit;
+    background-color: white;
 }
 
-.auth-field-group input:focus {
+.auth-field-group input:focus,
+.auth-field-group select:focus {
     border-color: var(--primary);
 }
 

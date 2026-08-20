@@ -179,6 +179,86 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
                         <label for="auth-password-input">Password</label>
                         <input type="password" id="auth-password-input" placeholder="Enter your password..." autocomplete="current-password" required>
                     </div>
+                    <div class="auth-field-group" id="auth-species-group" style="margin-top: 14px; display: none;">
+                        <label for="auth-species-select">Choose Your Parrot & Color Morph</label>
+                        <select id="auth-species-select" class="auth-select">
+                            <optgroup label="🦜 Budgies & Parakeets">
+                                <option value="BlueBudgie">🔵 Sky Blue Budgie</option>
+                                <option value="GreenBudgie">🟢 Classic Green Budgie</option>
+                                <option value="EnglishBudgie">👑 English Show Budgie</option>
+                                <option value="LutinoBudgie">💛 Lutino Yellow Budgie</option>
+                                <option value="AlbinoBudgie">⚪ Albino White Budgie</option>
+                                <option value="OpalineBudgie">✨ Opaline Budgie</option>
+                            </optgroup>
+                            <optgroup label="🦜 Cockatiels">
+                                <option value="GreyCockatiel">🩶 Normal Grey Cockatiel</option>
+                                <option value="LutinoCockatiel">💛 Lutino Cockatiel</option>
+                                <option value="PiedCockatiel">🎨 Pied Cockatiel</option>
+                                <option value="PearlCockatiel">🪶 Pearl Cockatiel</option>
+                                <option value="WhitefaceCockatiel">🤍 Whiteface Cockatiel</option>
+                                <option value="CinnamonCockatiel">🍂 Cinnamon Cockatiel</option>
+                            </optgroup>
+                            <optgroup label="🦜 Conures">
+                                <option value="SunConure">☀️ Sun Conure</option>
+                                <option value="GreenCheekConure">🍃 Green-Cheeked Conure</option>
+                                <option value="PineappleConure">🍍 Pineapple Conure</option>
+                                <option value="CrimsonBelliedConure">🍒 Crimson-Bellied Conure</option>
+                                <option value="JendayConure">🔥 Jenday Conure</option>
+                                <option value="NandayConure">🖤 Nanday Conure</option>
+                            </optgroup>
+                            <optgroup label="🦜 Macaws">
+                                <option value="BlueAndGoldMacaw">💙 Blue & Gold Macaw</option>
+                                <option value="ScarletMacaw">🔴 Scarlet Macaw</option>
+                                <option value="HyacinthMacaw">👑 Hyacinth Macaw</option>
+                                <option value="GreenWingedMacaw">🌿 Green-Winged Macaw</option>
+                                <option value="MilitaryMacaw">🎖️ Military Macaw</option>
+                                <option value="HahnsMacaw">🦜 Hahn's Mini Macaw</option>
+                            </optgroup>
+                            <optgroup label="🦜 Cockatoos">
+                                <option value="UmbrellaCockatoo">☂️ Umbrella Cockatoo</option>
+                                <option value="MoluccanCockatoo">🌸 Moluccan Salmon Cockatoo</option>
+                                <option value="SulphurCrestedCockatoo">👑 Sulphur-Crested Cockatoo</option>
+                                <option value="GalahCockatoo">🌺 Galah Rose-Breasted Cockatoo</option>
+                                <option value="MajorMitchellCockatoo">🪶 Major Mitchell's Cockatoo</option>
+                                <option value="PalmCockatoo">🖤 Black Palm Cockatoo</option>
+                            </optgroup>
+                            <optgroup label="🦜 Lovebirds">
+                                <option value="PeachFacedLovebird">🍑 Peach-Faced Lovebird</option>
+                                <option value="FischersLovebird">🧡 Fischer's Lovebird</option>
+                                <option value="MaskedLovebird">🎭 Black-Masked Lovebird</option>
+                                <option value="LutinoLovebird">💛 Lutino Lovebird</option>
+                            </optgroup>
+                            <optgroup label="🦜 Amazons & Greys">
+                                <option value="AfricanGrey">🧠 African Grey</option>
+                                <option value="BlueFrontedAmazon">🔵 Blue-Fronted Amazon</option>
+                                <option value="YellowNapedAmazon">🟡 Yellow-Naped Amazon</option>
+                                <option value="DoubleYellowAmazon">👑 Double Yellow-Headed Amazon</option>
+                            </optgroup>
+                            <optgroup label="🦜 Lorikeets & Lories">
+                                <option value="RainbowLorikeet">🌈 Rainbow Lorikeet</option>
+                                <option value="RedLory">🔴 Red Lory</option>
+                                <option value="BlackCappedLory">🎩 Black-Capped Lory</option>
+                            </optgroup>
+                            <optgroup label="🦜 Caiques & Quakers">
+                                <option value="WhiteBelliedCaique">🤍 White-Bellied Caique</option>
+                                <option value="BlackHeadedCaique">🖤 Black-Headed Caique</option>
+                                <option value="GreenQuaker">🟢 Green Quaker / Monk Parakeet</option>
+                                <option value="BlueQuaker">🔵 Blue Quaker Parakeet</option>
+                            </optgroup>
+                            <optgroup label="🦜 Other Wonderful Parrots">
+                                <option value="IndianRingneck">💍 Indian Ringneck Parakeet</option>
+                                <option value="Eclectus">💎 Eclectus Parrot</option>
+                                <option value="SenegalParrot">🌿 Senegal Parrot</option>
+                                <option value="MeyersParrot">🤎 Meyer's Parrot</option>
+                                <option value="Pionus">💙 Blue-Headed Pionus</option>
+                                <option value="Kakariki">🥝 Red-Crowned Kakariki</option>
+                                <option value="Rosella">🎨 Eastern Rosella</option>
+                                <option value="Kakapo">🌙 Kakapo</option>
+                                <option value="Kea">🏔️ Kea</option>
+                            </optgroup>
+                        </select>
+                        <small class="field-hint">Your unique ID will begin with your chosen parrot morph (e.g. #BlueBudgie-123456)</small>
+                    </div>
                     <div id="auth-error-msg" class="auth-error-alert" style="display: none;"></div>
                     <div id="auth-success-msg" class="auth-success-alert" style="display: none;"></div>
                 </form>

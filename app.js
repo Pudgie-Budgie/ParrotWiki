@@ -620,6 +620,13 @@ if (!localStorage.getItem('parrot_forum_test_cleared_v2')) {
     localStorage.setItem('parrot_forum_test_cleared_v2', 'true');
 }
 
+// One-time reset to clear all registered accounts so all IDs are available again
+if (!localStorage.getItem('parrot_auth_v3_cleared')) {
+    localStorage.removeItem('parrot_wiki_users');
+    localStorage.removeItem('parrot_wiki_current_user');
+    localStorage.setItem('parrot_auth_v3_cleared', 'true');
+}
+
 const PARROT_SPECIES = [
     'Budgie', 'Cockatiel', 'Conure', 'Macaw', 'Cockatoo',
     'Lovebird', 'Amazon', 'Lorikeet', 'Quaker', 'Caique',
@@ -627,12 +634,12 @@ const PARROT_SPECIES = [
     'Rosella', 'Kakapo', 'Kea', 'Lory', 'Poicephalus'
 ];
 
-function generateParrotId() {
+function generateParrotId(chosenSpecies) {
     const users = getRegisteredUsers();
+    const species = chosenSpecies || PARROT_SPECIES[Math.floor(Math.random() * PARROT_SPECIES.length)];
     let newId;
     let exists;
     do {
-        const species = PARROT_SPECIES[Math.floor(Math.random() * PARROT_SPECIES.length)];
         const randomNum = String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
         newId = `#${species}-${randomNum}`;
         exists = users.some(u => u.parrotId === newId);
@@ -923,6 +930,7 @@ function setAuthTab(tab) {
     const tabSignIn = document.getElementById('tab-auth-signin');
     const tabRegister = document.getElementById('tab-auth-register');
     const submitBtn = document.getElementById('auth-submit-btn');
+    const speciesGroup = document.getElementById('auth-species-group');
     const errorEl = document.getElementById('auth-error-msg');
     const successEl = document.getElementById('auth-success-msg');
 
@@ -933,10 +941,12 @@ function setAuthTab(tab) {
         if (tabSignIn) tabSignIn.classList.add('active');
         if (tabRegister) tabRegister.classList.remove('active');
         if (submitBtn) submitBtn.textContent = 'Sign In';
+        if (speciesGroup) speciesGroup.style.display = 'none';
     } else {
         if (tabSignIn) tabSignIn.classList.remove('active');
         if (tabRegister) tabRegister.classList.add('active');
         if (submitBtn) submitBtn.textContent = 'Register Account';
+        if (speciesGroup) speciesGroup.style.display = 'block';
     }
 }
 
@@ -1003,8 +1013,11 @@ async function handleAuthSubmit() {
             return;
         }
 
-        // 4. Create new registered user
-        const newParrotId = generateParrotId();
+        // 4. Create new registered user with chosen parrot species
+        const speciesSelect = document.getElementById('auth-species-select');
+        const chosenSpecies = speciesSelect ? speciesSelect.value : 'Budgie';
+        const newParrotId = generateParrotId(chosenSpecies);
+        
         const newUser = {
             email: email,
             passwordHash: passHash,
