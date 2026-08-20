@@ -606,25 +606,15 @@ function renderVideos(data) {
 // USER AUTHENTICATION & PARROT ID SYSTEM
 // ==========================================
 
-// One-time session reset of legacy owner ID & host storage on first load of this update
-if (!localStorage.getItem('parrot_auth_v2_initialized')) {
+// Complete Hard Reset: Log out host, wipe all account creation history, and reset to clean Guest state
+if (!localStorage.getItem('parrot_hard_reset_v4_done')) {
     localStorage.removeItem('parrot_host_authenticated');
     localStorage.removeItem('parrot_forum_host_mode');
     localStorage.removeItem('parrot_forum_user_id');
-    localStorage.setItem('parrot_auth_v2_initialized', 'true');
-}
-
-// One-time cleanup to clear test post #2
-if (!localStorage.getItem('parrot_forum_test_cleared_v2')) {
-    localStorage.removeItem('parrot_forum_posts');
-    localStorage.setItem('parrot_forum_test_cleared_v2', 'true');
-}
-
-// One-time reset to clear all registered accounts so all IDs are available again
-if (!localStorage.getItem('parrot_auth_v3_cleared')) {
     localStorage.removeItem('parrot_wiki_users');
     localStorage.removeItem('parrot_wiki_current_user');
-    localStorage.setItem('parrot_auth_v3_cleared', 'true');
+    localStorage.removeItem('parrot_forum_posts');
+    localStorage.setItem('parrot_hard_reset_v4_done', 'true');
 }
 
 const PARROT_SPECIES = [
