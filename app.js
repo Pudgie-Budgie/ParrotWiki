@@ -1520,10 +1520,10 @@ function validateForumPost(rawText, isStaff) {
 }
 
 // Staff & Member Delete Forum Post Confirmation Modal Flow
-let pendingPostToDelete = null; // { id, author, text, isOwnOnly }
+let pendingPostToDelete = null; // { id, author, text, isOwnOnly, seqNumber }
 
-function openDeleteModal(postId, postAuthor, postText, isOwnPostOnly = false) {
-    pendingPostToDelete = { id: postId, author: postAuthor, text: postText, isOwnOnly: isOwnPostOnly };
+function openDeleteModal(postId, postAuthor, postText, isOwnPostOnly = false, seqNumber = 1) {
+    pendingPostToDelete = { id: postId, author: postAuthor, text: postText, isOwnOnly: isOwnPostOnly, seqNumber: seqNumber };
     const modal = document.getElementById('delete-confirm-modal');
     const previewEl = document.getElementById('delete-post-preview');
     const authorEl = document.getElementById('delete-author-display');
@@ -1541,11 +1541,11 @@ function openDeleteModal(postId, postAuthor, postText, isOwnPostOnly = false) {
     }
 
     if (isOwnPostOnly) {
-        if (modalTitle) modalTitle.textContent = '🗑️ Delete Your Post';
+        if (modalTitle) modalTitle.textContent = `🗑️ Delete Post #${seqNumber}`;
         if (singleBtn) singleBtn.textContent = '🗑️ Delete My Post';
         if (allUserBtn) allUserBtn.style.display = 'none';
     } else {
-        if (modalTitle) modalTitle.textContent = '🛡️ Staff Moderation';
+        if (modalTitle) modalTitle.textContent = `🛡️ Moderate Post #${seqNumber}`;
         if (singleBtn) singleBtn.textContent = '🗑️ Delete This Post';
         if (allUserBtn) allUserBtn.style.display = 'block';
     }
@@ -1656,13 +1656,13 @@ async function renderForum() {
     const postsContainer = document.getElementById('forum-posts-container');
     if (!postsContainer) return;
 
-    const posts = await getStoredPosts();
+    const rawPosts = await getStoredPosts();
     postsContainer.innerHTML = '';
 
     const isStaff = isHostAuthenticated() || isAdminAuthenticated();
     const currentUser = getCurrentUser();
 
-    if (posts.length === 0) {
+    if (rawPosts.length === 0) {
         postsContainer.innerHTML = `
             <div style="text-align: center; padding: 40px 20px; color: #777; background: var(--card-bg); border-radius: 12px; box-shadow: var(--shadow);">
                 <div style="font-size: 2.2rem; margin-bottom: 8px;">🦜💬</div>
@@ -1672,6 +1672,12 @@ async function renderForum() {
         `;
         return;
     }
+
+    // Assign sequential chronological numbers (1, 2, 3...) so deletions never leave gaps
+    const posts = rawPosts.map((post, index) => ({
+        ...post,
+        seqNumber: index + 1
+    }));
 
     // Render in reverse chronological order: newest post on top, post #1 at the bottom
     [...posts].reverse().forEach(post => {
@@ -1690,18 +1696,18 @@ async function renderForum() {
             : '';
 
         // Default Welcome post (#1) is completely protected from deletion
-        const isWelcomePost = (post.id === 1) || (post.isHost && post.text && post.text.includes("Welcome to the Feathered Friends Forum!"));
+        const isWelcomePost = (post.seqNumber === 1) || (post.id === 1) || (post.isHost && post.text && post.text.includes("Welcome to the Feathered Friends Forum!"));
         const isOwnPost = currentUser && (post.author === currentUser.parrotId);
         const canDelete = (isStaff || isOwnPost) && !isWelcomePost;
 
         const deleteBtnHTML = canDelete ? `
-            <button class="post-delete-btn" data-post-id="${post.id}" data-post-author="${escapeHtml(post.author)}" data-post-text="${escapeHtml(post.text)}" data-is-own="${isOwnPost && !isStaff}" title="${isOwnPost && !isStaff ? 'Delete your post' : 'Delete options for Staff'}">🗑️ Delete</button>
+            <button class="post-delete-btn" data-post-id="${post.id}" data-seq-number="${post.seqNumber}" data-post-author="${escapeHtml(post.author)}" data-post-text="${escapeHtml(post.text)}" data-is-own="${isOwnPost && !isStaff}" title="${isOwnPost && !isStaff ? 'Delete your post' : 'Delete options for Staff'}">🗑️ Delete</button>
         ` : '';
 
         postCard.innerHTML = `
             <div class="forum-post-header">
                 <div class="forum-post-meta-left">
-                    <span class="post-number-tag">#${post.id}</span>
+                    <span class="post-number-tag">#${post.seqNumber}</span>
                     ${authorHTML}
                     ${testTagHTML}
                 </div>
@@ -1720,10 +1726,11 @@ async function renderForum() {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const id = btn.getAttribute('data-post-id');
+            const seqNumber = btn.getAttribute('data-seq-number') || '1';
             const author = btn.getAttribute('data-post-author');
             const text = btn.getAttribute('data-post-text');
             const isOwn = btn.getAttribute('data-is-own') === 'true';
-            if (id) openDeleteModal(id, author, text, isOwn);
+            if (id) openDeleteModal(id, author, text, isOwn, seqNumber);
         });
     });
 }
