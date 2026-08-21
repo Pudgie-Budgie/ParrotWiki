@@ -1504,17 +1504,33 @@ function validateForumPost(rawText, isStaff) {
         };
     }
 
+    // 8. Block Email Addresses & Major Mail Providers (Personal Safety)
+    const standardEmailPattern = /[a-zA-Z0-9._%+-]+\s*@\s*[a-zA-Z0-9.-]+\s*\.\s*[a-zA-Z]{2,}/i;
+    const providerPattern = /(@|\bat\b|\[at\]|\(at\))\s*(gmail|icloud|outlook|hotmail|live|msn|yahoo|proton|aol|mail|zoho)\b/i;
+    const directProviderDomain = /\b(gmail\.com|icloud\.com|outlook\.com|hotmail\.com|live\.com|msn\.com|yahoo\.com|proton\.me|aol\.com)\b/i;
+
+    if (standardEmailPattern.test(rawText) || providerPattern.test(rawText) || directProviderDomain.test(rawText)) {
+        return {
+            type: 'spam',
+            message: '❗ Posting personal email addresses is not allowed for privacy and safety.'
+        };
+    }
+
     return null;
 }
 
-// Staff Delete Forum Post Confirmation Modal Flow
-let pendingPostToDelete = null; // { id, author, text }
+// Staff & Member Delete Forum Post Confirmation Modal Flow
+let pendingPostToDelete = null; // { id, author, text, isOwnOnly }
 
-function openDeleteModal(postId, postAuthor, postText) {
-    pendingPostToDelete = { id: postId, author: postAuthor, text: postText };
+function openDeleteModal(postId, postAuthor, postText, isOwnPostOnly = false) {
+    pendingPostToDelete = { id: postId, author: postAuthor, text: postText, isOwnOnly: isOwnPostOnly };
     const modal = document.getElementById('delete-confirm-modal');
     const previewEl = document.getElementById('delete-post-preview');
     const authorEl = document.getElementById('delete-author-display');
+    const singleBtn = document.getElementById('delete-single-btn');
+    const allUserBtn = document.getElementById('delete-all-user-btn');
+    const modalTitle = document.querySelector('#delete-confirm-modal .modal-header h3');
+
     if (!modal) return;
 
     if (previewEl) {
@@ -1523,6 +1539,17 @@ function openDeleteModal(postId, postAuthor, postText) {
     if (authorEl) {
         authorEl.textContent = `👤 Author: ${postAuthor || 'Unknown'}`;
     }
+
+    if (isOwnPostOnly) {
+        if (modalTitle) modalTitle.textContent = '🗑️ Delete Your Post';
+        if (singleBtn) singleBtn.textContent = '🗑️ Delete My Post';
+        if (allUserBtn) allUserBtn.style.display = 'none';
+    } else {
+        if (modalTitle) modalTitle.textContent = '🛡️ Staff Moderation';
+        if (singleBtn) singleBtn.textContent = '🗑️ Delete This Post';
+        if (allUserBtn) allUserBtn.style.display = 'block';
+    }
+
     modal.style.display = 'flex';
 }
 
@@ -1633,6 +1660,7 @@ async function renderForum() {
     postsContainer.innerHTML = '';
 
     const isStaff = isHostAuthenticated() || isAdminAuthenticated();
+    const currentUser = getCurrentUser();
 
     if (posts.length === 0) {
         postsContainer.innerHTML = `
@@ -1663,8 +1691,11 @@ async function renderForum() {
 
         // Default Welcome post (#1) is completely protected from deletion
         const isWelcomePost = (post.id === 1) || (post.isHost && post.text && post.text.includes("Welcome to the Feathered Friends Forum!"));
-        const deleteBtnHTML = (isStaff && !isWelcomePost) ? `
-            <button class="post-delete-btn" data-post-id="${post.id}" data-post-author="${escapeHtml(post.author)}" data-post-text="${escapeHtml(post.text)}" title="Delete options for Staff">🗑️ Delete</button>
+        const isOwnPost = currentUser && (post.author === currentUser.parrotId);
+        const canDelete = (isStaff || isOwnPost) && !isWelcomePost;
+
+        const deleteBtnHTML = canDelete ? `
+            <button class="post-delete-btn" data-post-id="${post.id}" data-post-author="${escapeHtml(post.author)}" data-post-text="${escapeHtml(post.text)}" data-is-own="${isOwnPost && !isStaff}" title="${isOwnPost && !isStaff ? 'Delete your post' : 'Delete options for Staff'}">🗑️ Delete</button>
         ` : '';
 
         postCard.innerHTML = `
@@ -1691,7 +1722,8 @@ async function renderForum() {
             const id = btn.getAttribute('data-post-id');
             const author = btn.getAttribute('data-post-author');
             const text = btn.getAttribute('data-post-text');
-            if (id) openDeleteModal(id, author, text);
+            const isOwn = btn.getAttribute('data-is-own') === 'true';
+            if (id) openDeleteModal(id, author, text, isOwn);
         });
     });
 }
