@@ -528,15 +528,19 @@ function renderMerch(data) {
     data.forEach(item => {
         const div = document.createElement('div');
         div.className = 'card';
+        const isComic = item.type === 'Comic' || (item.title && item.title.toLowerCase().includes('comic'));
+        const actionButtonHTML = isComic ? '' : `
+            <div style="margin-top: 15px;">
+                <button class="merch-action-btn" data-title="${escapeHtml(item.title)}">🛒 Buy / View Details</button>
+            </div>
+        `;
         div.innerHTML = `
             ${item.image ? `<div class="card-img-wrapper"><img src="${item.image}" loading="lazy"></div>` : ''}
             <div class="card-content">
                 <h3>${item.title}</h3>
                 <div class="notes" style="margin-bottom:10px;">${item.type}</div>
                 <div class="rich-text-content">${item.description}</div>
-                <div style="margin-top: 15px;">
-                    <button class="merch-action-btn" data-title="${escapeHtml(item.title)}">🛒 Buy / View Details</button>
-                </div>
+                ${actionButtonHTML}
             </div>
         `;
         grid.appendChild(div);
