@@ -295,6 +295,27 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
         </div>
     </div>
 
+    <!-- Delete Post Moderation Modal -->
+    <div id="delete-confirm-modal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="color: #c62828;">🛡️ Staff Moderation</h3>
+                <button id="delete-modal-close-btn" class="modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 10px; font-size: 1rem; color: #222; font-weight: 600;">Choose a moderation action for this post:</p>
+                <div id="delete-post-preview" style="background: #fdf2f2; border: 1px solid #fbd5d5; border-radius: 8px; padding: 10px 14px; font-size: 0.9rem; color: #555; margin-bottom: 12px; font-style: italic; max-height: 120px; overflow-y: auto;"></div>
+                <div id="delete-author-display" style="font-weight: 700; color: #2c3e50; font-family: monospace; font-size: 0.9rem; margin-bottom: 14px;"></div>
+                <small style="color: #777;">Selected actions will permanently delete posts from both the screen and cloud database.</small>
+            </div>
+            <div class="modal-footer" style="flex-direction: column; gap: 8px; align-items: stretch;">
+                <button id="delete-single-btn" class="modal-btn-primary" style="background-color: #d32f2f; border-color: #b71c1c; width: 100%;">🗑️ Delete This Post</button>
+                <button id="delete-all-user-btn" class="modal-btn-primary" style="background-color: #880e4f; border-color: #4a148c; width: 100%;">💥 Delete All Posts From This User</button>
+                <button id="delete-cancel-btn" class="modal-btn-secondary" style="width: 100%;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2025 Feathered Friends Wiki. All content for educational purposes. Contact us at info@parrotfriends.org</p>

@@ -1361,6 +1361,181 @@ function updateAuthUI() {
     renderHostControls();
 }
 
+// ==========================================
+// FORUM ANTI-SPAM & MODERATION RULES
+// ==========================================
+
+const POST_COOLDOWN_SECONDS = 10;
+
+function validateForumPost(rawText, isStaff) {
+    const trimmed = rawText.trim();
+
+    // 1. Check for empty post
+    if (trimmed.length === 0) {
+        return { type: 'empty', message: '❗This message is empty. ❗' };
+    }
+
+    // 2. Kid-Friendly Profanity / Inappropriate Content Check
+    if (containsInappropriateContent(rawText)) {
+        return { type: 'profanity', message: '❗This message has inappropriate or profane content. ❗' };
+    }
+
+    // Staff (Host & Admin) are exempt from rate-limiting and formatting limits
+    if (isStaff) return null;
+
+    // 3. Post Cooldown Rate Limit (10 seconds)
+    const now = Date.now();
+    const lastTime = parseInt(sessionStorage.getItem('parrot_last_post_time') || '0', 10);
+    const timePassed = Math.floor((now - lastTime) / 1000);
+    if (timePassed < POST_COOLDOWN_SECONDS) {
+        const waitSeconds = POST_COOLDOWN_SECONDS - timePassed;
+        return {
+            type: 'cooldown',
+            message: `⏳ Please wait ${waitSeconds} second${waitSeconds > 1 ? 's' : ''} before squawking again! 🦜`
+        };
+    }
+
+    // 4. Duplicate Message Blocker
+    const lastText = sessionStorage.getItem('parrot_last_post_text') || '';
+    if (lastText && lastText.toLowerCase() === trimmed.toLowerCase()) {
+        return {
+            type: 'spam',
+            message: '❗ You just posted that exact message! Please share something new.'
+        };
+    }
+
+    // 5. No more than 5 of the same character in a row (6+ is blocked)
+    if (/(.)\1{5,}/iu.test(rawText)) {
+        return {
+            type: 'spam',
+            message: '❗ Please avoid typing more than 5 of the same character in a row.'
+        };
+    }
+
+    // 6. All Caps is Forbidden
+    const lettersOnly = rawText.replace(/[^a-zA-Z]/g, '');
+    if (lettersOnly.length >= 4 && lettersOnly === lettersOnly.toUpperCase()) {
+        return {
+            type: 'spam',
+            message: "❗ Please don't shout in ALL CAPS! 🦜"
+        };
+    }
+
+    // 7. Block URLs & External Links
+    const urlPattern = /(https?:\/\/|www\.|\.com\b|\.net\b|\.org\b|\.io\b|\.xyz\b|\.co\b|\.gg\b|\.edu\b|discord\.gg|bit\.ly|t\.me)/i;
+    if (urlPattern.test(rawText)) {
+        return {
+            type: 'spam',
+            message: '❗ Posting external web links or URLs is not allowed on this forum.'
+        };
+    }
+
+    return null;
+}
+
+// Staff Delete Forum Post Confirmation Modal Flow
+let pendingPostToDelete = null; // { id, author, text }
+
+function openDeleteModal(postId, postAuthor, postText) {
+    pendingPostToDelete = { id: postId, author: postAuthor, text: postText };
+    const modal = document.getElementById('delete-confirm-modal');
+    const previewEl = document.getElementById('delete-post-preview');
+    const authorEl = document.getElementById('delete-author-display');
+    if (!modal) return;
+
+    if (previewEl) {
+        previewEl.textContent = `“${postText || ''}”`;
+    }
+    if (authorEl) {
+        authorEl.textContent = `👤 Author: ${postAuthor || 'Unknown'}`;
+    }
+    modal.style.display = 'flex';
+}
+
+function closeDeleteModal() {
+    pendingPostToDelete = null;
+    const modal = document.getElementById('delete-confirm-modal');
+    if (modal) modal.style.display = 'none';
+}
+
+// 1. Delete Only This Post
+async function deleteSinglePost() {
+    if (!pendingPostToDelete || !pendingPostToDelete.id) return;
+    const postId = pendingPostToDelete.id;
+    closeDeleteModal();
+
+    if (supabaseClient) {
+        try {
+            const { error } = await supabaseClient
+                .from('forum_posts')
+                .delete()
+                .eq('id', postId);
+            if (error) {
+                console.warn("Supabase delete note:", error);
+            }
+        } catch (e) {
+            console.warn("Supabase delete error:", e);
+        }
+    }
+
+    // Also remove from local storage cache
+    const saved = localStorage.getItem('parrot_forum_posts');
+    if (saved) {
+        try {
+            let parsed = JSON.parse(saved);
+            parsed = parsed.filter(p => p.id != postId);
+            savePosts(parsed);
+        } catch (e) {}
+    }
+
+    await renderForum();
+}
+
+// 2. Delete ALL Posts From This User
+async function deleteAllPostsFromUser() {
+    if (!pendingPostToDelete || !pendingPostToDelete.author) return;
+    const author = pendingPostToDelete.author;
+
+    // Safety guard: Cannot bulk delete official Website Host welcome messages
+    if (author === '👑 Website Host') {
+        alert('❗ You cannot bulk delete official Website Host messages.');
+        return;
+    }
+
+    if (!confirm(`💥 ARE YOU SURE?\n\nThis will permanently delete ALL messages posted by "${author}" across the entire forum!`)) {
+        return;
+    }
+
+    closeDeleteModal();
+
+    if (supabaseClient) {
+        try {
+            const { error } = await supabaseClient
+                .from('forum_posts')
+                .delete()
+                .eq('author', author)
+                .neq('id', 1); // Never delete post #1
+            if (error) {
+                console.warn("Supabase bulk delete note:", error);
+            }
+        } catch (e) {
+            console.warn("Supabase bulk delete error:", e);
+        }
+    }
+
+    // Also remove from local storage cache
+    const saved = localStorage.getItem('parrot_forum_posts');
+    if (saved) {
+        try {
+            let parsed = JSON.parse(saved);
+            parsed = parsed.filter(p => p.id == 1 || p.author !== author);
+            savePosts(parsed);
+        } catch (e) {}
+    }
+
+    await renderForum();
+}
+
 // Render Forum Feed
 async function renderForum() {
     const postsContainer = document.getElementById('forum-posts-container');
@@ -1368,6 +1543,8 @@ async function renderForum() {
 
     const posts = await getStoredPosts();
     postsContainer.innerHTML = '';
+
+    const isStaff = isHostAuthenticated() || isAdminAuthenticated();
 
     if (posts.length === 0) {
         postsContainer.innerHTML = `
@@ -1396,6 +1573,12 @@ async function renderForum() {
             ? `<span class="post-test-tag">🧪 Test Message</span>`
             : '';
 
+        // Default Welcome post (#1) is completely protected from deletion
+        const isWelcomePost = (post.id === 1) || (post.isHost && post.text && post.text.includes("Welcome to the Feathered Friends Forum!"));
+        const deleteBtnHTML = (isStaff && !isWelcomePost) ? `
+            <button class="post-delete-btn" data-post-id="${post.id}" data-post-author="${escapeHtml(post.author)}" data-post-text="${escapeHtml(post.text)}" title="Delete options for Staff">🗑️ Delete</button>
+        ` : '';
+
         postCard.innerHTML = `
             <div class="forum-post-header">
                 <div class="forum-post-meta-left">
@@ -1403,11 +1586,25 @@ async function renderForum() {
                     ${authorHTML}
                     ${testTagHTML}
                 </div>
-                <span class="post-time-tag">${escapeHtml(post.timestamp)}</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="post-time-tag">${escapeHtml(post.timestamp)}</span>
+                    ${deleteBtnHTML}
+                </div>
             </div>
             <div class="forum-post-body">${escapeHtml(post.text)}</div>
         `;
         postsContainer.appendChild(postCard);
+    });
+
+    // Attach delete listeners
+    postsContainer.querySelectorAll('.post-delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = btn.getAttribute('data-post-id');
+            const author = btn.getAttribute('data-post-author');
+            const text = btn.getAttribute('data-post-text');
+            if (id) openDeleteModal(id, author, text);
+        });
     });
 }
 
@@ -1431,8 +1628,9 @@ async function submitForumPost() {
     const currentUser = getCurrentUser();
     const isHostActive = (forumState.identity === 'host' && isHostAuthenticated());
     const isAdminActive = (forumState.identity === 'admin' && (isHostAuthenticated() || isAdminAuthenticated()));
+    const isStaff = isHostActive || isAdminActive;
 
-    if (!currentUser && !isHostActive && !isAdminActive) {
+    if (!currentUser && !isStaff) {
         openAuthModal('signin');
         return;
     }
@@ -1443,19 +1641,14 @@ async function submitForumPost() {
     const rawText = inputEl.value;
     const trimmed = rawText.trim();
 
-    // 1. Check for empty post
-    if (trimmed.length === 0) {
-        showForumError('empty', '❗This message is empty. ❗');
+    // Validate anti-spam & safety rules
+    const validationError = validateForumPost(rawText, isStaff);
+    if (validationError) {
+        showForumError(validationError.type, validationError.message);
         return;
     }
 
-    // 2. Check for profanity / inappropriate content
-    if (containsInappropriateContent(rawText)) {
-        showForumError('profanity', '❗This message has inappropriate or profane content. ❗');
-        return;
-    }
-
-    // 3. Clear any active error
+    // Clear any active error
     clearForumError();
 
     const isTest = forumState.mode === 'test';
@@ -1463,7 +1656,13 @@ async function submitForumPost() {
     if (isHostActive) authorHandle = '👑 Website Host';
     if (isAdminActive) authorHandle = '🛡️ Forum Admin';
 
-    // 4. Try Supabase insert
+    // Record rate-limiting tracker for non-staff
+    if (!isStaff) {
+        sessionStorage.setItem('parrot_last_post_time', Date.now().toString());
+        sessionStorage.setItem('parrot_last_post_text', trimmed);
+    }
+
+    // Try Supabase insert
     if (supabaseClient) {
         try {
             const { error } = await supabaseClient
@@ -1649,6 +1848,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (staffModal) {
         staffModal.addEventListener('click', (e) => {
             if (e.target === staffModal) closeStaffModal();
+        });
+    }
+
+    // Delete Moderation Modal Listeners
+    const deleteModalCloseBtn = document.getElementById('delete-modal-close-btn');
+    const deleteCancelBtn = document.getElementById('delete-cancel-btn');
+    const deleteSingleBtn = document.getElementById('delete-single-btn');
+    const deleteAllUserBtn = document.getElementById('delete-all-user-btn');
+    const deleteModal = document.getElementById('delete-confirm-modal');
+
+    if (deleteModalCloseBtn) deleteModalCloseBtn.addEventListener('click', closeDeleteModal);
+    if (deleteCancelBtn) deleteCancelBtn.addEventListener('click', closeDeleteModal);
+    if (deleteSingleBtn) deleteSingleBtn.addEventListener('click', deleteSinglePost);
+    if (deleteAllUserBtn) deleteAllUserBtn.addEventListener('click', deleteAllPostsFromUser);
+    if (deleteModal) {
+        deleteModal.addEventListener('click', (e) => {
+            if (e.target === deleteModal) closeDeleteModal();
         });
     }
 
