@@ -109,7 +109,10 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
                         <h4>You are viewing as a Guest</h4>
                         <p>Sign in or register an account to receive your unique Parrot ID and join the chat!</p>
                     </div>
-                    <button id="forum-guest-auth-btn" class="auth-trigger-btn">Sign In / Register</button>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button id="forum-guest-auth-btn" class="auth-trigger-btn">Sign In / Register</button>
+                        <button id="guest-staff-unlock-btn" class="auth-trigger-btn btn-staff-trigger" style="background: #374151;">⚙️ Staff Unlock</button>
+                    </div>
                 </div>
 
                 <!-- Post Creator Box (For Registered Members & Host) -->
@@ -274,6 +277,9 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
                     </div>
                     <div id="auth-error-msg" class="auth-error-alert" style="display: none;"></div>
                     <div id="auth-success-msg" class="auth-success-alert" style="display: none;"></div>
+                    <div style="text-align: center; margin-top: 14px; padding-top: 10px; border-top: 1px dashed #e2e8f0;">
+                        <button id="modal-staff-unlock-link" class="btn-staff-trigger" style="background: none; border: none; color: #64748b; font-size: 0.85rem; cursor: pointer; text-decoration: underline; font-weight: 600;">👑 Owner / Admin Staff Unlock</button>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

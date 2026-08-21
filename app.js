@@ -640,10 +640,14 @@ function initSupabaseRealtime() {
 // USER AUTHENTICATION & PARROT ID SYSTEM
 // ==========================================
 
-// Complete Hard Reset: Clear extra posts down to Post #1
-if (!localStorage.getItem('parrot_hard_reset_v6_done')) {
-    localStorage.removeItem('parrot_forum_posts');
-    localStorage.setItem('parrot_hard_reset_v6_done', 'true');
+// Fresh Reset: Wipe obsolete account cache so you can register fresh
+if (!localStorage.getItem('parrot_user_wipe_v7_done')) {
+    localStorage.removeItem('parrot_wiki_users');
+    localStorage.removeItem('parrot_wiki_current_user');
+    localStorage.removeItem('parrot_last_member_user');
+    localStorage.removeItem('parrot_owner_member_id');
+    localStorage.removeItem('parrot_admin_member_id');
+    localStorage.setItem('parrot_user_wipe_v7_done', 'true');
 }
 
 const PARROT_SPECIES = [
@@ -683,12 +687,23 @@ function getCurrentUser() {
     if (saved) {
         try { return JSON.parse(saved); } catch (e) { console.error(e); }
     }
+    const lastSaved = localStorage.getItem('parrot_last_member_user');
+    if (lastSaved) {
+        try { 
+            const user = JSON.parse(lastSaved);
+            if (user && user.parrotId) {
+                localStorage.setItem('parrot_wiki_current_user', JSON.stringify(user));
+                return user;
+            }
+        } catch (e) {}
+    }
     return null;
 }
 
 function setCurrentUser(user) {
     if (user) {
         localStorage.setItem('parrot_wiki_current_user', JSON.stringify(user));
+        localStorage.setItem('parrot_last_member_user', JSON.stringify(user));
     } else {
         localStorage.removeItem('parrot_wiki_current_user');
     }
@@ -1021,6 +1036,7 @@ async function verifyAndUnlockStaff() {
             localStorage.setItem('parrot_host_authenticated', 'true');
             localStorage.setItem('parrot_forum_host_mode', 'host');
             forumState.identity = 'host';
+            getCurrentUser(); // Initializes / restores member identity
             closeStaffModal();
             updateAuthUI();
             renderForum();
@@ -1035,6 +1051,7 @@ async function verifyAndUnlockStaff() {
             localStorage.setItem('parrot_admin_authenticated', 'true');
             localStorage.setItem('parrot_forum_host_mode', 'admin');
             forumState.identity = 'admin';
+            getCurrentUser(); // Initializes / restores member identity
             closeStaffModal();
             updateAuthUI();
             renderForum();
@@ -1117,11 +1134,24 @@ function showAuthError(message, isUnavailable = false) {
 }
 
 function handleLogout() {
-    setCurrentUser(null);
-    localStorage.removeItem('parrot_host_authenticated');
-    localStorage.removeItem('parrot_admin_authenticated');
-    localStorage.removeItem('parrot_forum_host_mode');
-    forumState.identity = 'user';
+    const isStaffMode = (isHostAuthenticated() && forumState.identity === 'host') || 
+                        ((isHostAuthenticated() || isAdminAuthenticated()) && forumState.identity === 'admin');
+
+    if (isStaffMode) {
+        // Drop back to Member mode without losing member account
+        localStorage.removeItem('parrot_host_authenticated');
+        localStorage.removeItem('parrot_admin_authenticated');
+        localStorage.removeItem('parrot_forum_host_mode');
+        forumState.identity = 'user';
+    } else {
+        // Complete logout of member account
+        setCurrentUser(null);
+        localStorage.removeItem('parrot_last_member_user');
+        localStorage.removeItem('parrot_host_authenticated');
+        localStorage.removeItem('parrot_admin_authenticated');
+        localStorage.removeItem('parrot_forum_host_mode');
+        forumState.identity = 'user';
+    }
     updateAuthUI();
     renderForum();
 }
@@ -1132,7 +1162,7 @@ async function handleAuthSubmit() {
 
     if (!emailInput || !passInput) return;
 
-    const email = emailInput.value.trim();
+    const email = emailInput.value.trim().toLowerCase();
     const password = passInput.value;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1262,12 +1292,16 @@ async function handleAuthSubmit() {
         // Sign In Flow (Cloud & Local)
         if (supabaseClient) {
             try {
-                const { data: userRecord } = await supabaseClient
+                const { data: userRecord, error: sbError } = await supabaseClient
                     .from('user_accounts')
                     .select('*')
                     .eq('email', email)
                     .eq('password_hash', passHash)
                     .maybeSingle();
+
+                if (sbError) {
+                    console.error("Supabase signin query error:", sbError);
+                }
 
                 if (userRecord) {
                     const userObj = { email: userRecord.email, parrotId: userRecord.parrot_id };
@@ -1277,7 +1311,18 @@ async function handleAuthSubmit() {
                     await renderForum();
                     return;
                 } else {
-                    showAuthError('❗ Invalid email or password. Please check your credentials.');
+                    // Check if email exists in database to give precise feedback
+                    const { data: emailCheck } = await supabaseClient
+                        .from('user_accounts')
+                        .select('email')
+                        .eq('email', email)
+                        .maybeSingle();
+
+                    if (emailCheck) {
+                        showAuthError('❗ Incorrect password. Please try again.');
+                    } else {
+                        showAuthError('❗ No account found with this email. Please click "Register" above to create an account first.');
+                    }
                     return;
                 }
             } catch (err) {
@@ -1286,14 +1331,19 @@ async function handleAuthSubmit() {
         }
 
         const users = getRegisteredUsers();
-        const matchedUser = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.passwordHash === passHash);
+        const matchedUser = users.find(u => u.email.toLowerCase() === email && u.passwordHash === passHash);
         if (matchedUser) {
             setCurrentUser(matchedUser);
             closeAuthModal();
             updateAuthUI();
             await renderForum();
         } else {
-            showAuthError('❗ Invalid email or password. Please check your credentials.');
+            const emailFound = users.some(u => u.email.toLowerCase() === email);
+            if (emailFound) {
+                showAuthError('❗ Incorrect password. Please try again.');
+            } else {
+                showAuthError('❗ No account found with this email. Please click "Register" above to create an account first.');
+            }
         }
     }
 }
@@ -1313,6 +1363,7 @@ function updateAuthUI() {
                     <span>👑</span>
                     <span class="parrot-tag">Website Host</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
+                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">⚙️</button>
                 </div>
             `;
         } else if ((isHost || isAdmin) && forumState.identity === 'admin') {
@@ -1321,6 +1372,7 @@ function updateAuthUI() {
                     <span>🛡️</span>
                     <span class="parrot-tag">Forum Admin</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
+                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">⚙️</button>
                 </div>
             `;
         } else if (currentUser) {
@@ -1329,11 +1381,15 @@ function updateAuthUI() {
                     <span>🦜</span>
                     <span class="parrot-tag">${currentUser.parrotId}</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
+                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">⚙️</button>
                 </div>
             `;
         } else {
             return `
-                <button class="auth-corner-btn btn-auth-trigger">🔒 Sign In / Register</button>
+                <div style="display: inline-flex; align-items: center; gap: 6px;">
+                    <button class="auth-corner-btn btn-auth-trigger">🔒 Sign In / Register</button>
+                    <button class="auth-corner-btn btn-staff-trigger" style="background: #374151; padding: 7px 11px;" title="Owner & Admin Unlock">⚙️ Staff</button>
+                </div>
             `;
         }
     };
@@ -1348,6 +1404,12 @@ function updateAuthUI() {
     });
     document.querySelectorAll('.btn-logout-action').forEach(btn => {
         btn.addEventListener('click', handleLogout);
+    });
+    document.querySelectorAll('.btn-staff-trigger').forEach(btn => {
+        btn.addEventListener('click', () => {
+            closeAuthModal();
+            openStaffModal('host');
+        });
     });
 
     const guestBanner = document.getElementById('forum-guest-banner');
