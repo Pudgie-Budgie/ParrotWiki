@@ -261,6 +261,17 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
                         </select>
                         <small class="field-hint">Your unique ID will begin with your chosen parrot morph (e.g. #BlueBudgie-123456)</small>
                     </div>
+                    <!-- Human Verification Box (Only on Register tab) -->
+                    <div id="auth-human-verify-group" class="human-verify-card" style="margin-top: 16px; display: none;">
+                        <label class="human-verify-label">
+                            <input type="checkbox" id="auth-human-checkbox" class="human-checkbox">
+                            <span class="human-verify-text">I am a human bird lover 🦜</span>
+                        </label>
+                        <div class="human-verify-badge">
+                            <span style="font-size: 1.2rem;">🛡️</span>
+                            <span style="font-size: 0.72rem; color: #777; line-height: 1.1; text-align: right;">Anti-Bot<br>Protected</span>
+                        </div>
+                    </div>
                     <div id="auth-error-msg" class="auth-error-alert" style="display: none;"></div>
                     <div id="auth-success-msg" class="auth-success-alert" style="display: none;"></div>
                 </form>

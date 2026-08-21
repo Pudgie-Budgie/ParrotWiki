@@ -1082,22 +1082,27 @@ function setAuthTab(tab) {
     const tabRegister = document.getElementById('tab-auth-register');
     const submitBtn = document.getElementById('auth-submit-btn');
     const speciesGroup = document.getElementById('auth-species-group');
+    const humanVerifyGroup = document.getElementById('auth-human-verify-group');
+    const humanCheckbox = document.getElementById('auth-human-checkbox');
     const errorEl = document.getElementById('auth-error-msg');
     const successEl = document.getElementById('auth-success-msg');
 
     if (errorEl) errorEl.style.display = 'none';
     if (successEl) successEl.style.display = 'none';
+    if (humanCheckbox) humanCheckbox.checked = false;
 
     if (tab === 'signin') {
         if (tabSignIn) tabSignIn.classList.add('active');
         if (tabRegister) tabRegister.classList.remove('active');
         if (submitBtn) submitBtn.textContent = 'Sign In';
         if (speciesGroup) speciesGroup.style.display = 'none';
+        if (humanVerifyGroup) humanVerifyGroup.style.display = 'none';
     } else {
         if (tabSignIn) tabSignIn.classList.remove('active');
         if (tabRegister) tabRegister.classList.add('active');
         if (submitBtn) submitBtn.textContent = 'Register Account';
         if (speciesGroup) speciesGroup.style.display = 'block';
+        if (humanVerifyGroup) humanVerifyGroup.style.display = 'flex';
     }
 }
 
@@ -1144,7 +1149,14 @@ async function handleAuthSubmit() {
     const passHash = await sha256Hex(password);
 
     if (currentAuthTab === 'register') {
-        // 1. Check for profanity in password
+        // 1. Check Human Verification Checkbox
+        const humanCheckbox = document.getElementById('auth-human-checkbox');
+        if (!humanCheckbox || !humanCheckbox.checked) {
+            showAuthError('❗ Please check the "I am a human bird lover" box to continue.');
+            return;
+        }
+
+        // 2. Check for profanity in password
         if (containsInappropriateContent(password)) {
             showAuthError('❗ PASSWORD NOT ALLOWED! ❗');
             return;
@@ -1461,9 +1473,10 @@ function closeDeleteModal() {
 // 1. Delete Only This Post
 async function deleteSinglePost() {
     if (!pendingPostToDelete || !pendingPostToDelete.id) return;
-    const postId = pendingPostToDelete.id;
+    const postId = parseInt(pendingPostToDelete.id, 10);
     closeDeleteModal();
 
+    let deleteError = null;
     if (supabaseClient) {
         try {
             const { error } = await supabaseClient
@@ -1471,10 +1484,12 @@ async function deleteSinglePost() {
                 .delete()
                 .eq('id', postId);
             if (error) {
-                console.warn("Supabase delete note:", error);
+                console.error("Supabase delete error:", error);
+                deleteError = error;
             }
         } catch (e) {
-            console.warn("Supabase delete error:", e);
+            console.error("Supabase delete error:", e);
+            deleteError = e;
         }
     }
 
@@ -1483,12 +1498,16 @@ async function deleteSinglePost() {
     if (saved) {
         try {
             let parsed = JSON.parse(saved);
-            parsed = parsed.filter(p => p.id != postId);
+            parsed = parsed.filter(p => parseInt(p.id, 10) !== postId);
             savePosts(parsed);
         } catch (e) {}
     }
 
     await renderForum();
+
+    if (deleteError) {
+        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the delete because of database security rules.\n\nPlease run this 1 SQL line in your Supabase SQL Editor:\n\nCREATE POLICY \"Allow public delete posts\" ON forum_posts FOR DELETE USING (true);");
+    }
 }
 
 // 2. Delete ALL Posts From This User
@@ -1508,6 +1527,7 @@ async function deleteAllPostsFromUser() {
 
     closeDeleteModal();
 
+    let deleteError = null;
     if (supabaseClient) {
         try {
             const { error } = await supabaseClient
@@ -1516,10 +1536,12 @@ async function deleteAllPostsFromUser() {
                 .eq('author', author)
                 .neq('id', 1); // Never delete post #1
             if (error) {
-                console.warn("Supabase bulk delete note:", error);
+                console.error("Supabase bulk delete error:", error);
+                deleteError = error;
             }
         } catch (e) {
-            console.warn("Supabase bulk delete error:", e);
+            console.error("Supabase bulk delete error:", e);
+            deleteError = e;
         }
     }
 
@@ -1528,12 +1550,16 @@ async function deleteAllPostsFromUser() {
     if (saved) {
         try {
             let parsed = JSON.parse(saved);
-            parsed = parsed.filter(p => p.id == 1 || p.author !== author);
+            parsed = parsed.filter(p => parseInt(p.id, 10) === 1 || p.author !== author);
             savePosts(parsed);
         } catch (e) {}
     }
 
     await renderForum();
+
+    if (deleteError) {
+        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the delete because of database security rules.\n\nPlease run this 1 SQL line in your Supabase SQL Editor:\n\nCREATE POLICY \"Allow public delete posts\" ON forum_posts FOR DELETE USING (true);");
+    }
 }
 
 // Render Forum Feed
