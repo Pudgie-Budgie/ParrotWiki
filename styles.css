@@ -97,6 +97,15 @@ body {
     color: white;
 }
 
+.bird-price-disclaimer {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.88rem;
+    font-style: italic;
+    margin-top: 14px;
+    margin-bottom: 25px;
+}
+
 /* Grid Layout */
 .grid-layout {
     display: grid;
@@ -161,8 +170,11 @@ body {
     color: var(--primary);
     padding: 4px 8px;
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     font-weight: bold;
+    text-align: right;
+    line-height: 1.25;
+    white-space: normal;
 }
 
 .specs-grid {
@@ -178,6 +190,15 @@ body {
     color: #555;
     font-size: 0.8rem;
     text-transform: uppercase;
+}
+
+.spec-cost {
+    grid-column: span 2;
+    background: #f4fbf6;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border-left: 3px solid var(--primary);
+    font-weight: 500;
 }
 
 .rating-box {

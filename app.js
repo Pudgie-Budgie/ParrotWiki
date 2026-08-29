@@ -396,6 +396,7 @@ function renderBirds(data) {
     data.forEach(bird => {
         const card = document.createElement('div');
         card.className = 'card';
+        const priceDisplay = bird.price ? `${bird.price} in pet stores` : 'Unknown';
         card.innerHTML = `
             <div class="card-img-wrapper">
                 <img src="${bird.image}" alt="${bird.name}" loading="lazy">
@@ -406,13 +407,13 @@ function renderBirds(data) {
                         <div class="bird-name">${bird.name}</div>
                         <div class="bird-scientific">${bird.scientific}</div>
                     </div>
-                    <div class="price-tag">${bird.price}</div>
                 </div>
                 <div class="specs-grid">
                     <div class="spec-item"><strong>Origin</strong> ${bird.origin}</div>
                     <div class="spec-item"><strong>Lifespan</strong> ${bird.lifespan || 'Unknown'}</div>
                     <div class="spec-item"><strong>IQ</strong> ${bird.intelligence}</div>
                     <div class="spec-item"><strong>Talk</strong> ${bird.talking || 'Varies'}</div>
+                    <div class="spec-item spec-cost"><strong>Cost</strong> ${priceDisplay}</div>
                 </div>
                 <div class="rating-box">
                     <strong>Beginner:</strong> <span style="color:#d35400">${getStars(bird.beginner_score)}</span>
@@ -709,13 +710,9 @@ function setCurrentUser(user) {
     }
 }
 
-// 58-character Master Host Passphrase SHA-256 Hash (Owner)
-// Passphrase: FeatheredFriends2025!SuperSecretParrotMasterHostKey#9982
-const HOST_PASSWORD_HASH = "7b8676fa1f18ffbbad4906c1fc33b6b18b460caf267aa4583d5be146ae6c4878";
-
-// 53-character Admin Passphrase SHA-256 Hash (Admin)
-// Passphrase: ParrotAdminSecurity2025!FeatheredGuardianPassKey#4418
-const ADMIN_PASSWORD_HASH = "4238c3309c4e49353a17cb7268049e7b6c0b0bbab81ae357fc0ba8dc8b561002";
+// Staff Authorization Cryptographic Hashes (One-Way SHA-256)
+const HOST_AUTH_SIGNATURE = "522df236b95f8199320b5213b422542041d417c0c84357f17c69d91a2369dead";
+const ADMIN_AUTH_SIGNATURE = "d4dfd3b4af1bda0da411c5a71cd723a5f564c1de799485ae912746c0561c1380";
 
 async function sha256Hex(text) {
     const msgBuffer = new TextEncoder().encode(text);
@@ -1032,7 +1029,7 @@ async function verifyAndUnlockStaff() {
     const hashed = await sha256Hex(val);
 
     if (currentStaffModalTab === 'host') {
-        if (hashed === HOST_PASSWORD_HASH) {
+        if (hashed === HOST_AUTH_SIGNATURE) {
             localStorage.setItem('parrot_host_authenticated', 'true');
             localStorage.setItem('parrot_forum_host_mode', 'host');
             forumState.identity = 'host';
@@ -1047,7 +1044,7 @@ async function verifyAndUnlockStaff() {
             }
         }
     } else {
-        if (hashed === ADMIN_PASSWORD_HASH) {
+        if (hashed === ADMIN_AUTH_SIGNATURE) {
             localStorage.setItem('parrot_admin_authenticated', 'true');
             localStorage.setItem('parrot_forum_host_mode', 'admin');
             forumState.identity = 'admin';
