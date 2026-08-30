@@ -23,6 +23,7 @@
 		<button class="tab-link active" data-tab="tab-birds">🦜 Bird Profiles</button>
 		<button class="tab-link" data-tab="tab-care">🛠️ Care & Health</button>
 		<button class="tab-link" data-tab="tab-videos">🎬 Videos</button>
+		<button class="tab-link" data-tab="tab-literature">📚 Literature</button>
 		<button class="tab-link" data-tab="tab-merch">🛍️ Merch</button>
 		<button class="tab-link" data-tab="tab-forum">💬 Forum</button>
 		<button class="tab-link" data-tab="tab-facts">💡 Fun Facts</button>
@@ -82,6 +83,50 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
 			<div id="video-grid" class="grid-layout">
 				</div>
 		</section>
+
+        <section id="tab-literature" class="tab-content">
+            <div style="text-align:center; margin-bottom:25px;">
+                <h2>📚 Feathered Friends Literature & Comics</h2>
+                <p style="color: #555; font-size: 1.05rem;">Original stories, novels, and comics crafted for passionate bird lovers!</p>
+            </div>
+
+            <!-- Literature Showcase Grid (Novel & Comic Strip) -->
+            <div class="literature-showcase-grid">
+                <!-- 1. Novel Feature Card -->
+                <div class="novel-feature-card">
+                    <div class="novel-feature-badge">📖 Featured Novel</div>
+                    <div class="novel-feature-body">
+                        <div class="novel-icon-wrap">🦜📜</div>
+                        <div class="novel-text-wrap">
+                            <h3>Avian Adventures & Tales</h3>
+                            <p>A thrilling tale of narrow escapes, starting over, dramatic upsets, turning the tables, with humor and friendship all throughout.</p>
+                            <div style="margin-top: 15px;">
+                                <button id="novel-story-btn" class="novel-story-btn">
+                                    <span>📖</span> Bird-Themed Novel, written by a bird fan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Comic Strip Feature Card -->
+                <div class="novel-feature-card comic-feature-card">
+                    <div class="novel-feature-badge comic-badge">🎨 Featured Comic Strip</div>
+                    <div class="novel-feature-body">
+                        <div class="novel-icon-wrap comic-icon-wrap">🦜🎨</div>
+                        <div class="novel-text-wrap">
+                            <h3>Life with a Bird (Comic)</h3>
+                            <p>Anyone who owns a parrot knows: you don't own the bird, the bird owns you. Relatable comic strips depicting daily life with our feathered companions!</p>
+                            <div style="margin-top: 15px;">
+                                <button id="comic-story-btn" class="novel-story-btn comic-story-btn">
+                                    <span>🎨</span> Bird-Themed Comic Strip, drawn by a bird fan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section id="tab-merch" class="tab-content">
             <div class="tab-corner-auth" id="merch-auth-corner"></div>
@@ -331,6 +376,52 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
                 <button id="delete-single-btn" class="modal-btn-primary" style="background-color: #d32f2f; border-color: #b71c1c; width: 100%;">🗑️ Delete This Post</button>
                 <button id="delete-all-user-btn" class="modal-btn-primary" style="background-color: #880e4f; border-color: #4a148c; width: 100%;">💥 Delete All Posts From This User</button>
                 <button id="delete-cancel-btn" class="modal-btn-secondary" style="width: 100%;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Novel Reader / Story Modal -->
+    <div id="novel-modal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>📖 Bird-Themed Novel</h3>
+                <button id="novel-modal-close-btn" class="modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: center; padding: 25px 15px;">
+                <div style="font-size: 3.2rem; margin-bottom: 8px;">🦜📜</div>
+                <h4 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 6px;">Written by a Bird Fan</h4>
+                <p style="color: #666; font-size: 0.95rem; line-height: 1.6; max-width: 440px; margin: 0 auto 18px;">
+                    The story is currently being prepared for release! Chapters and tales will be uploaded right here. Stay tuned!
+                </p>
+                <div style="background: #f4fbf6; border: 1px dashed #2c7744; border-radius: 8px; padding: 14px 20px; font-weight: 600; color: #2c7744; display: inline-block;">
+                    ✨ Story Coming Soon ✨
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="novel-modal-dismiss-btn" class="modal-btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comic Reader Modal -->
+    <div id="comic-modal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>🎨 Life with a Bird (Comic)</h3>
+                <button id="comic-modal-close-btn" class="modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: center; padding: 25px 15px;">
+                <div style="font-size: 3.2rem; margin-bottom: 8px;">🦜🎨</div>
+                <h4 style="color: #d35400; font-size: 1.2rem; margin-bottom: 6px;">Drawn by a Bird Fan</h4>
+                <p style="color: #666; font-size: 0.95rem; line-height: 1.6; max-width: 440px; margin: 0 auto 18px;">
+                    The comic strip panels are being illustrated and prepared for release! Panels will be uploaded right here. Stay tuned!
+                </p>
+                <div style="background: #fff8e1; border: 1px dashed #e67e22; border-radius: 8px; padding: 14px 20px; font-weight: 600; color: #d35400; display: inline-block;">
+                    ✨ Comic Strip Coming Soon ✨
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="comic-modal-dismiss-btn" class="modal-btn-primary" style="background-color: #d35400; border-color: #b94600;">Close</button>
             </div>
         </div>
     </div>

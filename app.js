@@ -276,14 +276,20 @@ const staticData = {
         }
     ],
 
-// 3. Merch Shop Data
+// 3. Literature Data
+    literature: {
+        comics: [
+            {
+                title: "Life with a Bird (Comic)",
+                type: "Comic Strip",
+                image: null,
+                description: "Anyone who owns a parrot knows: you don't own the bird, the bird owns you. <br><i>(Placeholder for comic strip)</i>"
+            }
+        ]
+    },
+
+// 4. Merch Shop Data
     merch: [
-        {
-            title: "Life with a Bird (Comic)",
-            type: "Comic",
-            image: null,
-            description: "Anyone who owns a parrot knows: you don't own the bird, the bird owns you. <br><i>(Placeholder for comic strip)</i>"
-        },
         {
             title: "Budgie Tote Bag!",
             type: "Merch",
@@ -521,7 +527,27 @@ function renderCare(data) {
         }
     });
 }
-// 3. Render Merch
+// 3. Render Literature
+function renderLiterature(data) {
+    const grid = document.getElementById('literature-comics-grid');
+    if (!grid || !data || !data.comics) return;
+    grid.innerHTML = '';
+    data.comics.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `
+            ${item.image ? `<div class="card-img-wrapper"><img src="${item.image}" loading="lazy"></div>` : ''}
+            <div class="card-content">
+                <h3>${item.title}</h3>
+                <div class="notes" style="margin-bottom:10px;">${item.type}</div>
+                <div class="rich-text-content">${item.description}</div>
+            </div>
+        `;
+        grid.appendChild(div);
+    });
+}
+
+// 4. Render Merch
 function renderMerch(data) {
     const grid = document.getElementById('merch-grid');
     if (!grid) return;
@@ -529,19 +555,15 @@ function renderMerch(data) {
     data.forEach(item => {
         const div = document.createElement('div');
         div.className = 'card';
-        const isComic = item.type === 'Comic' || (item.title && item.title.toLowerCase().includes('comic'));
-        const actionButtonHTML = isComic ? '' : `
-            <div style="margin-top: 15px;">
-                <button class="merch-action-btn" data-title="${escapeHtml(item.title)}">🛒 Buy / View Details</button>
-            </div>
-        `;
         div.innerHTML = `
             ${item.image ? `<div class="card-img-wrapper"><img src="${item.image}" loading="lazy"></div>` : ''}
             <div class="card-content">
                 <h3>${item.title}</h3>
                 <div class="notes" style="margin-bottom:10px;">${item.type}</div>
                 <div class="rich-text-content">${item.description}</div>
-                ${actionButtonHTML}
+                <div style="margin-top: 15px;">
+                    <button class="merch-action-btn" data-title="${escapeHtml(item.title)}">🛒 Buy / View Details</button>
+                </div>
             </div>
         `;
         grid.appendChild(div);
@@ -1855,12 +1877,49 @@ function updateForumInputMode() {
 document.addEventListener('DOMContentLoaded', () => {
     renderBirds(staticData.birds);
     renderCare(staticData.care);
+    renderVideos(staticData.videos);
+    renderLiterature(staticData.literature);
     renderMerch(staticData.merch);
-    renderFacts(staticData.facts);
-    renderVideos(staticData.videos); 
+    renderFacts(staticData.facts); 
     renderForum();
     updateAuthUI();
     initSupabaseRealtime();
+
+    // Novel Story Modal Listeners
+    const novelStoryBtn = document.getElementById('novel-story-btn');
+    const novelModal = document.getElementById('novel-modal');
+    const novelModalCloseBtn = document.getElementById('novel-modal-close-btn');
+    const novelModalDismissBtn = document.getElementById('novel-modal-dismiss-btn');
+
+    const openNovelModal = () => { if (novelModal) novelModal.style.display = 'flex'; };
+    const closeNovelModal = () => { if (novelModal) novelModal.style.display = 'none'; };
+
+    if (novelStoryBtn) novelStoryBtn.addEventListener('click', openNovelModal);
+    if (novelModalCloseBtn) novelModalCloseBtn.addEventListener('click', closeNovelModal);
+    if (novelModalDismissBtn) novelModalDismissBtn.addEventListener('click', closeNovelModal);
+    if (novelModal) {
+        novelModal.addEventListener('click', (e) => {
+            if (e.target === novelModal) closeNovelModal();
+        });
+    }
+
+    // Comic Story Modal Listeners
+    const comicStoryBtn = document.getElementById('comic-story-btn');
+    const comicModal = document.getElementById('comic-modal');
+    const comicModalCloseBtn = document.getElementById('comic-modal-close-btn');
+    const comicModalDismissBtn = document.getElementById('comic-modal-dismiss-btn');
+
+    const openComicModal = () => { if (comicModal) comicModal.style.display = 'flex'; };
+    const closeComicModal = () => { if (comicModal) comicModal.style.display = 'none'; };
+
+    if (comicStoryBtn) comicStoryBtn.addEventListener('click', openComicModal);
+    if (comicModalCloseBtn) comicModalCloseBtn.addEventListener('click', closeComicModal);
+    if (comicModalDismissBtn) comicModalDismissBtn.addEventListener('click', closeComicModal);
+    if (comicModal) {
+        comicModal.addEventListener('click', (e) => {
+            if (e.target === comicModal) closeComicModal();
+        });
+    }
 
     // Forum post listeners
     const submitBtn = document.getElementById('forum-submit-btn');
