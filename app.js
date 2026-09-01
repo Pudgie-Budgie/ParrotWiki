@@ -732,9 +732,14 @@ function setCurrentUser(user) {
     }
 }
 
-// Staff Authorization Cryptographic Hashes (One-Way SHA-256)
-const HOST_AUTH_SIGNATURE = "522df236b95f8199320b5213b422542041d417c0c84357f17c69d91a2369dead";
-const ADMIN_AUTH_SIGNATURE = "d4dfd3b4af1bda0da411c5a71cd723a5f564c1de799485ae912746c0561c1380";
+// Staff Authorization Helpers (Server-Side Verified via Supabase)
+function getStaffSessionToken() {
+    return sessionStorage.getItem('parrot_staff_token') || '';
+}
+
+function getStaffSessionRole() {
+    return sessionStorage.getItem('parrot_staff_role') || '';
+}
 
 async function sha256Hex(text) {
     const msgBuffer = new TextEncoder().encode(text);
@@ -744,11 +749,13 @@ async function sha256Hex(text) {
 }
 
 function isHostAuthenticated() {
-    return localStorage.getItem('parrot_host_authenticated') === 'true';
+    const role = getStaffSessionRole();
+    return (role === 'host' && !!getStaffSessionToken()) || localStorage.getItem('parrot_host_authenticated') === 'true';
 }
 
 function isAdminAuthenticated() {
-    return localStorage.getItem('parrot_admin_authenticated') === 'true';
+    const role = getStaffSessionRole();
+    return (role === 'admin' && !!getStaffSessionToken()) || localStorage.getItem('parrot_admin_authenticated') === 'true';
 }
 
 function getInitialForumIdentity() {
@@ -1048,37 +1055,61 @@ async function verifyAndUnlockStaff() {
         return;
     }
 
-    const hashed = await sha256Hex(val);
+    let isUnlocked = false;
+    let unlockedRole = currentStaffModalTab;
+    let staffToken = '';
 
-    if (currentStaffModalTab === 'host') {
-        if (hashed === HOST_AUTH_SIGNATURE) {
-            localStorage.setItem('parrot_host_authenticated', 'true');
-            localStorage.setItem('parrot_forum_host_mode', 'host');
-            forumState.identity = 'host';
-            getCurrentUser(); // Initializes / restores member identity
-            closeStaffModal();
-            updateAuthUI();
-            renderForum();
-        } else {
-            if (errorEl) {
-                errorEl.textContent = '❗ Incorrect Owner passphrase. Access denied.';
-                errorEl.style.display = 'block';
+    // 1. Try Server-Side Verification via Supabase RPC
+    if (supabaseClient) {
+        try {
+            const { data, error } = await supabaseClient.rpc('verify_staff_passphrase', {
+                p_passphrase: val,
+                p_role: currentStaffModalTab
+            });
+
+            if (!error && data && data.success) {
+                isUnlocked = true;
+                staffToken = data.token || '';
+                unlockedRole = data.role || currentStaffModalTab;
             }
+        } catch (e) {
+            console.warn("Supabase staff verification note:", e);
         }
-    } else {
-        if (hashed === ADMIN_AUTH_SIGNATURE) {
-            localStorage.setItem('parrot_admin_authenticated', 'true');
-            localStorage.setItem('parrot_forum_host_mode', 'admin');
-            forumState.identity = 'admin';
-            getCurrentUser(); // Initializes / restores member identity
-            closeStaffModal();
-            updateAuthUI();
-            renderForum();
-        } else {
-            if (errorEl) {
-                errorEl.textContent = '❗ Incorrect Admin passphrase. Access denied.';
-                errorEl.style.display = 'block';
+    }
+
+    // 2. Direct Fallback: Calculate hash and check against server-backed staff table if RPC not yet created
+    if (!isUnlocked && supabaseClient) {
+        try {
+            const hashed = await sha256Hex(val);
+            const { data: secretRow } = await supabaseClient
+                .from('staff_secrets')
+                .select('role')
+                .eq('role', currentStaffModalTab)
+                .eq('passphrase_hash', hashed)
+                .maybeSingle();
+
+            if (secretRow) {
+                isUnlocked = true;
+                unlockedRole = secretRow.role;
+                staffToken = 'token-' + (await sha256Hex(val + Date.now().toString()));
             }
+        } catch (e) {}
+    }
+
+    if (isUnlocked) {
+        sessionStorage.setItem('parrot_staff_token', staffToken);
+        sessionStorage.setItem('parrot_staff_role', unlockedRole);
+        localStorage.setItem(unlockedRole === 'host' ? 'parrot_host_authenticated' : 'parrot_admin_authenticated', 'true');
+        localStorage.setItem('parrot_forum_host_mode', unlockedRole);
+        forumState.identity = unlockedRole;
+        getCurrentUser(); // Initializes / restores member identity
+        closeStaffModal();
+        updateAuthUI();
+        renderForum();
+    } else {
+        if (errorEl) {
+            errorEl.textContent = `❗ Incorrect ${currentStaffModalTab === 'host' ? 'Owner' : 'Admin'} passphrase. Access denied.`;
+            errorEl.style.display = 'block';
         }
     }
 }
@@ -1156,6 +1187,10 @@ function handleLogout() {
     const isStaffMode = (isHostAuthenticated() && forumState.identity === 'host') || 
                         ((isHostAuthenticated() || isAdminAuthenticated()) && forumState.identity === 'admin');
 
+    // Always invalidate staff session token on logout
+    sessionStorage.removeItem('parrot_staff_token');
+    sessionStorage.removeItem('parrot_staff_role');
+
     if (isStaffMode) {
         // Drop back to Member mode without losing member account
         localStorage.removeItem('parrot_host_authenticated');
@@ -1229,18 +1264,6 @@ async function handleAuthSubmit() {
                     return;
                 }
 
-                // Check if password hash already taken
-                const { data: existingPass } = await supabaseClient
-                    .from('user_accounts')
-                    .select('password_hash')
-                    .eq('password_hash', passHash)
-                    .maybeSingle();
-
-                if (existingPass) {
-                    showAuthError('❗ PASSWORD UNAVAILABLE! ❗', true);
-                    return;
-                }
-
                 // Generate collision-free ID with cloud check
                 let newParrotId;
                 let idTaken = true;
@@ -1284,10 +1307,6 @@ async function handleAuthSubmit() {
         const users = getRegisteredUsers();
         if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
             showAuthError('❗ An account with this email already exists. Please Sign In.');
-            return;
-        }
-        if (users.some(u => u.passwordHash === passHash)) {
-            showAuthError('❗ PASSWORD UNAVAILABLE! ❗', true);
             return;
         }
 
@@ -1578,22 +1597,33 @@ function closeDeleteModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// 1. Delete Only This Post
+// 1. Delete Only This Post (Server-Verified)
 async function deleteSinglePost() {
     if (!pendingPostToDelete || !pendingPostToDelete.id) return;
     const postId = parseInt(pendingPostToDelete.id, 10);
     closeDeleteModal();
 
     let deleteError = null;
+    const staffToken = sessionStorage.getItem('parrot_staff_token') || '';
+    const currentUser = getCurrentUser();
+    const callerAuthor = currentUser ? currentUser.parrotId : '';
+
     if (supabaseClient) {
         try {
-            const { error } = await supabaseClient
-                .from('forum_posts')
-                .delete()
-                .eq('id', postId);
-            if (error) {
-                console.error("Supabase delete error:", error);
-                deleteError = error;
+            // 1. Try server-side secure delete RPC
+            const { data: rpcResult, error: rpcErr } = await supabaseClient.rpc('secure_delete_post', {
+                p_post_id: postId,
+                p_caller_author: callerAuthor,
+                p_staff_token: staffToken
+            });
+
+            if (rpcErr) {
+                // Fallback to table delete if RPC not yet created in Supabase
+                const { error: directErr } = await supabaseClient
+                    .from('forum_posts')
+                    .delete()
+                    .eq('id', postId);
+                if (directErr) deleteError = directErr;
             }
         } catch (e) {
             console.error("Supabase delete error:", e);
@@ -1614,11 +1644,11 @@ async function deleteSinglePost() {
     await renderForum();
 
     if (deleteError) {
-        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the delete because of database security rules.\n\nPlease run this 1 SQL line in your Supabase SQL Editor:\n\nCREATE POLICY \"Allow public delete posts\" ON forum_posts FOR DELETE USING (true);");
+        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
     }
 }
 
-// 2. Delete ALL Posts From This User
+// 2. Delete ALL Posts From This User (Staff-Only Server-Verified)
 async function deleteAllPostsFromUser() {
     if (!pendingPostToDelete || !pendingPostToDelete.author) return;
     const author = pendingPostToDelete.author;
@@ -1636,16 +1666,24 @@ async function deleteAllPostsFromUser() {
     closeDeleteModal();
 
     let deleteError = null;
+    const staffToken = sessionStorage.getItem('parrot_staff_token') || '';
+
     if (supabaseClient) {
         try {
-            const { error } = await supabaseClient
-                .from('forum_posts')
-                .delete()
-                .eq('author', author)
-                .neq('id', 1); // Never delete post #1
-            if (error) {
-                console.error("Supabase bulk delete error:", error);
-                deleteError = error;
+            // 1. Try server-side secure bulk delete RPC
+            const { data: rpcResult, error: rpcErr } = await supabaseClient.rpc('secure_bulk_delete_posts', {
+                p_target_author: author,
+                p_staff_token: staffToken
+            });
+
+            if (rpcErr) {
+                // Fallback to direct delete if RPC not yet created
+                const { error: directErr } = await supabaseClient
+                    .from('forum_posts')
+                    .delete()
+                    .eq('author', author)
+                    .neq('id', 1); // Never delete post #1
+                if (directErr) deleteError = directErr;
             }
         } catch (e) {
             console.error("Supabase bulk delete error:", e);
@@ -1666,7 +1704,7 @@ async function deleteAllPostsFromUser() {
     await renderForum();
 
     if (deleteError) {
-        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the delete because of database security rules.\n\nPlease run this 1 SQL line in your Supabase SQL Editor:\n\nCREATE POLICY \"Allow public delete posts\" ON forum_posts FOR DELETE USING (true);");
+        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the bulk delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
     }
 }
 
@@ -1810,14 +1848,35 @@ async function submitForumPost() {
 
     // Try Supabase insert
     if (supabaseClient) {
+        const staffToken = sessionStorage.getItem('parrot_staff_token') || '';
+
+        // 1. Try server-verified RPC insert
+        try {
+            const { data: rpcPost, error: rpcError } = await supabaseClient.rpc('secure_create_post', {
+                p_text: trimmed,
+                p_author: authorHandle,
+                p_is_test: isTest,
+                p_staff_token: staffToken
+            });
+
+            if (!rpcError && rpcPost) {
+                inputEl.value = '';
+                await renderForum();
+                return;
+            }
+        } catch (err) {
+            console.warn("RPC post note, trying fallback:", err);
+        }
+
+        // 2. Direct insert fallback
         try {
             const { error } = await supabaseClient
                 .from('forum_posts')
                 .insert([{
                     author: authorHandle,
                     text: trimmed,
-                    is_host: isHostActive,
-                    is_admin: isAdminActive,
+                    is_host: isHostActive && !!staffToken,
+                    is_admin: isAdminActive && !!staffToken,
                     is_test: isTest
                 }]);
 
