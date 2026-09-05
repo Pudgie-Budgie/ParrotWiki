@@ -1,6 +1,6 @@
 // Parrot Database
 const staticData = {
-    // 1. é¹¦é¹‰åˆ—è¡¨
+    // 1. 鹦鹉列表
     birds: [
     {
         name: "Budgerigar 'Budgie' (Parakeet)",
@@ -181,19 +181,19 @@ const staticData = {
     ],
 
 
-// 2. å…»æŠ¤ä¸Žç–¾ç—…
+// 2. 养护与疾病
 	care: [
         {
-            title: "ðŸ  The Perfect Cage Setup",
+            title: "🏠 The Perfect Cage Setup",
             category: "Equipment",
             
-            // 1. å¤§å›¾é…ç½®
-            image: "./assets/bigCage.jpg", // æ¢æˆå•†å“å¤§å›¾
-            mainLink: "https://amzn.to/3LEPHlU", // ã€å…³é”®ã€‘åŠ ä¸Šè¿™ä¸ªï¼Œå¤§å›¾å°±èƒ½ç‚¹äº†
+            // 1. 大图配置
+            image: "./assets/bigCage.jpg", // 换成商品大图
+            mainLink: "https://amzn.to/3LEPHlU", // 【关键】加上这个，大图就能点了
             
             content: "A big cage provides more space for your feathered friends to play and live.",
             
-            // 2. è¿·ä½ åˆ—è¡¨é…ç½®
+            // 2. 迷你列表配置
             products: [
                 {
                     name: "Easy to clean cage",
@@ -215,7 +215,7 @@ const staticData = {
                     image: "./assets/toypack.jpg",
                     link: "https://amzn.to/4qTbiWx"
                 },
-                // å¯ä»¥å¤šåŠ å‡ ä¸ªï¼Œæµ‹è¯•æ¨ªå‘æ»šåŠ¨
+                // 可以多加几个，测试横向滚动
                 {
                     name: "Parakeet Running Wheel (for small birds)",
                     image: "./assets/wheel.jpg",
@@ -224,10 +224,10 @@ const staticData = {
             ]
         },
         {
-            title: "ðŸš¿ Bathing Basics",
+            title: "🚿 Bathing Basics",
             category: "Hygiene",
-            image: "./assets/fountain.jpg", // æ›¿æ¢ä¸ºå°é¸Ÿæ´—æ¾¡å›¾
-			mainLink: "https://amzn.to/45JFWtq", // ã€å…³é”®ã€‘åŠ ä¸Šè¿™ä¸ªï¼Œå¤§å›¾å°±èƒ½ç‚¹äº†
+            image: "./assets/fountain.jpg", // 替换为小鸟洗澡图
+			mainLink: "https://amzn.to/45JFWtq", // 【关键】加上这个，大图就能点了
             content: "Most parrots love water! It keeps feathers healthy and reduces dust.\n**Methods:** A shallow dish of water OR a gentle misting spray bottle.\n**Golden Rules:**\n1. Use **Lukewarm Water** only.\n2. **NO SOAP** or shampoo (it strips essential oils).\n3. Bathe in warm days (23C/73F or above) and better in the **morning** so they are dry before bedtime.\n4. Let the parrots decide whether to bathe. Do not force them. ",
             products: [
                 {
@@ -238,14 +238,14 @@ const staticData = {
             ]
         },
         {
-	    title: "ðŸ‘ Treats & Healthy Foods",
+	    title: "👍 Treats & Healthy Foods",
             category: "Treats & Nutrients",
             //image: "",
             content: "There are many things that parrots like to or should eat. A parrot, like a human, needs a wide array of different nutrients. **These are some good treats & healthy foods for parrots:**\n\n- **A variety of seeds:** Seeds provide the bird energy to fuel them during the day (seeds also serve well as treats).\n- **Fruits & Vegetables:** Parrots should eat a wide variety of fruits and vegetables (except avocado) to supplement their diet with vitamins, minerals, fiber, and antioxidants. They also make good treats.\n- **High-Quality Pellets:** A processed food designed to supply the foundational nutrients in a parrot's diet all in a single bite, making up 60-80 percent of a bird's ideal diet.\n- **Mineral Block:** Contains many essential minerals, such as calcium, zinc, iron, and iodine, all compressed into a single block.\n- **Nuts:** A healthy, high-energy treat (avoid peanuts), should not exceed 5-10 percent of the bird's diet.\n- **Millet:** A treat for smaller birds, such as budgies."
         },
         {
 
-            title: "â˜ ï¸ Dangerous & Toxic Foods",
+            title: "☠️ Dangerous & Toxic Foods",
             category: "Danger",
             //image: "",
             content: "Parrots have sensitive metabolisms. What is safe for humans can be deadly for birds. **Never feed the following:**\n\n- **Avocado:** Contains *persin*, which causes heart failure and sudden death.\n- **Chocolate/Caffeine:** Causes hyperactivity, seizures, and cardiac arrest.\n- **Onions/Garlic:** Destroy red blood cells, leading to anemia.\n- **Apple Seeds:** Contain traces of cyanide.\n- **Salt & Sugar:** Processed human foods damage their kidneys."
@@ -254,7 +254,7 @@ const staticData = {
             title: "Scaly Face Mites (Knemidocoptes)", 
             category: "Health & Disease", 
             //image: "",
-            content: "**Target:** Extremely common in Budgies (Parakeets) and Canaries.\n\n**The Condition:** Microscopic mites burrow into the beak, cere (nose), eyelids, and legs. This creates a crusty, white, honeycomb-like buildup. It looks like 'scale' growing on the face. If left untreated, it can deform the beak permanently.\n\n**Treatment:** Fortunately, this is highly curable. A vet will prescribe **Ivermectin** (a spot-on drop). \n\n**âš ï¸ Warning:** Do not use cheap 'mite sprays' from pet stores. They are often toxic and ineffective against burrowing mites."
+            content: "**Target:** Extremely common in Budgies (Parakeets) and Canaries.\n\n**The Condition:** Microscopic mites burrow into the beak, cere (nose), eyelids, and legs. This creates a crusty, white, honeycomb-like buildup. It looks like 'scale' growing on the face. If left untreated, it can deform the beak permanently.\n\n**Treatment:** Fortunately, this is highly curable. A vet will prescribe **Ivermectin** (a spot-on drop). \n\n**⚠️ Warning:** Do not use cheap 'mite sprays' from pet stores. They are often toxic and ineffective against burrowing mites."
         },
         {
             title: "Psittacosis (Parrot Fever)", 
@@ -272,7 +272,7 @@ const staticData = {
             title: "Egg Binding (Dystocia)", 
             category: "Health & Disease", 
             //image: "",
-            content: "**Emergency:** This happens when a female bird cannot pass an egg. It is life-threatening and can kill within hours.\n\n**Symptoms:** The bird sits at the bottom of the cage, panting, straining, or has a visibly swollen abdomen. One or both legs may be paralyzed due to the egg pressing on nerves.\n\n**Immediate Action:**\n1. Place the bird in a hospital cage (warm, humid environment, ~85Â°F).\n2. Give liquid Calcium (if available).\n3. **Rush to a vet immediately.** Surgery may be required."
+            content: "**Emergency:** This happens when a female bird cannot pass an egg. It is life-threatening and can kill within hours.\n\n**Symptoms:** The bird sits at the bottom of the cage, panting, straining, or has a visibly swollen abdomen. One or both legs may be paralyzed due to the egg pressing on nerves.\n\n**Immediate Action:**\n1. Place the bird in a hospital cage (warm, humid environment, ~85°F).\n2. Give liquid Calcium (if available).\n3. **Rush to a vet immediately.** Surgery may be required."
         }
     ],
 
@@ -311,7 +311,7 @@ const staticData = {
     ],
 
 
-    // 4. å†·çŸ¥è¯† 
+    // 4. 冷知识 
     facts: [
        
         { content: "Parrots are the only birds that can eat with their feet, holding food like a hand." },
@@ -326,9 +326,9 @@ const staticData = {
         { content: "Parrots do not have vocal cords. They use a syrinx (bifurcated trachea) to control airflow and mimic sounds." },
         { content: "Cockatoos use their crests like a mood ring: up for excitement/fear, flat for calm." },
         { content: "A parrot's beak grows continuously throughout its life, just like human fingernails, which is why they need to chew." },
-        { content: "The Buff-faced Pygmy Parrot is the smallest in the world, standing only 3 inches tallâ€”smaller than a finger!" },
+        { content: "The Buff-faced Pygmy Parrot is the smallest in the world, standing only 3 inches tall—smaller than a finger!" },
         { content: "Parrots are one of the few animals that can move their upper beak independently from their skull." },
-        { content: "Wild Amazon parrots have regional 'dialects'â€”flocks from different areas sound different from each other." },
+        { content: "Wild Amazon parrots have regional 'dialects'—flocks from different areas sound different from each other." },
         { content: "Studies suggest yawning is contagious among Parakeets, which may be a sign of primitive empathy." },
         { content: "Many parrot species are monogamous and will mate for life, often sharing parenting duties equally." },
         { content: "There are nearly 400 distinct species of parrots found in tropical and subtropical regions around the world." }
@@ -336,11 +336,11 @@ const staticData = {
 	
 	// ... inside staticData ...
     
-    // 5. è§†é¢‘ (åªéœ€è¦ YouTube çš„ IDï¼Œå°±æ˜¯ç½‘å€ v= åŽé¢é‚£ä¸²å­—ç¬¦)
+    // 5. 视频 (只需要 YouTube 的 ID，就是网址 v= 后面那串字符)
     videos: [
         {
             title: "Jealous Bird",
-            desc: "No head scratches for other birds â€” only for me!",
+            desc: "No head scratches for other birds — only for me!",
             videoId: "uK3VE3Adhnk" 
         },
         {
@@ -380,7 +380,7 @@ const staticData = {
         },
 		{
 			title: "Disco the Budgie",
-			desc: "With over 1,700 words, Disco the budgie rivaled Puck (also a budgie) - who holds the Guinness world record for the largest vocabulary of a bird (1,728 words) â€” but was uniquely creative in inventing his own phrases.",
+			desc: "With over 1,700 words, Disco the budgie rivaled Puck (also a budgie) - who holds the Guinness world record for the largest vocabulary of a bird (1,728 words) — but was uniquely creative in inventing his own phrases.",
 			videoId: "jXc9ylCXqCw"
 		}
     ],
@@ -1039,9 +1039,9 @@ const staticData = {
 // RENDER LOGIC
 // ==========================================
 
-// Helper: æ¸²æŸ“æ˜Ÿæ˜Ÿ
+// Helper: 渲染星星
 function getStars(score) {
-    return 'â˜…'.repeat(score) + 'â˜†'.repeat(5 - score);
+    return '★'.repeat(score) + '☆'.repeat(5 - score);
 }
 
 // 1. Render Birds
@@ -1090,7 +1090,7 @@ function renderCare(data) {
     data.forEach(item => {
         const div = document.createElement('div');
         
-        // 1. æ ·å¼åˆ¤æ–­
+        // 1. 样式判断
         let cardClass = 'care-card';
         const cat = (item.category || '').toLowerCase();
         const isHealth = cat.includes('health') || cat.includes('disease');
@@ -1098,17 +1098,17 @@ function renderCare(data) {
             cardClass += ' health'; 
         }
 
-        // 2. æ–‡æœ¬æ ¼å¼åŒ–
+        // 2. 文本格式化
         let content = item.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         content = content.replace(/\*(.*?)\*/g, '<em>$1</em>');
         content = content.replace(/\n/g, '<br>');
 
         // ===============================================
-        // A. å·¦ä¾§å¤§å›¾é€»è¾‘ (æ™ºèƒ½åˆ¤æ–­ï¼šæ²¡å›¾å°±ä¸æ˜¾ç¤º)
+        // A. 左侧大图逻辑 (智能判断：没图就不显示)
         // ===============================================
-        let imgContainerHTML = ''; // é»˜è®¤ä¸ºç©º
+        let imgContainerHTML = ''; // 默认为空
 
-        // ã€å…³é”®ä¿®æ”¹ã€‘åªæœ‰å½“ item.image æœ‰å€¼çš„æ—¶å€™ï¼Œæ‰ç”Ÿæˆè¿™ä¸€å—
+        // 【关键修改】只有当 item.image 有值的时候，才生成这一块
         if (item.image) {
             const imgTag = `<img src="${item.image}" alt="${item.title}" loading="lazy">`;
             
@@ -1116,7 +1116,7 @@ function renderCare(data) {
                 imgContainerHTML = `
                     <a href="${item.mainLink}" target="_blank" class="care-card-img clickable">
                         ${imgTag}
-                        <div class="shop-overlay">ðŸ›’ View on Amazon</div>
+                        <div class="shop-overlay">🛒 View on Amazon</div>
                     </a>
                 `;
             } else {
@@ -1129,7 +1129,7 @@ function renderCare(data) {
         }
 
         // ===============================================
-        // B. åº•éƒ¨è¿·ä½ åˆ—è¡¨é€»è¾‘
+        // B. 底部迷你列表逻辑
         // ===============================================
         let productsHTML = '';
         if (item.products && item.products.length > 0) {
@@ -1143,7 +1143,7 @@ function renderCare(data) {
             productsHTML = `
                 <div class="product-section">
                     <div class="product-section-title">
-                        ðŸ›’ Recommended Gear
+                        🛒 Recommended Gear
                     </div>
                     <div class="product-list">
                         ${itemsHTML}
@@ -1154,8 +1154,8 @@ function renderCare(data) {
 
         div.className = cardClass;
         
-        // 3. ç»„åˆ HTML
-        // å¦‚æžœ imgContainerHTML æ˜¯ç©ºçš„ï¼Œå³ä¾§çš„ care-content ä¼šè‡ªåŠ¨å¡«æ»¡æ•´è¡Œ (Flexbox ç‰¹æ€§)
+        // 3. 组合 HTML
+        // 如果 imgContainerHTML 是空的，右侧的 care-content 会自动填满整行 (Flexbox 特性)
         div.innerHTML = `
             ${imgContainerHTML}
             <div class="care-content">
@@ -1168,7 +1168,7 @@ function renderCare(data) {
             </div>
         `;
         
-        // 4. åˆ†æµ
+        // 4. 分流
         if (isHealth) {
             healthGrid.appendChild(div);
         } else {
@@ -1211,7 +1211,7 @@ function renderMerch(data) {
                 <div class="notes" style="margin-bottom:10px;">${item.type}</div>
                 <div class="rich-text-content">${item.description}</div>
                 <div style="margin-top: 15px;">
-                    <button class="merch-action-btn" data-title="${escapeHtml(item.title)}">ðŸ›’ Buy / View Details</button>
+                    <button class="merch-action-btn" data-title="${escapeHtml(item.title)}">🛒 Buy / View Details</button>
                 </div>
             </div>
         `;
@@ -1229,11 +1229,11 @@ function renderMerch(data) {
                 const err = document.getElementById('auth-error-msg');
                 if (err) {
                     err.className = 'auth-error-alert';
-                    err.textContent = 'ðŸ”’ Please Sign In or Register to purchase merchandise!';
+                    err.textContent = '🔒 Please Sign In or Register to purchase merchandise!';
                     err.style.display = 'block';
                 }
             } else {
-                alert(`ðŸ›ï¸ Thank you for your interest in "${btn.getAttribute('data-title')}"! Merch purchasing will officially open soon.`);
+                alert(`🛍️ Thank you for your interest in "${btn.getAttribute('data-title')}"! Merch purchasing will officially open soon.`);
             }
         });
     });
@@ -1263,15 +1263,22 @@ function renderVideos(data) {
         div.innerHTML = `
             <div class="video-wrapper">
                 <iframe 
-                    src="https://www.youtube.com/embed/${item.videoId}" 
+                    src="https://www.youtube-nocookie.com/embed/${item.videoId}?rel=0" 
                     title="${item.title}" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
                     allowfullscreen>
                 </iframe>
             </div>
             <div class="video-info">
                 <h3>${item.title}</h3>
                 <p>${item.desc}</p>
+                <div style="margin-top: 10px;">
+                    <a href="https://www.youtube.com/watch?v=${item.videoId}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; color: var(--primary); font-size: 0.88rem; font-weight: 600; text-decoration: none;">
+                        <span>▶</span> Watch on YouTube
+                    </a>
+                </div>
             </div>
         `;
         grid.appendChild(div);
@@ -1480,11 +1487,11 @@ function containsInappropriateContent(text) {
 async function getStoredPosts() {
     const welcomePost = {
         id: 1,
-        author: "ðŸ‘‘ Website Host",
+        author: "👑 Website Host",
         isHost: true,
         isAdmin: false,
         isTest: false,
-        text: "Welcome to the Feathered Friends Forum! ðŸ¦œ Share your parrot stories, care tips, questions, or just say hello!",
+        text: "Welcome to the Feathered Friends Forum! 🦜 Share your parrot stories, care tips, questions, or just say hello!",
         timestamp: "Community Host"
     };
 
@@ -1497,7 +1504,7 @@ async function getStoredPosts() {
 
             if (!error && data && data.length > 0) {
                 return data.map(p => {
-                    let timeFormatted = p.created_at ? (new Date(p.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' Â· ' + new Date(p.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })) : "Community Host";
+                    let timeFormatted = p.created_at ? (new Date(p.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + new Date(p.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })) : "Community Host";
                     return {
                         id: p.id,
                         author: p.author,
@@ -1558,19 +1565,19 @@ function renderHostControls() {
             <label class="settings-label">Author Identity:</label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="user" ${forumState.identity === 'user' ? 'checked' : ''}>
-                <span>ðŸ‘¤ Member (<span class="mini-id">${currentId}</span>)</span>
+                <span>👤 Member (<span class="mini-id">${currentId}</span>)</span>
             </label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="host" ${forumState.identity === 'host' ? 'checked' : ''}>
-                <span>ðŸ‘‘ Website Host (Owner)</span>
+                <span>👑 Website Host (Owner)</span>
             </label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="admin" ${forumState.identity === 'admin' ? 'checked' : ''}>
-                <span>ðŸ›¡ï¸ Forum Admin</span>
+                <span>🛡️ Forum Admin</span>
             </label>
             <div class="host-status-box" style="margin-top:6px;">
-                <div class="host-status-title">ðŸ‘‘ Verified Owner Device</div>
-                <button id="staff-lock-action" class="host-lock-link">ðŸ”’ Lock / Log Out</button>
+                <div class="host-status-title">👑 Verified Owner Device</div>
+                <button id="staff-lock-action" class="host-lock-link">🔒 Lock / Log Out</button>
             </div>
         `;
     } else if (isAdmin) {
@@ -1578,25 +1585,25 @@ function renderHostControls() {
             <label class="settings-label">Author Identity:</label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="user" ${forumState.identity === 'user' ? 'checked' : ''}>
-                <span>ðŸ‘¤ Member (<span class="mini-id">${currentId}</span>)</span>
+                <span>👤 Member (<span class="mini-id">${currentId}</span>)</span>
             </label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="admin" ${forumState.identity === 'admin' ? 'checked' : ''}>
-                <span>ðŸ›¡ï¸ Forum Admin</span>
+                <span>🛡️ Forum Admin</span>
             </label>
             <div class="admin-status-box" style="margin-top:6px;">
-                <div class="host-status-title" style="color:#0277bd;">ðŸ›¡ï¸ Verified Admin Device</div>
-                <button id="staff-lock-action" class="host-lock-link">ðŸ”’ Lock / Log Out</button>
+                <div class="host-status-title" style="color:#0277bd;">🛡️ Verified Admin Device</div>
+                <button id="staff-lock-action" class="host-lock-link">🔒 Lock / Log Out</button>
             </div>
         `;
     } else {
         groupEl.innerHTML = `
             <div style="display:flex; flex-direction:column; gap:6px;">
                 <button id="host-unlock-trigger" class="host-unlock-btn">
-                    <span>ðŸ‘‘</span> <span>Owner / Host Unlock</span>
+                    <span>👑</span> <span>Owner / Host Unlock</span>
                 </button>
                 <button id="admin-unlock-trigger" class="host-unlock-btn">
-                    <span>ðŸ›¡ï¸</span> <span>Admin Unlock</span>
+                    <span>🛡️</span> <span>Admin Unlock</span>
                 </button>
             </div>
         `;
@@ -1678,13 +1685,13 @@ function setStaffModalTab(tab) {
     if (tab === 'host') {
         if (tabHost) tabHost.classList.add('active');
         if (tabAdmin) tabAdmin.classList.remove('active');
-        if (titleEl) titleEl.textContent = 'ðŸ‘‘ Owner / Host Unlock';
+        if (titleEl) titleEl.textContent = '👑 Owner / Host Unlock';
         if (descEl) descEl.textContent = 'Enter the master passphrase to unlock verified Owner / Host posting privileges on this device.';
         if (submitBtn) submitBtn.textContent = 'Unlock Owner';
     } else {
         if (tabHost) tabHost.classList.remove('active');
         if (tabAdmin) tabAdmin.classList.add('active');
-        if (titleEl) titleEl.textContent = 'ðŸ›¡ï¸ Forum Admin Unlock';
+        if (titleEl) titleEl.textContent = '🛡️ Forum Admin Unlock';
         if (descEl) descEl.textContent = 'Enter the admin passphrase to unlock verified Admin moderator privileges on this device.';
         if (submitBtn) submitBtn.textContent = 'Unlock Admin';
     }
@@ -1698,7 +1705,7 @@ async function verifyAndUnlockStaff() {
     const val = input.value.trim();
     if (!val) {
         if (errorEl) {
-            errorEl.textContent = 'â— Please enter the passphrase.';
+            errorEl.textContent = '❗ Please enter the passphrase.';
             errorEl.style.display = 'block';
         }
         return;
@@ -1757,7 +1764,7 @@ async function verifyAndUnlockStaff() {
         renderForum();
     } else {
         if (errorEl) {
-            errorEl.textContent = `â— Incorrect ${currentStaffModalTab === 'host' ? 'Owner' : 'Admin'} passphrase. Access denied.`;
+            errorEl.textContent = `❗ Incorrect ${currentStaffModalTab === 'host' ? 'Owner' : 'Admin'} passphrase. Access denied.`;
             errorEl.style.display = 'block';
         }
     }
@@ -1870,12 +1877,12 @@ async function handleAuthSubmit() {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        showAuthError('â— Please enter a valid email address.');
+        showAuthError('❗ Please enter a valid email address.');
         return;
     }
 
     if (!password || password.length < 4) {
-        showAuthError('â— Password must be at least 4 characters long.');
+        showAuthError('❗ Password must be at least 4 characters long.');
         return;
     }
 
@@ -1885,13 +1892,13 @@ async function handleAuthSubmit() {
         // 1. Check Human Verification Checkbox
         const humanCheckbox = document.getElementById('auth-human-checkbox');
         if (!humanCheckbox || !humanCheckbox.checked) {
-            showAuthError('â— Please check the "I am a human bird lover" box to continue.');
+            showAuthError('❗ Please check the "I am a human bird lover" box to continue.');
             return;
         }
 
         // 2. Check for profanity in password
         if (containsInappropriateContent(password)) {
-            showAuthError('â— PASSWORD NOT ALLOWED! â—');
+            showAuthError('❗ PASSWORD NOT ALLOWED! ❗');
             return;
         }
 
@@ -1909,7 +1916,7 @@ async function handleAuthSubmit() {
                     .maybeSingle();
 
                 if (existingEmail) {
-                    showAuthError('â— An account with this email already exists. Please Sign In.');
+                    showAuthError('❗ An account with this email already exists. Please Sign In.');
                     return;
                 }
 
@@ -1944,7 +1951,7 @@ async function handleAuthSubmit() {
                     closeAuthModal();
                     updateAuthUI();
                     await renderForum();
-                    alert(`ðŸŽ‰ Welcome! You have successfully registered with ID: ${newParrotId}`);
+                    alert(`🎉 Welcome! You have successfully registered with ID: ${newParrotId}`);
                     return;
                 }
             } catch (err) {
@@ -1955,7 +1962,7 @@ async function handleAuthSubmit() {
         // Local Storage Fallback
         const users = getRegisteredUsers();
         if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
-            showAuthError('â— An account with this email already exists. Please Sign In.');
+            showAuthError('❗ An account with this email already exists. Please Sign In.');
             return;
         }
 
@@ -1974,7 +1981,7 @@ async function handleAuthSubmit() {
         closeAuthModal();
         updateAuthUI();
         await renderForum();
-        alert(`ðŸŽ‰ Welcome! You have successfully registered with ID: ${newParrotId}`);
+        alert(`🎉 Welcome! You have successfully registered with ID: ${newParrotId}`);
     } else {
         // Sign In Flow (Cloud & Local)
         if (supabaseClient) {
@@ -2006,9 +2013,9 @@ async function handleAuthSubmit() {
                         .maybeSingle();
 
                     if (emailCheck) {
-                        showAuthError('â— Incorrect password. Please try again.');
+                        showAuthError('❗ Incorrect password. Please try again.');
                     } else {
-                        showAuthError('â— No account found with this email. Please click "Register" above to create an account first.');
+                        showAuthError('❗ No account found with this email. Please click "Register" above to create an account first.');
                     }
                     return;
                 }
@@ -2027,9 +2034,9 @@ async function handleAuthSubmit() {
         } else {
             const emailFound = users.some(u => u.email.toLowerCase() === email);
             if (emailFound) {
-                showAuthError('â— Incorrect password. Please try again.');
+                showAuthError('❗ Incorrect password. Please try again.');
             } else {
-                showAuthError('â— No account found with this email. Please click "Register" above to create an account first.');
+                showAuthError('❗ No account found with this email. Please click "Register" above to create an account first.');
             }
         }
     }
@@ -2047,35 +2054,35 @@ function updateAuthUI() {
         if (isHost && forumState.identity === 'host') {
             return `
                 <div class="auth-user-pill">
-                    <span>ðŸ‘‘</span>
+                    <span>👑</span>
                     <span class="parrot-tag">Website Host</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
-                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">âš™ï¸</button>
+                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">⚙️</button>
                 </div>
             `;
         } else if ((isHost || isAdmin) && forumState.identity === 'admin') {
             return `
                 <div class="auth-user-pill admin-pill">
-                    <span>ðŸ›¡ï¸</span>
+                    <span>🛡️</span>
                     <span class="parrot-tag">Forum Admin</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
-                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">âš™ï¸</button>
+                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">⚙️</button>
                 </div>
             `;
         } else if (currentUser) {
             return `
                 <div class="auth-user-pill">
-                    <span>ðŸ¦œ</span>
+                    <span>🦜</span>
                     <span class="parrot-tag">${currentUser.parrotId}</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
-                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">âš™ï¸</button>
+                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">⚙️</button>
                 </div>
             `;
         } else {
             return `
                 <div style="display: inline-flex; align-items: center; gap: 6px;">
-                    <button class="auth-corner-btn btn-auth-trigger">ðŸ”’ Sign In / Register</button>
-                    <button class="auth-corner-btn btn-staff-trigger" style="background: #374151; padding: 7px 11px;" title="Owner & Admin Unlock">âš™ï¸ Staff</button>
+                    <button class="auth-corner-btn btn-auth-trigger">🔒 Sign In / Register</button>
+                    <button class="auth-corner-btn btn-staff-trigger" style="background: #374151; padding: 7px 11px;" title="Owner & Admin Unlock">⚙️ Staff</button>
                 </div>
             `;
         }
@@ -2133,12 +2140,12 @@ function validateForumPost(rawText, isStaff) {
 
     // 1. Check for empty post
     if (trimmed.length === 0) {
-        return { type: 'empty', message: 'â—This message is empty. â—' };
+        return { type: 'empty', message: '❗This message is empty. ❗' };
     }
 
     // 2. Kid-Friendly Profanity / Inappropriate Content Check
     if (containsInappropriateContent(rawText)) {
-        return { type: 'profanity', message: 'â—This message has inappropriate or profane content. â—' };
+        return { type: 'profanity', message: '❗This message has inappropriate or profane content. ❗' };
     }
 
     // Staff (Host & Admin) are exempt from rate-limiting and formatting limits
@@ -2152,7 +2159,7 @@ function validateForumPost(rawText, isStaff) {
         const waitSeconds = POST_COOLDOWN_SECONDS - timePassed;
         return {
             type: 'cooldown',
-            message: `â³ Please wait ${waitSeconds} second${waitSeconds > 1 ? 's' : ''} before squawking again! ðŸ¦œ`
+            message: `⏳ Please wait ${waitSeconds} second${waitSeconds > 1 ? 's' : ''} before squawking again! 🦜`
         };
     }
 
@@ -2161,7 +2168,7 @@ function validateForumPost(rawText, isStaff) {
     if (lastText && lastText.toLowerCase() === trimmed.toLowerCase()) {
         return {
             type: 'spam',
-            message: 'â— You just posted that exact message! Please share something new.'
+            message: '❗ You just posted that exact message! Please share something new.'
         };
     }
 
@@ -2169,7 +2176,7 @@ function validateForumPost(rawText, isStaff) {
     if (/(.)\1{5,}/iu.test(rawText)) {
         return {
             type: 'spam',
-            message: 'â— Please avoid typing more than 5 of the same character in a row.'
+            message: '❗ Please avoid typing more than 5 of the same character in a row.'
         };
     }
 
@@ -2178,7 +2185,7 @@ function validateForumPost(rawText, isStaff) {
     if (lettersOnly.length >= 4 && lettersOnly === lettersOnly.toUpperCase()) {
         return {
             type: 'spam',
-            message: "â— Please don't shout in ALL CAPS! ðŸ¦œ"
+            message: "❗ Please don't shout in ALL CAPS! 🦜"
         };
     }
 
@@ -2187,7 +2194,7 @@ function validateForumPost(rawText, isStaff) {
     if (urlPattern.test(rawText)) {
         return {
             type: 'spam',
-            message: 'â— Posting external web links or URLs is not allowed on this forum.'
+            message: '❗ Posting external web links or URLs is not allowed on this forum.'
         };
     }
 
@@ -2199,7 +2206,7 @@ function validateForumPost(rawText, isStaff) {
     if (standardEmailPattern.test(rawText) || providerPattern.test(rawText) || directProviderDomain.test(rawText)) {
         return {
             type: 'spam',
-            message: 'â— Posting personal email addresses is not allowed for privacy and safety.'
+            message: '❗ Posting personal email addresses is not allowed for privacy and safety.'
         };
     }
 
@@ -2221,19 +2228,19 @@ function openDeleteModal(postId, postAuthor, postText, isOwnPostOnly = false, se
     if (!modal) return;
 
     if (previewEl) {
-        previewEl.textContent = `â€œ${postText || ''}â€`;
+        previewEl.textContent = `“${postText || ''}”`;
     }
     if (authorEl) {
-        authorEl.textContent = `ðŸ‘¤ Author: ${postAuthor || 'Unknown'}`;
+        authorEl.textContent = `👤 Author: ${postAuthor || 'Unknown'}`;
     }
 
     if (isOwnPostOnly) {
-        if (modalTitle) modalTitle.textContent = `ðŸ—‘ï¸ Delete Post #${seqNumber}`;
-        if (singleBtn) singleBtn.textContent = 'ðŸ—‘ï¸ Delete My Post';
+        if (modalTitle) modalTitle.textContent = `🗑️ Delete Post #${seqNumber}`;
+        if (singleBtn) singleBtn.textContent = '🗑️ Delete My Post';
         if (allUserBtn) allUserBtn.style.display = 'none';
     } else {
-        if (modalTitle) modalTitle.textContent = `ðŸ›¡ï¸ Moderate Post #${seqNumber}`;
-        if (singleBtn) singleBtn.textContent = 'ðŸ—‘ï¸ Delete This Post';
+        if (modalTitle) modalTitle.textContent = `🛡️ Moderate Post #${seqNumber}`;
+        if (singleBtn) singleBtn.textContent = '🗑️ Delete This Post';
         if (allUserBtn) allUserBtn.style.display = 'block';
     }
 
@@ -2293,7 +2300,7 @@ async function deleteSinglePost() {
     await renderForum();
 
     if (deleteError) {
-        alert("âš ï¸ Cloud Delete Notice:\nYour cloud database blocked the delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
+        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
     }
 }
 
@@ -2303,12 +2310,12 @@ async function deleteAllPostsFromUser() {
     const author = pendingPostToDelete.author;
 
     // Safety guard: Cannot bulk delete official Website Host welcome messages
-    if (author === 'ðŸ‘‘ Website Host') {
-        alert('â— You cannot bulk delete official Website Host messages.');
+    if (author === '👑 Website Host') {
+        alert('❗ You cannot bulk delete official Website Host messages.');
         return;
     }
 
-    if (!confirm(`ðŸ’¥ ARE YOU SURE?\n\nThis will permanently delete ALL messages posted by "${author}" across the entire forum!`)) {
+    if (!confirm(`💥 ARE YOU SURE?\n\nThis will permanently delete ALL messages posted by "${author}" across the entire forum!`)) {
         return;
     }
 
@@ -2353,7 +2360,7 @@ async function deleteAllPostsFromUser() {
     await renderForum();
 
     if (deleteError) {
-        alert("âš ï¸ Cloud Delete Notice:\nYour cloud database blocked the bulk delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
+        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the bulk delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
     }
 }
 
@@ -2371,7 +2378,7 @@ async function renderForum() {
     if (rawPosts.length === 0) {
         postsContainer.innerHTML = `
             <div style="text-align: center; padding: 40px 20px; color: #777; background: var(--card-bg); border-radius: 12px; box-shadow: var(--shadow);">
-                <div style="font-size: 2.2rem; margin-bottom: 8px;">ðŸ¦œðŸ’¬</div>
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">🦜💬</div>
                 <h3 style="color: var(--primary); margin-bottom: 6px;">No posts yet!</h3>
                 <p style="font-size: 0.95rem;">Be the first bird lover to post a message above.</p>
             </div>
@@ -2392,13 +2399,13 @@ async function renderForum() {
         
         let authorHTML = `<span class="post-author-tag">${escapeHtml(post.author)}</span>`;
         if (post.isHost) {
-            authorHTML = `<span class="post-author-tag host-badge">ðŸ‘‘ Website Host</span>`;
+            authorHTML = `<span class="post-author-tag host-badge">👑 Website Host</span>`;
         } else if (post.isAdmin) {
-            authorHTML = `<span class="post-author-tag admin-badge">ðŸ›¡ï¸ Forum Admin</span>`;
+            authorHTML = `<span class="post-author-tag admin-badge">🛡️ Forum Admin</span>`;
         }
 
         const testTagHTML = post.isTest
-            ? `<span class="post-test-tag">ðŸ§ª Test Message</span>`
+            ? `<span class="post-test-tag">🧪 Test Message</span>`
             : '';
 
         // Default Welcome post (#1) is completely protected from deletion
@@ -2407,7 +2414,7 @@ async function renderForum() {
         const canDelete = (isStaff || isOwnPost) && !isWelcomePost;
 
         const deleteBtnHTML = canDelete ? `
-            <button class="post-delete-btn" data-post-id="${post.id}" data-seq-number="${post.seqNumber}" data-post-author="${escapeHtml(post.author)}" data-post-text="${escapeHtml(post.text)}" data-is-own="${isOwnPost && !isStaff}" title="${isOwnPost && !isStaff ? 'Delete your post' : 'Delete options for Staff'}">ðŸ—‘ï¸ Delete</button>
+            <button class="post-delete-btn" data-post-id="${post.id}" data-seq-number="${post.seqNumber}" data-post-author="${escapeHtml(post.author)}" data-post-text="${escapeHtml(post.text)}" data-is-own="${isOwnPost && !isStaff}" title="${isOwnPost && !isStaff ? 'Delete your post' : 'Delete options for Staff'}">🗑️ Delete</button>
         ` : '';
 
         postCard.innerHTML = `
@@ -2486,8 +2493,8 @@ async function submitForumPost() {
 
     const isTest = forumState.mode === 'test';
     let authorHandle = currentUser ? currentUser.parrotId : 'Guest';
-    if (isHostActive) authorHandle = 'ðŸ‘‘ Website Host';
-    if (isAdminActive) authorHandle = 'ðŸ›¡ï¸ Forum Admin';
+    if (isHostActive) authorHandle = '👑 Website Host';
+    if (isAdminActive) authorHandle = '🛡️ Forum Admin';
 
     // Record rate-limiting tracker for non-staff
     if (!isStaff) {
@@ -2543,7 +2550,7 @@ async function submitForumPost() {
     const posts = await getStoredPosts();
     const nextId = posts.length > 0 ? posts[posts.length - 1].id + 1 : 1;
     const now = new Date();
-    const timeFormatted = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' Â· ' + now.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    const timeFormatted = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + now.toLocaleDateString([], { month: 'short', day: 'numeric' });
 
     const newPost = {
         id: nextId,
@@ -2568,7 +2575,7 @@ function updateForumInputMode() {
     if (!inputEl || !submitBtn) return;
 
     if (forumState.mode === 'test') {
-        inputEl.placeholder = "ðŸ§ª [Test Mode] Type a test message here...";
+        inputEl.placeholder = "🧪 [Test Mode] Type a test message here...";
         inputEl.classList.add('test-mode');
         submitBtn.textContent = "Post Test";
     } else {
@@ -2759,7 +2766,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Quiz Buttons
+        // Quiz Buttons
     const quizStartBtn = document.getElementById('quiz-start-btn');
     if (quizStartBtn) {
         quizStartBtn.addEventListener('click', startQuiz);
@@ -3000,19 +3007,19 @@ function finishQuiz() {
 
     if (titleDisplay && iconDisplay && messageDisplay) {
         if (correctCount === 10) {
-            iconDisplay.textContent = 'ðŸ†';
+            iconDisplay.textContent = '🏆';
             titleDisplay.textContent = 'Flock Legend! Perfect 10/10!';
             messageDisplay.textContent = 'Incredible! You have the ultimate avian wisdom. Even an African Grey would be impressed!';
         } else if (correctCount >= 8) {
-            iconDisplay.textContent = 'ðŸ¦œ';
+            iconDisplay.textContent = '🦜';
             titleDisplay.textContent = 'Master Birder!';
             messageDisplay.textContent = 'Outstanding job! You truly know your feathered companions inside and out.';
         } else if (correctCount >= 5) {
-            iconDisplay.textContent = 'ðŸª¶';
+            iconDisplay.textContent = '🪶';
             titleDisplay.textContent = 'Avian Enthusiast!';
             messageDisplay.textContent = 'Great effort! You know quite a bit about parrots. Keep reading our profiles to learn even more!';
         } else {
-            iconDisplay.textContent = 'ðŸ£';
+            iconDisplay.textContent = '🐣';
             titleDisplay.textContent = 'Fledgling Explorer!';
             messageDisplay.textContent = 'A good first flight! Check out our Care & Health guides and Fun Facts tab to brush up on parrot trivia.';
         }
