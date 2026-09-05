@@ -360,7 +360,7 @@ const staticData = {
         },
 		{
             title: "Neo the Budgie",
-            desc: "Short budgie tune",
+            desc: "Short budgie tune.",
             videoId: "tf_W5hSL-hk"
         },
 		{
