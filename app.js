@@ -360,7 +360,7 @@ const staticData = {
         },
 		{
             title: "Neo the Budgie",
-            desc: "Neo the Budgie introduces himself.",
+            desc: "Short budgie tune",
             videoId: "tf_W5hSL-hk"
         },
 		{
@@ -1263,11 +1263,9 @@ function renderVideos(data) {
         div.innerHTML = `
             <div class="video-wrapper">
                 <iframe 
-                    src="https://www.youtube-nocookie.com/embed/${item.videoId}?rel=0" 
+                    src="https://www.youtube.com/embed/${item.videoId}" 
                     title="${item.title}" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    loading="lazy"
                     allowfullscreen>
                 </iframe>
             </div>
