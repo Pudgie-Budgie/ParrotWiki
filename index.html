@@ -19,15 +19,20 @@
         </div>
     </header>
 
-	<nav class="tab-nav container">
-		<button class="tab-link active" data-tab="tab-birds">🦜 Bird Profiles</button>
-		<button class="tab-link" data-tab="tab-care">🛠️ Care & Health</button>
-		<button class="tab-link" data-tab="tab-videos">🎬 Videos</button>
-		<button class="tab-link" data-tab="tab-literature">📚 Literature</button>
-		<button class="tab-link" data-tab="tab-merch">🛍️ Merch</button>
-		<button class="tab-link" data-tab="tab-forum">💬 Forum</button>
-		<button class="tab-link" data-tab="tab-facts">💡 Fun Facts</button>
-	</nav>
+	<div class="tab-nav-wrapper container">
+		<button class="tab-nav-scroll-btn tab-nav-prev" id="tab-nav-prev" aria-label="Scroll tabs left" title="Scroll left">‹</button>
+		<nav class="tab-nav" id="main-tab-nav">
+			<button class="tab-link active" data-tab="tab-birds">🦜 Bird Profiles</button>
+			<button class="tab-link" data-tab="tab-care">🛠️ Care & Health</button>
+			<button class="tab-link" data-tab="tab-videos">🎬 Videos</button>
+			<button class="tab-link" data-tab="tab-literature">📚 Literature</button>
+			<button class="tab-link" data-tab="tab-merch">🛍️ Merch</button>
+			<button class="tab-link" data-tab="tab-forum">💬 Forum</button>
+			<button class="tab-link" data-tab="tab-facts">💡 Fun Facts</button>
+			<button class="tab-link" data-tab="tab-quiz">🧠 Parrot Quiz</button>
+		</nav>
+		<button class="tab-nav-scroll-btn tab-nav-next" id="tab-nav-next" aria-label="Scroll tabs right" title="Scroll right">›</button>
+	</div>
 
     <main class="container">
         <section id="tab-birds" class="tab-content active">
@@ -203,6 +208,81 @@ Parrots are intelligent, social, and long-lived companions. Some are talented ta
                 <h2>Did You Know?</h2>
             </div>
             <div id="facts-grid" class="grid-layout"></div>
+        </section>
+
+        <!-- Parrot Quiz Tab Section -->
+        <section id="tab-quiz" class="tab-content">
+            <div style="text-align: center; max-width: 760px; margin: 0 auto 25px; padding: 0 15px;">
+                <h2 style="color: #2c7744; margin-bottom: 10px;">🧠 Feathered Friends Parrot Quiz</h2>
+                <p style="color: #555; font-size: 1.05rem; line-height: 1.6;">
+                    Test your parrot knowledge! 10 random questions are drawn from our avian question bank every round.
+                </p>
+            </div>
+
+            <div class="quiz-container">
+                <!-- 1. Start Screen -->
+                <div id="quiz-start-screen" class="quiz-card quiz-start-card">
+                    <div class="quiz-badge">🦜 10 Random Questions</div>
+                    <div class="quiz-start-icon">🧠🎯</div>
+                    <h3>Ready to Test Your Parrot IQ?</h3>
+                    <p style="color: #555; font-size: 1rem; line-height: 1.6; max-width: 520px; margin: 0 auto 20px;">
+                        Each quiz draws 10 unique, non-repeating questions. Complete each question to advance through the 10-step progress bar!
+                    </p>
+                    <div class="quiz-rules-box">
+                        <div class="quiz-rule-item"><span>🟨</span> <strong>Yellow:</strong> Current active question</div>
+                        <div class="quiz-rule-item"><span>🟩</span> <strong>Green:</strong> Correct answer</div>
+                        <div class="quiz-rule-item"><span>🟥</span> <strong>Red:</strong> Incorrect answer</div>
+                        <div class="quiz-rule-item"><span>🔒</span> <strong>No Skipping:</strong> Answer to advance</div>
+                    </div>
+                    <div style="margin-top: 25px;">
+                        <button id="quiz-start-btn" class="quiz-primary-btn">🚀 Start Quiz</button>
+                    </div>
+                </div>
+
+                <!-- 2. Active Question Arena -->
+                <div id="quiz-active-arena" class="quiz-card quiz-arena-card" style="display: none;">
+                    <!-- 10-Segment Progress Track -->
+                    <div class="quiz-progress-wrapper">
+                        <div class="quiz-progress-meta">
+                            <span class="quiz-step-title" id="quiz-step-indicator">Question 1 of 10</span>
+                            <span class="quiz-legend-text"><span class="legend-dot green"></span> Correct &nbsp; <span class="legend-dot red"></span> Wrong &nbsp; <span class="legend-dot yellow"></span> Current</span>
+                        </div>
+                        <div class="quiz-progress-track" id="quiz-progress-track">
+                            <div class="quiz-bar-segment" data-index="0" title="Question 1"></div>
+                            <div class="quiz-bar-segment" data-index="1" title="Question 2"></div>
+                            <div class="quiz-bar-segment" data-index="2" title="Question 3"></div>
+                            <div class="quiz-bar-segment" data-index="3" title="Question 4"></div>
+                            <div class="quiz-bar-segment" data-index="4" title="Question 5"></div>
+                            <div class="quiz-bar-segment" data-index="5" title="Question 6"></div>
+                            <div class="quiz-bar-segment" data-index="6" title="Question 7"></div>
+                            <div class="quiz-bar-segment" data-index="7" title="Question 8"></div>
+                            <div class="quiz-bar-segment" data-index="8" title="Question 9"></div>
+                            <div class="quiz-bar-segment" data-index="9" title="Question 10"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question Content Area -->
+                    <div class="quiz-question-box">
+                        <div class="quiz-question-number-badge" id="quiz-question-badge">Question #1</div>
+                        <h3 id="quiz-question-text" class="quiz-question-text">Question text will appear here...</h3>
+                        <div id="quiz-options-container" class="quiz-options-grid">
+                            <!-- 4 Choice buttons (A, B, C, D) generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Results Screen -->
+                <div id="quiz-results-screen" class="quiz-card quiz-results-card" style="display: none;">
+                    <div class="quiz-result-icon" id="quiz-result-icon">🏆</div>
+                    <h3 id="quiz-result-title" style="color: #2c7744; font-size: 1.6rem; margin-bottom: 8px;">Quiz Completed!</h3>
+                    <div class="quiz-score-display" id="quiz-score-display">You got 8 out of 10 correct!</div>
+                    <p id="quiz-result-message" class="quiz-result-message">Awesome job bird lover!</p>
+                    <div class="quiz-results-bars-summary" id="quiz-results-bars-summary"></div>
+                    <div style="margin-top: 25px;">
+                        <button id="quiz-restart-btn" class="quiz-primary-btn">🔄 Take Another 10 Questions</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
     </main>

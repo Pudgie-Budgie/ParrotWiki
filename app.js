@@ -1,6 +1,6 @@
 // Parrot Database
 const staticData = {
-    // 1. 鹦鹉列表
+    // 1. é¹¦é¹‰åˆ—è¡¨
     birds: [
     {
         name: "Budgerigar 'Budgie' (Parakeet)",
@@ -181,19 +181,19 @@ const staticData = {
     ],
 
 
-// 2. 养护与疾病
+// 2. å…»æŠ¤ä¸Žç–¾ç—…
 	care: [
         {
-            title: "🏠 The Perfect Cage Setup",
+            title: "ðŸ  The Perfect Cage Setup",
             category: "Equipment",
             
-            // 1. 大图配置
-            image: "./assets/bigCage.jpg", // 换成商品大图
-            mainLink: "https://amzn.to/3LEPHlU", // 【关键】加上这个，大图就能点了
+            // 1. å¤§å›¾é…ç½®
+            image: "./assets/bigCage.jpg", // æ¢æˆå•†å“å¤§å›¾
+            mainLink: "https://amzn.to/3LEPHlU", // ã€å…³é”®ã€‘åŠ ä¸Šè¿™ä¸ªï¼Œå¤§å›¾å°±èƒ½ç‚¹äº†
             
             content: "A big cage provides more space for your feathered friends to play and live.",
             
-            // 2. 迷你列表配置
+            // 2. è¿·ä½ åˆ—è¡¨é…ç½®
             products: [
                 {
                     name: "Easy to clean cage",
@@ -215,7 +215,7 @@ const staticData = {
                     image: "./assets/toypack.jpg",
                     link: "https://amzn.to/4qTbiWx"
                 },
-                // 可以多加几个，测试横向滚动
+                // å¯ä»¥å¤šåŠ å‡ ä¸ªï¼Œæµ‹è¯•æ¨ªå‘æ»šåŠ¨
                 {
                     name: "Parakeet Running Wheel (for small birds)",
                     image: "./assets/wheel.jpg",
@@ -224,10 +224,10 @@ const staticData = {
             ]
         },
         {
-            title: "🚿 Bathing Basics",
+            title: "ðŸš¿ Bathing Basics",
             category: "Hygiene",
-            image: "./assets/fountain.jpg", // 替换为小鸟洗澡图
-			mainLink: "https://amzn.to/45JFWtq", // 【关键】加上这个，大图就能点了
+            image: "./assets/fountain.jpg", // æ›¿æ¢ä¸ºå°é¸Ÿæ´—æ¾¡å›¾
+			mainLink: "https://amzn.to/45JFWtq", // ã€å…³é”®ã€‘åŠ ä¸Šè¿™ä¸ªï¼Œå¤§å›¾å°±èƒ½ç‚¹äº†
             content: "Most parrots love water! It keeps feathers healthy and reduces dust.\n**Methods:** A shallow dish of water OR a gentle misting spray bottle.\n**Golden Rules:**\n1. Use **Lukewarm Water** only.\n2. **NO SOAP** or shampoo (it strips essential oils).\n3. Bathe in warm days (23C/73F or above) and better in the **morning** so they are dry before bedtime.\n4. Let the parrots decide whether to bathe. Do not force them. ",
             products: [
                 {
@@ -238,14 +238,14 @@ const staticData = {
             ]
         },
         {
-	    title: "👍 Treats & Healthy Foods",
+	    title: "ðŸ‘ Treats & Healthy Foods",
             category: "Treats & Nutrients",
             //image: "",
             content: "There are many things that parrots like to or should eat. A parrot, like a human, needs a wide array of different nutrients. **These are some good treats & healthy foods for parrots:**\n\n- **A variety of seeds:** Seeds provide the bird energy to fuel them during the day (seeds also serve well as treats).\n- **Fruits & Vegetables:** Parrots should eat a wide variety of fruits and vegetables (except avocado) to supplement their diet with vitamins, minerals, fiber, and antioxidants. They also make good treats.\n- **High-Quality Pellets:** A processed food designed to supply the foundational nutrients in a parrot's diet all in a single bite, making up 60-80 percent of a bird's ideal diet.\n- **Mineral Block:** Contains many essential minerals, such as calcium, zinc, iron, and iodine, all compressed into a single block.\n- **Nuts:** A healthy, high-energy treat (avoid peanuts), should not exceed 5-10 percent of the bird's diet.\n- **Millet:** A treat for smaller birds, such as budgies."
         },
         {
 
-            title: "☠️ Dangerous & Toxic Foods",
+            title: "â˜ ï¸ Dangerous & Toxic Foods",
             category: "Danger",
             //image: "",
             content: "Parrots have sensitive metabolisms. What is safe for humans can be deadly for birds. **Never feed the following:**\n\n- **Avocado:** Contains *persin*, which causes heart failure and sudden death.\n- **Chocolate/Caffeine:** Causes hyperactivity, seizures, and cardiac arrest.\n- **Onions/Garlic:** Destroy red blood cells, leading to anemia.\n- **Apple Seeds:** Contain traces of cyanide.\n- **Salt & Sugar:** Processed human foods damage their kidneys."
@@ -254,7 +254,7 @@ const staticData = {
             title: "Scaly Face Mites (Knemidocoptes)", 
             category: "Health & Disease", 
             //image: "",
-            content: "**Target:** Extremely common in Budgies (Parakeets) and Canaries.\n\n**The Condition:** Microscopic mites burrow into the beak, cere (nose), eyelids, and legs. This creates a crusty, white, honeycomb-like buildup. It looks like 'scale' growing on the face. If left untreated, it can deform the beak permanently.\n\n**Treatment:** Fortunately, this is highly curable. A vet will prescribe **Ivermectin** (a spot-on drop). \n\n**⚠️ Warning:** Do not use cheap 'mite sprays' from pet stores. They are often toxic and ineffective against burrowing mites."
+            content: "**Target:** Extremely common in Budgies (Parakeets) and Canaries.\n\n**The Condition:** Microscopic mites burrow into the beak, cere (nose), eyelids, and legs. This creates a crusty, white, honeycomb-like buildup. It looks like 'scale' growing on the face. If left untreated, it can deform the beak permanently.\n\n**Treatment:** Fortunately, this is highly curable. A vet will prescribe **Ivermectin** (a spot-on drop). \n\n**âš ï¸ Warning:** Do not use cheap 'mite sprays' from pet stores. They are often toxic and ineffective against burrowing mites."
         },
         {
             title: "Psittacosis (Parrot Fever)", 
@@ -272,7 +272,7 @@ const staticData = {
             title: "Egg Binding (Dystocia)", 
             category: "Health & Disease", 
             //image: "",
-            content: "**Emergency:** This happens when a female bird cannot pass an egg. It is life-threatening and can kill within hours.\n\n**Symptoms:** The bird sits at the bottom of the cage, panting, straining, or has a visibly swollen abdomen. One or both legs may be paralyzed due to the egg pressing on nerves.\n\n**Immediate Action:**\n1. Place the bird in a hospital cage (warm, humid environment, ~85°F).\n2. Give liquid Calcium (if available).\n3. **Rush to a vet immediately.** Surgery may be required."
+            content: "**Emergency:** This happens when a female bird cannot pass an egg. It is life-threatening and can kill within hours.\n\n**Symptoms:** The bird sits at the bottom of the cage, panting, straining, or has a visibly swollen abdomen. One or both legs may be paralyzed due to the egg pressing on nerves.\n\n**Immediate Action:**\n1. Place the bird in a hospital cage (warm, humid environment, ~85Â°F).\n2. Give liquid Calcium (if available).\n3. **Rush to a vet immediately.** Surgery may be required."
         }
     ],
 
@@ -311,7 +311,7 @@ const staticData = {
     ],
 
 
-    // 4. 冷知识 
+    // 4. å†·çŸ¥è¯† 
     facts: [
        
         { content: "Parrots are the only birds that can eat with their feet, holding food like a hand." },
@@ -326,9 +326,9 @@ const staticData = {
         { content: "Parrots do not have vocal cords. They use a syrinx (bifurcated trachea) to control airflow and mimic sounds." },
         { content: "Cockatoos use their crests like a mood ring: up for excitement/fear, flat for calm." },
         { content: "A parrot's beak grows continuously throughout its life, just like human fingernails, which is why they need to chew." },
-        { content: "The Buff-faced Pygmy Parrot is the smallest in the world, standing only 3 inches tall—smaller than a finger!" },
+        { content: "The Buff-faced Pygmy Parrot is the smallest in the world, standing only 3 inches tallâ€”smaller than a finger!" },
         { content: "Parrots are one of the few animals that can move their upper beak independently from their skull." },
-        { content: "Wild Amazon parrots have regional 'dialects'—flocks from different areas sound different from each other." },
+        { content: "Wild Amazon parrots have regional 'dialects'â€”flocks from different areas sound different from each other." },
         { content: "Studies suggest yawning is contagious among Parakeets, which may be a sign of primitive empathy." },
         { content: "Many parrot species are monogamous and will mate for life, often sharing parenting duties equally." },
         { content: "There are nearly 400 distinct species of parrots found in tropical and subtropical regions around the world." }
@@ -336,11 +336,11 @@ const staticData = {
 	
 	// ... inside staticData ...
     
-    // 5. 视频 (只需要 YouTube 的 ID，就是网址 v= 后面那串字符)
+    // 5. è§†é¢‘ (åªéœ€è¦ YouTube çš„ IDï¼Œå°±æ˜¯ç½‘å€ v= åŽé¢é‚£ä¸²å­—ç¬¦)
     videos: [
         {
             title: "Jealous Bird",
-            desc: "No head scratches for other birds — only for me!",
+            desc: "No head scratches for other birds â€” only for me!",
             videoId: "uK3VE3Adhnk" 
         },
         {
@@ -380,9 +380,658 @@ const staticData = {
         },
 		{
 			title: "Disco the Budgie",
-			desc: "With over 1,700 words, Disco the budgie rivaled Puck (also a budgie) - who holds the Guinness world record for the largest vocabulary of a bird (1,728 words) — but was uniquely creative in inventing his own phrases.",
+			desc: "With over 1,700 words, Disco the budgie rivaled Puck (also a budgie) - who holds the Guinness world record for the largest vocabulary of a bird (1,728 words) â€” but was uniquely creative in inventing his own phrases.",
 			videoId: "jXc9ylCXqCw"
 		}
+    ],
+
+    // 6. Parrot Quiz Question Bank (Complete 100-Question Trivia Bank)
+    quizBank: [
+        {
+            id: 1,
+            question: "Parrots are part of the Psittacopassera group of birds. Roughly how many species of different parrots are in this grouping?",
+            options: ["400", "200", "1032", "620"],
+            answer: 0
+        },
+        {
+            id: 2,
+            question: "What do parrots use instead of vocal cords to mimic sounds?",
+            options: ["Larynx", "Syrinx", "Beak resonance", "Diaphragm"],
+            answer: 1
+        },
+        {
+            id: 3,
+            question: "Which food is dangerous and can be fatal to parrots?",
+            options: ["Carrots", "Millet", "Avocado", "Sunflower seeds"],
+            answer: 2
+        },
+        {
+            id: 4,
+            question: "What does 'zygodactyl' describe about a parrot's feet?",
+            options: ["Webbed toes", "Three toes forward", "No toes", "Two toes forward, two back"],
+            answer: 3
+        },
+        {
+            id: 5,
+            question: "Which parrot is the top-tier mimic, considered #1 in average talking ability?",
+            options: ["African Grey", "Cockatiel", "Budgie", "Lovebird"],
+            answer: 0
+        },
+        {
+            id: 6,
+            question: "Which type of cockatoo usually has brown-eyed females and black-eyed males?",
+            options: ["Little Corella", "Umbrella", "Gang-Gang", "Goffin's"],
+            answer: 1
+        },
+        {
+            id: 7,
+            question: "Five types of cockatoos are listed on the CITES I list. What does CITES stand for?",
+            options: ["Creatures of the International Tropical Environment Species", "Cockatoos of India and Tunesia Environmental Studies", "Convention on International Trade in Endangered Species", "Cockatoo Industry Trade and Exposition Seminars"],
+            answer: 2
+        },
+        {
+            id: 8,
+            question: "Which parrot is the only flightless parrot in the world?",
+            options: ["Budgerigar", "Kea", "African Grey", "Kakapo"],
+            answer: 3
+        },
+        {
+            id: 9,
+            question: "Where are Budgerigars (Budgies) originally native to in the wild?",
+            options: ["Australia", "South America", "Madagascar", "New Zealand"],
+            answer: 0
+        },
+        {
+            id: 10,
+            question: "Which bird holds the Guinness World Record for the largest vocabulary of any bird (over 1,728 words)?",
+            options: ["Alex the African Grey", "Puck the Budgie", "Disco the Budgie", "Einstein the Amazon"],
+            answer: 1
+        },
+        {
+            id: 11,
+            question: "What is the only alpine parrot in the world, famous for its problem-solving in New Zealand?",
+            options: ["Quaker Parrot", "Cockatiel", "Kea", "Sun Conure"],
+            answer: 2
+        },
+        {
+            id: 12,
+            question: "Where do most parrots taste their food?",
+            options: ["Tip of the tongue", "Inside the beak tip", "Throat", "Roof of the mouth"],
+            answer: 3
+        },
+        {
+            id: 13,
+            question: "Why do parrots need plenty of wooden toys and safe branches to chew on?",
+            options: ["Their beaks grow continuously throughout their life", "To clean their feathers", "To sharpen their claws", "Only to build nests"],
+            answer: 0
+        },
+        {
+            id: 14,
+            question: "Which small parrot is illegal to own in states like California due to invasive agricultural fears?",
+            options: ["Green Cheek Conure", "Quaker Parrot (Monk Parakeet)", "Lovebird", "Cockatiel"],
+            answer: 1
+        },
+        {
+            id: 15,
+            question: "How can you tell the biological gender of an adult wild-type Budgie?",
+            options: ["Tail length", "Eye color", "Cere color (Blue = Male, Brown/Tan = Female)", "Beak shape"],
+            answer: 2
+        },
+        {
+            id: 16,
+            question: "What is the smallest parrot species in the world, standing only about 3 inches tall?",
+            options: ["Lineolated Parakeet", "Pacific Parrotlet", "Peach-faced Lovebird", "Buff-faced Pygmy Parrot"],
+            answer: 3
+        },
+        {
+            id: 17,
+            question: "Which parrot species exhibits such extreme sexual dimorphism that males are emerald green and females are bright red and blue?",
+            options: ["Eclectus Parrot", "Rainbow Lorikeet", "Sun Conure", "Galah"],
+            answer: 0
+        },
+        {
+            id: 18,
+            question: "What special anatomical feature do Lorikeets and Lories have on their tongues to drink nectar?",
+            options: ["Hollow straw tubes", "Brush-like papillae", "Barbed teeth", "Sticky suction cups"],
+            answer: 1
+        },
+        {
+            id: 19,
+            question: "Why is an all-seed diet unhealthy as the sole staple food for pet parrots?",
+            options: ["Too much protein", "Causes immediate dehydration", "High in fat and deficient in essential vitamins (like Vitamin A)", "Seeds cannot be digested"],
+            answer: 2
+        },
+        {
+            id: 20,
+            question: "What is the primary danger of non-stick cookware (Teflon / PTFE) around pet birds?",
+            options: ["Birds eat the coating", "It ruins their eyesight", "It attracts predators", "Overheating releases odorless, lethal fumes to avian lungs"],
+            answer: 3
+        },
+        {
+            id: 21,
+            question: "How many hours of uninterrupted darkness and quiet sleep do most pet parrots require each night?",
+            options: ["10 to 12 hours", "6 to 8 hours", "4 to 6 hours", "14 to 16 hours"],
+            answer: 0
+        },
+        {
+            id: 22,
+            question: "Which famous African Grey was studied for over 30 years by Dr. Irene Pepperberg, proving advanced reasoning?",
+            options: ["Puck", "Alex", "Disco", "Einstein"],
+            answer: 1
+        },
+        {
+            id: 23,
+            question: "Which Australian cockatoo is famous for its vibrant rose-pink chest and soft grey wings?",
+            options: ["Palm Cockatoo", "Major Mitchell's Cockatoo", "Galah (Rose-breasted Cockatoo)", "Moluccan Cockatoo"],
+            answer: 2
+        },
+        {
+            id: 24,
+            question: "What is the largest flying parrot species in the world by length?",
+            options: ["Green-winged Macaw", "Scarlet Macaw", "Kakapo", "Hyacinth Macaw"],
+            answer: 3
+        },
+        {
+            id: 25,
+            question: "Which parrot species is unique for building massive communal stick nests rather than nesting in tree cavities?",
+            options: ["Monk Parakeet (Quaker Parrot)", "Budgerigar", "Cockatiel", "Senegal Parrot"],
+            answer: 0
+        },
+        {
+            id: 26,
+            question: "What does it usually mean when a parrot softly grinds its beak together before sleeping?",
+            options: [
+                "The parrot is hungry",
+                "The parrot is content, relaxed, and settling down",
+                "The beak is overgrown and in pain",
+                "The parrot is feeling territorial"
+            ],
+            answer: 1
+        },
+        {
+            id: 27,
+            question: "What is the powdery substance produced by down feathers of Cockatoos, Cockatiels, and African Greys?",
+            options: ["Chitin dust", "Dander mites", "Powder down (keratin dust)", "Talcum residue"],
+            answer: 2
+        },
+        {
+            id: 28,
+            question: "Which bird became famous on YouTube for dancing with a rhythmic beat to Backstreet Boys songs?",
+            options: ["Fred the Macaw", "Alex the African Grey", "Apollo the Caique", "Snowball the Eleonora Cockatoo"],
+            answer: 3
+        },
+        {
+            id: 29,
+            question: "What substance in apple seeds and peach pits contains cyanide and should never be fed to parrots?",
+            options: ["Amygdalin", "Theobromine", "Persin", "Capsaicin"],
+            answer: 0
+        },
+        {
+            id: 30,
+            question: "Why can parrots eat fiery hot chili peppers without feeling any burning sensation?",
+            options: [
+                "Their beaks block the juice",
+                "They lack the specific sensory receptor for capsaicin",
+                "Stomach acid destroys the spice",
+                "They swallow without tasting"
+            ],
+            answer: 1
+        },
+        {
+            id: 31,
+            question: "Which small South American parrot is celebrated as the 'clown of the bird world' for hopping on two feet?",
+            options: ["Lineolated Parakeet", "Bourke's Parakeet", "White-bellied Caique", "Pionus Parrot"],
+            answer: 2
+        },
+        {
+            id: 32,
+            question: "What calcium-rich internal shell of a marine mollusk is commonly placed in cages for mineral supplementation?",
+            options: ["Oyster grit", "Conch plate", "Coral fragment", "Cuttlebone"],
+            answer: 3
+        },
+        {
+            id: 33,
+            question: "What condition can develop on a bird's feet if they only stand on smooth, uniform dowel perches?",
+            options: ["Pododermatitis (Bumblefoot)", "Feather cysts", "Scaly leg mites", "Beak rot"],
+            answer: 0
+        },
+        {
+            id: 34,
+            question: "What is the term for a sudden panic reaction in Cockatiels during the night, often triggered by a shadow?",
+            options: ["Sleep paralysis", "Night frights", "Nocturnal frenzy", "Roost terror"],
+            answer: 1
+        },
+        {
+            id: 35,
+            question: "Which toxic chemical in chocolate is dangerous to parrots because their bodies cannot metabolize it?",
+            options: ["Capsaicin", "Persin", "Theobromine", "Solanine"],
+            answer: 2
+        },
+        {
+            id: 36,
+            question: "What oil-secreting gland near the base of a parrot's tail is used for feather conditioning during preening?",
+            options: ["Adrenal gland", "Parotid gland", "Thyroid gland", "Uropygial (preen) gland"],
+            answer: 3
+        },
+        {
+            id: 37,
+            question: "Which part of a parrot's digestive tract acts as an expandable pouch for temporary food storage?",
+            options: ["Crop", "Gizzard", "Proventriculus", "Cloaca"],
+            answer: 0
+        },
+        {
+            id: 38,
+            question: "Which muscular part of a bird's stomach grinds up tough seeds and food particles?",
+            options: ["Crop", "Gizzard (ventriculus)", "Liver", "Cecum"],
+            answer: 1
+        },
+        {
+            id: 39,
+            question: "What is the critically endangered blue macaw whose wild extinction inspired the animated movie 'Rio'?",
+            options: ["Glaucous Macaw", "Hyacinth Macaw", "Spix's Macaw", "Lear's Macaw"],
+            answer: 2
+        },
+        {
+            id: 40,
+            question: "Which historical ruler is credited with introducing the first parakeets (Ringnecks) to ancient Greece from India?",
+            options: ["Julius Caesar", "Cleopatra", "King Solomon", "Alexander the Great"],
+            answer: 3
+        },
+        {
+            id: 41,
+            question: "What causes a parrot's pupils to rapidly expand and contract ('eye pinning')?",
+            options: ["Excitement, interest, aggression, or intense focus", "Dehydration", "Eye infection", "Lack of sleep"],
+            answer: 0
+        },
+        {
+            id: 42,
+            question: "What is the normal resting body temperature of most parrots?",
+            options: ["98.6Â°F (37Â°C)", "104Â°F to 108Â°F (40Â°C to 42Â°C)", "88Â°F to 92Â°F (31Â°C to 33Â°C)", "115Â°F to 120Â°F (46Â°C to 49Â°C)"],
+            answer: 1
+        },
+        {
+            id: 43,
+            question: "How do parrots breathe differently from mammals?",
+            options: ["They have gills in their throat", "They breathe through feather pores", "They have a system of air sacs providing unidirectional oxygen flow", "They only inhale once every two minutes"],
+            answer: 2
+        },
+        {
+            id: 44,
+            question: "What is unique about bird bones that makes their skeleton lightweight enough for flight?",
+            options: ["They are filled with fluid", "They dissolve during flight", "They are made entirely of cartilage", "They are pneumatic (hollow with internal struts of air)"],
+            answer: 3
+        },
+        {
+            id: 45,
+            question: "Which parrot species is famous for having a bright all-white crest that raises like an umbrella when excited?",
+            options: ["Umbrella Cockatoo", "Galah", "Sulphur-crested Cockatoo", "Palm Cockatoo"],
+            answer: 0
+        },
+        {
+            id: 46,
+            question: "What is the name of the massive, smoky-grey Australian cockatoo with red cheek patches and a colossal bill?",
+            options: ["Gang-Gang Cockatoo", "Palm Cockatoo", "Red-tailed Black Cockatoo", "Glossy Black Cockatoo"],
+            answer: 1
+        },
+        {
+            id: 47,
+            question: "What is the mutual social grooming behavior where two parrots gently preen each other called?",
+            options: ["Crop feeding", "Molting", "Allopreening", "Dust bathing"],
+            answer: 2
+        },
+        {
+            id: 48,
+            question: "What is a newly growing feather with a dark, blood-filled central shaft called?",
+            options: ["Down feather", "Flight quill", "Contour feather", "Blood feather (pin feather)"],
+            answer: 3
+        },
+        {
+            id: 49,
+            question: "What should you immediately do if a blood feather breaks and begins actively bleeding?",
+            options: ["Gently pluck the broken shaft at the base and apply styptic powder or cornstarch", "Apply ice only", "Bandage the entire wing tightly", "Bathe the bird in warm water"],
+            answer: 0
+        },
+        {
+            id: 50,
+            question: "Which common household cooking ingredient can safely clot bleeding on a bird's nail or feather in an emergency?",
+            options: ["Black pepper", "Cornstarch or flour", "Baking powder", "Sugar"],
+            answer: 1
+        },
+        {
+            id: 51,
+            question: "Which African parrot is known for its green body, grey head, and bright yellow-orange 'V' shape on its belly?",
+            options: ["Cape Parrot", "Meyer's Parrot", "Senegal Parrot", "Lovebird"],
+            answer: 2
+        },
+        {
+            id: 52,
+            question: "Which small Australian parakeet is crepuscular (active at dawn and dusk) and has soft pink and pastel plumage?",
+            options: ["Budgerigar", "Turquoise Parrot", "Scarlet-chested Parrot", "Bourke's Parakeet"],
+            answer: 3
+        },
+        {
+            id: 53,
+            question: "What is the primary function of the colorful orange cheek patches on wild-type Cockatiels?",
+            options: ["Visual communication, emotional state, and mate selection", "Storing extra seed", "Hearing high-frequency calls", "Absorbing heat from sunlight"],
+            answer: 0
+        },
+        {
+            id: 54,
+            question: "Why should you avoid using commercial sandpaper perch covers inside a parrot's cage?",
+            options: [
+                "They make the bird sneeze",
+                "They scrape the bottom of their feet, leading to painful sores and infections",
+                "Parrots can choke on the paper",
+                "They turn beaks yellow"
+            ],
+            answer: 1
+        },
+        {
+            id: 55,
+            question: "What is the natural shedding and replacement of old feathers with new ones called?",
+            options: ["Preening", "Pinning", "Molting", "Fluffing"],
+            answer: 2
+        },
+        {
+            id: 56,
+            question: "Which South American parrot is famous for brilliant golden-yellow plumage, orange cheeks, and very loud flock calls?",
+            options: ["Nanday Conure", "Jenday Conure", "Golden Parakeet", "Sun Conure"],
+            answer: 3
+        },
+        {
+            id: 57,
+            question: "Why is clipping a bird's flight feathers too short or asymmetrically dangerous?",
+            options: ["They crash heavily onto floors, risking cracked keel bones or split crops", "It prevents digestion", "It causes beak fractures", "Feathers turn brown"],
+            answer: 0
+        },
+        {
+            id: 58,
+            question: "What is the prominent ridge extending along a bird's breastbone where flight muscles attach?",
+            options: ["Femur", "Keel bone (carina)", "Furcula", "Coracoid"],
+            answer: 1
+        },
+        {
+            id: 59,
+            question: "What does it indicate if a parrot sits fluffed up at the bottom of its cage with closed eyes during daylight?",
+            options: ["The parrot is sleeping happily", "The parrot is playing hide and seek", "The parrot is critically ill and needs urgent avian veterinary care", "The parrot is cooling down"],
+            answer: 2
+        },
+        {
+            id: 60,
+            question: "Why do parrots instinctively mask and hide signs of illness in front of humans?",
+            options: ["They are shy", "They feel no pain", "Their immune system works silently", "In the wild, predators target visibly sick birds, and flocks may abandon them"],
+            answer: 3
+        },
+        {
+            id: 61,
+            question: "What is the single external bodily opening through which birds expel waste and lay eggs?",
+            options: ["Cloaca (vent)", "Crop", "Syrinx", "Trachea"],
+            answer: 0
+        },
+        {
+            id: 62,
+            question: "In bird droppings, what is the chalky white part made of?",
+            options: ["Bile", "Urates (uric acid)", "Enzyme paste", "Keratin powder"],
+            answer: 1
+        },
+        {
+            id: 63,
+            question: "Which Puerto Rican Amazon parrot is one of the most endangered birds in the world?",
+            options: ["Hispaniolan Parakeet", "Cuban Amazon", "Iguaca (Puerto Rican Amazon)", "St. Lucia Amazon"],
+            answer: 2
+        },
+        {
+            id: 64,
+            question: "Which parrot is nocturnal, flightless, and famous for having a sweet herbal or honey-like scent?",
+            options: ["Antipodes Parakeet", "Kea", "Kaka", "Kakapo"],
+            answer: 3
+        },
+        {
+            id: 65,
+            question: "What is the term for a mating system where a pair bonds exclusively for the season or lifetime?",
+            options: ["Monogamy", "Polygamy", "Parthenogenesis", "Hermaphroditism"],
+            answer: 0
+        },
+        {
+            id: 66,
+            question: "Which common household item containing heavy metals is a leading cause of fatal lead poisoning in parrots?",
+            options: [
+                "Plastic water dishes",
+                "Curtain drapery weights, antique bells, and cheap solder",
+                "Untreated birch perches",
+                "Ceramic food bowls"
+            ],
+            answer: 1
+        },
+        {
+            id: 67,
+            question: "Zinc toxicity in pet birds is most commonly caused by birds chewing on which material?",
+            options: ["Natural pine branches", "Stainless steel bowls", "Galvanized wire, cheap cage hardware, and keychains", "Cotton perches"],
+            answer: 2
+        },
+        {
+            id: 68,
+            question: "Which category of fresh vegetables is among the healthiest daily staples for companion parrots?",
+            options: ["Wild forest mushrooms", "Raw onions and scallions", "Rhubarb leaves", "Dark leafy greens (Kale, Swiss Chard, Dandelion greens)"],
+            answer: 3
+        },
+        {
+            id: 69,
+            question: "Why should you never let a companion parrot eat directly out of your mouth or share chewed food?",
+            options: [
+                "Human saliva contains Gram-negative bacteria (like Pasteurella) harmful to birds",
+                "Water softens their beak",
+                "Humans transfer tooth enamel",
+                "It ruins their vocal ability"
+            ],
+            answer: 0
+        },
+        {
+            id: 70,
+            question: "Why are domestic cats dangerous to parrots even without visible bite wounds?",
+            options: [
+                "Cat purring disorients birds",
+                "Cat saliva carries Pasteurella multocida bacteria, causing fatal sepsis from minor scratches",
+                "Cats steal bird feathers for nests",
+                "Cats emit high frequencies that deafen birds"
+            ],
+            answer: 1
+        },
+        {
+            id: 71,
+            question: "Which small African parrot is famous for forming intense monogamous bonds and tucking nesting strips in its rump?",
+            options: ["Cockatiel", "Budgerigar", "Peach-faced Lovebird", "Gouldian Finch"],
+            answer: 2
+        },
+        {
+            id: 72,
+            question: "What is the fleshy, featherless skin band above the beak where a parrot's nostrils sit?",
+            options: ["Nape", "Comb", "Wattle", "Cere"],
+            answer: 3
+        },
+        {
+            id: 73,
+            question: "What are the two nostril openings located on a parrot's cere called?",
+            options: ["Nares", "Spiracles", "Alveoli", "Bronchi"],
+            answer: 0
+        },
+        {
+            id: 74,
+            question: "What spectrum of light can parrots see that is completely invisible to human eyes?",
+            options: ["Infrared light", "Ultraviolet (UV) light", "X-ray radiation", "Microwave radiation"],
+            answer: 1
+        },
+        {
+            id: 75,
+            question: "Why do some parrot species that look identical to human eyes look completely distinct to each other?",
+            options: ["They rely purely on smell", "They glow in the dark", "Their feathers reflect UV light patterns that only avian eyes can perceive", "They have polarized eye lenses"],
+            answer: 2
+        },
+        {
+            id: 76,
+            question: "What causes a dangerous 'crop burn' in hand-fed baby parrots?",
+            options: ["Excessive sunlight", "Spicy bell peppers", "Citrus fruits", "Feeding hand-rearing formula heated above 105Â°F (40.5Â°C)"],
+            answer: 3
+        },
+        {
+            id: 77,
+            question: "What is the behavioral condition where a parrot chews or plucks out its own feathers due to stress or boredom?",
+            options: [
+                "Feather destructive behavior (feather plucking)",
+                "Molting fever",
+                "Follicle shedding",
+                "Down atrophy"
+            ],
+            answer: 0
+        },
+        {
+            id: 78,
+            question: "Which training method using praise and treats is the most effective and humane way to train parrots?",
+            options: ["Negative punishment", "Positive reinforcement", "Dominance hierarchy", "Flooding"],
+            answer: 1
+        },
+        {
+            id: 79,
+            question: "What is 'target training' when working with companion parrots?",
+            options: ["Teaching the bird to fly at moving targets", "Throwing balls through hoops", "Teaching the bird to touch a target stick with its beak to guide movement", "Tagging bird feet with colored rings"],
+            answer: 2
+        },
+        {
+            id: 80,
+            question: "Why is yelling back at a screaming parrot ineffective?",
+            options: ["Parrots cannot hear human voices", "It triggers egg-laying", "It causes their feathers to fall out", "Parrots interpret loud human shouting as dramatic flock excitement, rewarding the screaming"],
+            answer: 3
+        },
+        {
+            id: 81,
+            question: "What is the average lifespan of a well-cared-for large Macaw or Cockatoo in captivity?",
+            options: ["50 to 70+ years", "20 to 30 years", "10 to 15 years", "100 to 120 years"],
+            answer: 0
+        },
+        {
+            id: 82,
+            question: "What is the average expected lifespan of a companion Cockatiel?",
+            options: ["3 to 5 years", "15 to 20+ years", "8 to 10 years", "35 to 45 years"],
+            answer: 1
+        },
+        {
+            id: 83,
+            question: "What is the average lifespan of a healthy, well-cared-for domestic Budgie?",
+            options: ["2 to 4 years", "20 to 25 years", "7 to 12 years", "30 years"],
+            answer: 2
+        },
+        {
+            id: 84,
+            question: "Which parrot holds the Guinness World Record for the oldest verified bird, living to age 83 at Brookfield Zoo?",
+            options: ["Puck the Budgie", "Charlie the Blue and Gold Macaw", "Alex the African Grey", "Cookie the Major Mitchell's Cockatoo"],
+            answer: 3
+        },
+        {
+            id: 85,
+            question: "Which alpine parrot is famous in New Zealand for sliding down roofs and picking rubber off cars?",
+            options: ["Kea", "Kakapo", "Kaka", "Crimson Rosella"],
+            answer: 0
+        },
+        {
+            id: 86,
+            question: "What is the native home continent of all true Macaws?",
+            options: ["Africa", "Central and South America", "Asia", "Australia"],
+            answer: 1
+        },
+        {
+            id: 87,
+            question: "What is the native region of all Cockatoo species?",
+            options: ["South America", "Europe", "Australasia (Australia, Indonesia, Philippines)", "Africa"],
+            answer: 2
+        },
+        {
+            id: 88,
+            question: "Which African parrot is famous for its silver-grey body and bright scarlet red tail?",
+            options: ["Meyer's Parrot", "Timneh African Grey", "Jardine's Parrot", "Congo African Grey"],
+            answer: 3
+        },
+        {
+            id: 89,
+            question: "How can you distinguish a Timneh African Grey from a Congo African Grey?",
+            options: [
+                "Timneh has a horn-colored upper beak and darker maroon tail, and is slightly smaller",
+                "Timneh has bright yellow eyes and blue wings",
+                "Timneh is twice as large as a Congo",
+                "Timneh has green chest feathers"
+            ],
+            answer: 0
+        },
+        {
+            id: 90,
+            question: "What is the term for parrots eating clay or soil at natural mineral cliffs in the Amazon?",
+            options: ["Coprophagy", "Geophagy", "Herbivory", "Lithophagy"],
+            answer: 1
+        },
+        {
+            id: 91,
+            question: "Why do wild macaws and parrots visit clay licks (colpas) along Amazon riverbanks?",
+            options: ["To sharpen their beaks", "To dye their plumage red", "To ingest sodium minerals and neutralize toxins from unripe wild seeds", "To escape canopy heat"],
+            answer: 2
+        },
+        {
+            id: 92,
+            question: "What is a primary natural aerial predator of wild parrots in rainforest canopies?",
+            options: ["Tree frogs", "Fruit bats", "Toucans", "Harpy Eagles and large hawks"],
+            answer: 3
+        },
+        {
+            id: 93,
+            question: "What do parrots use their strong, curved upper beak for in addition to eating?",
+            options: [
+                "As a 'third hand' or foot to climb branches and bars",
+                "To store extra water",
+                "To dig deep underground burrows",
+                "To strike sparks for heat"
+            ],
+            answer: 0
+        },
+        {
+            id: 94,
+            question: "What anatomical skull feature allows parrots to move their upper beak up and down independently?",
+            options: ["Mandibular lock", "Cranial kinesis (prokinesis)", "Hyoid extension", "Zygomatic flex"],
+            answer: 1
+        },
+        {
+            id: 95,
+            question: "What is the name of the tiny, spunky parrot native to South America, often nicknamed the 'pocket parrot'?",
+            options: ["Fischer's Lovebird", "Green-cheek Conure", "Pacific Parrotlet", "Canary-winged Parakeet"],
+            answer: 2
+        },
+        {
+            id: 96,
+            question: "Which common household appliance cycle releases toxic fumes that can kill a bird within minutes?",
+            options: ["Refrigerator defrost", "Microwave defrost cycle", "Dishwasher steam cycle", "Self-cleaning oven cycle"],
+            answer: 3
+        },
+        {
+            id: 97,
+            question: "What is the term for a feather that remains trapped inside its keratin sheath without opening properly?",
+            options: ["Retained pinfeather sheath", "Molt necrosis", "Down decay", "Follicle split"],
+            answer: 0
+        },
+        {
+            id: 98,
+            question: "What is the safest way to help a companion bird with prickly pinfeathers on its head?",
+            options: ["Snip the pinfeathers with scissors", "Gently roll and pinch the dry translucent sheaths between clean fingers during bonding", "Wash the bird with vinegar", "Apply petroleum jelly"],
+            answer: 1
+        },
+        {
+            id: 99,
+            question: "Why are foraging toys (toys where food is hidden in paper or wood) essential for companion parrots?",
+            options: ["To reduce feeding costs", "It forces birds to exercise their wings", "Wild parrots spend up to 70% of their day foraging; foraging prevents boredom and plucking", "It keeps birds awake during the day"],
+            answer: 2
+        },
+        {
+            id: 100,
+            question: "Which Australian parrot has an expressive erectile crest, yellow and white accents, and is the #2 most popular pet bird in the world?",
+            options: ["Budgerigar", "Galah", "Major Mitchell's Cockatoo", "Cockatiel"],
+            answer: 3
+        }
     ]
 };
 
@@ -390,9 +1039,9 @@ const staticData = {
 // RENDER LOGIC
 // ==========================================
 
-// Helper: 渲染星星
+// Helper: æ¸²æŸ“æ˜Ÿæ˜Ÿ
 function getStars(score) {
-    return '★'.repeat(score) + '☆'.repeat(5 - score);
+    return 'â˜…'.repeat(score) + 'â˜†'.repeat(5 - score);
 }
 
 // 1. Render Birds
@@ -441,7 +1090,7 @@ function renderCare(data) {
     data.forEach(item => {
         const div = document.createElement('div');
         
-        // 1. 样式判断
+        // 1. æ ·å¼åˆ¤æ–­
         let cardClass = 'care-card';
         const cat = (item.category || '').toLowerCase();
         const isHealth = cat.includes('health') || cat.includes('disease');
@@ -449,17 +1098,17 @@ function renderCare(data) {
             cardClass += ' health'; 
         }
 
-        // 2. 文本格式化
+        // 2. æ–‡æœ¬æ ¼å¼åŒ–
         let content = item.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         content = content.replace(/\*(.*?)\*/g, '<em>$1</em>');
         content = content.replace(/\n/g, '<br>');
 
         // ===============================================
-        // A. 左侧大图逻辑 (智能判断：没图就不显示)
+        // A. å·¦ä¾§å¤§å›¾é€»è¾‘ (æ™ºèƒ½åˆ¤æ–­ï¼šæ²¡å›¾å°±ä¸æ˜¾ç¤º)
         // ===============================================
-        let imgContainerHTML = ''; // 默认为空
+        let imgContainerHTML = ''; // é»˜è®¤ä¸ºç©º
 
-        // 【关键修改】只有当 item.image 有值的时候，才生成这一块
+        // ã€å…³é”®ä¿®æ”¹ã€‘åªæœ‰å½“ item.image æœ‰å€¼çš„æ—¶å€™ï¼Œæ‰ç”Ÿæˆè¿™ä¸€å—
         if (item.image) {
             const imgTag = `<img src="${item.image}" alt="${item.title}" loading="lazy">`;
             
@@ -467,7 +1116,7 @@ function renderCare(data) {
                 imgContainerHTML = `
                     <a href="${item.mainLink}" target="_blank" class="care-card-img clickable">
                         ${imgTag}
-                        <div class="shop-overlay">🛒 View on Amazon</div>
+                        <div class="shop-overlay">ðŸ›’ View on Amazon</div>
                     </a>
                 `;
             } else {
@@ -480,7 +1129,7 @@ function renderCare(data) {
         }
 
         // ===============================================
-        // B. 底部迷你列表逻辑
+        // B. åº•éƒ¨è¿·ä½ åˆ—è¡¨é€»è¾‘
         // ===============================================
         let productsHTML = '';
         if (item.products && item.products.length > 0) {
@@ -494,7 +1143,7 @@ function renderCare(data) {
             productsHTML = `
                 <div class="product-section">
                     <div class="product-section-title">
-                        🛒 Recommended Gear
+                        ðŸ›’ Recommended Gear
                     </div>
                     <div class="product-list">
                         ${itemsHTML}
@@ -505,8 +1154,8 @@ function renderCare(data) {
 
         div.className = cardClass;
         
-        // 3. 组合 HTML
-        // 如果 imgContainerHTML 是空的，右侧的 care-content 会自动填满整行 (Flexbox 特性)
+        // 3. ç»„åˆ HTML
+        // å¦‚æžœ imgContainerHTML æ˜¯ç©ºçš„ï¼Œå³ä¾§çš„ care-content ä¼šè‡ªåŠ¨å¡«æ»¡æ•´è¡Œ (Flexbox ç‰¹æ€§)
         div.innerHTML = `
             ${imgContainerHTML}
             <div class="care-content">
@@ -519,7 +1168,7 @@ function renderCare(data) {
             </div>
         `;
         
-        // 4. 分流
+        // 4. åˆ†æµ
         if (isHealth) {
             healthGrid.appendChild(div);
         } else {
@@ -562,7 +1211,7 @@ function renderMerch(data) {
                 <div class="notes" style="margin-bottom:10px;">${item.type}</div>
                 <div class="rich-text-content">${item.description}</div>
                 <div style="margin-top: 15px;">
-                    <button class="merch-action-btn" data-title="${escapeHtml(item.title)}">🛒 Buy / View Details</button>
+                    <button class="merch-action-btn" data-title="${escapeHtml(item.title)}">ðŸ›’ Buy / View Details</button>
                 </div>
             </div>
         `;
@@ -580,11 +1229,11 @@ function renderMerch(data) {
                 const err = document.getElementById('auth-error-msg');
                 if (err) {
                     err.className = 'auth-error-alert';
-                    err.textContent = '🔒 Please Sign In or Register to purchase merchandise!';
+                    err.textContent = 'ðŸ”’ Please Sign In or Register to purchase merchandise!';
                     err.style.display = 'block';
                 }
             } else {
-                alert(`🛍️ Thank you for your interest in "${btn.getAttribute('data-title')}"! Merch purchasing will officially open soon.`);
+                alert(`ðŸ›ï¸ Thank you for your interest in "${btn.getAttribute('data-title')}"! Merch purchasing will officially open soon.`);
             }
         });
     });
@@ -831,11 +1480,11 @@ function containsInappropriateContent(text) {
 async function getStoredPosts() {
     const welcomePost = {
         id: 1,
-        author: "👑 Website Host",
+        author: "ðŸ‘‘ Website Host",
         isHost: true,
         isAdmin: false,
         isTest: false,
-        text: "Welcome to the Feathered Friends Forum! 🦜 Share your parrot stories, care tips, questions, or just say hello!",
+        text: "Welcome to the Feathered Friends Forum! ðŸ¦œ Share your parrot stories, care tips, questions, or just say hello!",
         timestamp: "Community Host"
     };
 
@@ -848,7 +1497,7 @@ async function getStoredPosts() {
 
             if (!error && data && data.length > 0) {
                 return data.map(p => {
-                    let timeFormatted = p.created_at ? (new Date(p.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + new Date(p.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })) : "Community Host";
+                    let timeFormatted = p.created_at ? (new Date(p.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' Â· ' + new Date(p.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })) : "Community Host";
                     return {
                         id: p.id,
                         author: p.author,
@@ -909,19 +1558,19 @@ function renderHostControls() {
             <label class="settings-label">Author Identity:</label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="user" ${forumState.identity === 'user' ? 'checked' : ''}>
-                <span>👤 Member (<span class="mini-id">${currentId}</span>)</span>
+                <span>ðŸ‘¤ Member (<span class="mini-id">${currentId}</span>)</span>
             </label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="host" ${forumState.identity === 'host' ? 'checked' : ''}>
-                <span>👑 Website Host (Owner)</span>
+                <span>ðŸ‘‘ Website Host (Owner)</span>
             </label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="admin" ${forumState.identity === 'admin' ? 'checked' : ''}>
-                <span>🛡️ Forum Admin</span>
+                <span>ðŸ›¡ï¸ Forum Admin</span>
             </label>
             <div class="host-status-box" style="margin-top:6px;">
-                <div class="host-status-title">👑 Verified Owner Device</div>
-                <button id="staff-lock-action" class="host-lock-link">🔒 Lock / Log Out</button>
+                <div class="host-status-title">ðŸ‘‘ Verified Owner Device</div>
+                <button id="staff-lock-action" class="host-lock-link">ðŸ”’ Lock / Log Out</button>
             </div>
         `;
     } else if (isAdmin) {
@@ -929,25 +1578,25 @@ function renderHostControls() {
             <label class="settings-label">Author Identity:</label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="user" ${forumState.identity === 'user' ? 'checked' : ''}>
-                <span>👤 Member (<span class="mini-id">${currentId}</span>)</span>
+                <span>ðŸ‘¤ Member (<span class="mini-id">${currentId}</span>)</span>
             </label>
             <label class="settings-option">
                 <input type="radio" name="author-identity" value="admin" ${forumState.identity === 'admin' ? 'checked' : ''}>
-                <span>🛡️ Forum Admin</span>
+                <span>ðŸ›¡ï¸ Forum Admin</span>
             </label>
             <div class="admin-status-box" style="margin-top:6px;">
-                <div class="host-status-title" style="color:#0277bd;">🛡️ Verified Admin Device</div>
-                <button id="staff-lock-action" class="host-lock-link">🔒 Lock / Log Out</button>
+                <div class="host-status-title" style="color:#0277bd;">ðŸ›¡ï¸ Verified Admin Device</div>
+                <button id="staff-lock-action" class="host-lock-link">ðŸ”’ Lock / Log Out</button>
             </div>
         `;
     } else {
         groupEl.innerHTML = `
             <div style="display:flex; flex-direction:column; gap:6px;">
                 <button id="host-unlock-trigger" class="host-unlock-btn">
-                    <span>👑</span> <span>Owner / Host Unlock</span>
+                    <span>ðŸ‘‘</span> <span>Owner / Host Unlock</span>
                 </button>
                 <button id="admin-unlock-trigger" class="host-unlock-btn">
-                    <span>🛡️</span> <span>Admin Unlock</span>
+                    <span>ðŸ›¡ï¸</span> <span>Admin Unlock</span>
                 </button>
             </div>
         `;
@@ -1029,13 +1678,13 @@ function setStaffModalTab(tab) {
     if (tab === 'host') {
         if (tabHost) tabHost.classList.add('active');
         if (tabAdmin) tabAdmin.classList.remove('active');
-        if (titleEl) titleEl.textContent = '👑 Owner / Host Unlock';
+        if (titleEl) titleEl.textContent = 'ðŸ‘‘ Owner / Host Unlock';
         if (descEl) descEl.textContent = 'Enter the master passphrase to unlock verified Owner / Host posting privileges on this device.';
         if (submitBtn) submitBtn.textContent = 'Unlock Owner';
     } else {
         if (tabHost) tabHost.classList.remove('active');
         if (tabAdmin) tabAdmin.classList.add('active');
-        if (titleEl) titleEl.textContent = '🛡️ Forum Admin Unlock';
+        if (titleEl) titleEl.textContent = 'ðŸ›¡ï¸ Forum Admin Unlock';
         if (descEl) descEl.textContent = 'Enter the admin passphrase to unlock verified Admin moderator privileges on this device.';
         if (submitBtn) submitBtn.textContent = 'Unlock Admin';
     }
@@ -1049,7 +1698,7 @@ async function verifyAndUnlockStaff() {
     const val = input.value.trim();
     if (!val) {
         if (errorEl) {
-            errorEl.textContent = '❗ Please enter the passphrase.';
+            errorEl.textContent = 'â— Please enter the passphrase.';
             errorEl.style.display = 'block';
         }
         return;
@@ -1108,7 +1757,7 @@ async function verifyAndUnlockStaff() {
         renderForum();
     } else {
         if (errorEl) {
-            errorEl.textContent = `❗ Incorrect ${currentStaffModalTab === 'host' ? 'Owner' : 'Admin'} passphrase. Access denied.`;
+            errorEl.textContent = `â— Incorrect ${currentStaffModalTab === 'host' ? 'Owner' : 'Admin'} passphrase. Access denied.`;
             errorEl.style.display = 'block';
         }
     }
@@ -1221,12 +1870,12 @@ async function handleAuthSubmit() {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        showAuthError('❗ Please enter a valid email address.');
+        showAuthError('â— Please enter a valid email address.');
         return;
     }
 
     if (!password || password.length < 4) {
-        showAuthError('❗ Password must be at least 4 characters long.');
+        showAuthError('â— Password must be at least 4 characters long.');
         return;
     }
 
@@ -1236,13 +1885,13 @@ async function handleAuthSubmit() {
         // 1. Check Human Verification Checkbox
         const humanCheckbox = document.getElementById('auth-human-checkbox');
         if (!humanCheckbox || !humanCheckbox.checked) {
-            showAuthError('❗ Please check the "I am a human bird lover" box to continue.');
+            showAuthError('â— Please check the "I am a human bird lover" box to continue.');
             return;
         }
 
         // 2. Check for profanity in password
         if (containsInappropriateContent(password)) {
-            showAuthError('❗ PASSWORD NOT ALLOWED! ❗');
+            showAuthError('â— PASSWORD NOT ALLOWED! â—');
             return;
         }
 
@@ -1260,7 +1909,7 @@ async function handleAuthSubmit() {
                     .maybeSingle();
 
                 if (existingEmail) {
-                    showAuthError('❗ An account with this email already exists. Please Sign In.');
+                    showAuthError('â— An account with this email already exists. Please Sign In.');
                     return;
                 }
 
@@ -1295,7 +1944,7 @@ async function handleAuthSubmit() {
                     closeAuthModal();
                     updateAuthUI();
                     await renderForum();
-                    alert(`🎉 Welcome! You have successfully registered with ID: ${newParrotId}`);
+                    alert(`ðŸŽ‰ Welcome! You have successfully registered with ID: ${newParrotId}`);
                     return;
                 }
             } catch (err) {
@@ -1306,7 +1955,7 @@ async function handleAuthSubmit() {
         // Local Storage Fallback
         const users = getRegisteredUsers();
         if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
-            showAuthError('❗ An account with this email already exists. Please Sign In.');
+            showAuthError('â— An account with this email already exists. Please Sign In.');
             return;
         }
 
@@ -1325,7 +1974,7 @@ async function handleAuthSubmit() {
         closeAuthModal();
         updateAuthUI();
         await renderForum();
-        alert(`🎉 Welcome! You have successfully registered with ID: ${newParrotId}`);
+        alert(`ðŸŽ‰ Welcome! You have successfully registered with ID: ${newParrotId}`);
     } else {
         // Sign In Flow (Cloud & Local)
         if (supabaseClient) {
@@ -1357,9 +2006,9 @@ async function handleAuthSubmit() {
                         .maybeSingle();
 
                     if (emailCheck) {
-                        showAuthError('❗ Incorrect password. Please try again.');
+                        showAuthError('â— Incorrect password. Please try again.');
                     } else {
-                        showAuthError('❗ No account found with this email. Please click "Register" above to create an account first.');
+                        showAuthError('â— No account found with this email. Please click "Register" above to create an account first.');
                     }
                     return;
                 }
@@ -1378,9 +2027,9 @@ async function handleAuthSubmit() {
         } else {
             const emailFound = users.some(u => u.email.toLowerCase() === email);
             if (emailFound) {
-                showAuthError('❗ Incorrect password. Please try again.');
+                showAuthError('â— Incorrect password. Please try again.');
             } else {
-                showAuthError('❗ No account found with this email. Please click "Register" above to create an account first.');
+                showAuthError('â— No account found with this email. Please click "Register" above to create an account first.');
             }
         }
     }
@@ -1398,35 +2047,35 @@ function updateAuthUI() {
         if (isHost && forumState.identity === 'host') {
             return `
                 <div class="auth-user-pill">
-                    <span>👑</span>
+                    <span>ðŸ‘‘</span>
                     <span class="parrot-tag">Website Host</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
-                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">⚙️</button>
+                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">âš™ï¸</button>
                 </div>
             `;
         } else if ((isHost || isAdmin) && forumState.identity === 'admin') {
             return `
                 <div class="auth-user-pill admin-pill">
-                    <span>🛡️</span>
+                    <span>ðŸ›¡ï¸</span>
                     <span class="parrot-tag">Forum Admin</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
-                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">⚙️</button>
+                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">âš™ï¸</button>
                 </div>
             `;
         } else if (currentUser) {
             return `
                 <div class="auth-user-pill">
-                    <span>🦜</span>
+                    <span>ðŸ¦œ</span>
                     <span class="parrot-tag">${currentUser.parrotId}</span>
                     <button class="auth-logout-btn btn-logout-action">Log Out</button>
-                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">⚙️</button>
+                    <button class="btn-staff-trigger" style="background:none; border:none; cursor:pointer; font-size:0.95rem; padding:0 2px;" title="Staff Settings">âš™ï¸</button>
                 </div>
             `;
         } else {
             return `
                 <div style="display: inline-flex; align-items: center; gap: 6px;">
-                    <button class="auth-corner-btn btn-auth-trigger">🔒 Sign In / Register</button>
-                    <button class="auth-corner-btn btn-staff-trigger" style="background: #374151; padding: 7px 11px;" title="Owner & Admin Unlock">⚙️ Staff</button>
+                    <button class="auth-corner-btn btn-auth-trigger">ðŸ”’ Sign In / Register</button>
+                    <button class="auth-corner-btn btn-staff-trigger" style="background: #374151; padding: 7px 11px;" title="Owner & Admin Unlock">âš™ï¸ Staff</button>
                 </div>
             `;
         }
@@ -1484,12 +2133,12 @@ function validateForumPost(rawText, isStaff) {
 
     // 1. Check for empty post
     if (trimmed.length === 0) {
-        return { type: 'empty', message: '❗This message is empty. ❗' };
+        return { type: 'empty', message: 'â—This message is empty. â—' };
     }
 
     // 2. Kid-Friendly Profanity / Inappropriate Content Check
     if (containsInappropriateContent(rawText)) {
-        return { type: 'profanity', message: '❗This message has inappropriate or profane content. ❗' };
+        return { type: 'profanity', message: 'â—This message has inappropriate or profane content. â—' };
     }
 
     // Staff (Host & Admin) are exempt from rate-limiting and formatting limits
@@ -1503,7 +2152,7 @@ function validateForumPost(rawText, isStaff) {
         const waitSeconds = POST_COOLDOWN_SECONDS - timePassed;
         return {
             type: 'cooldown',
-            message: `⏳ Please wait ${waitSeconds} second${waitSeconds > 1 ? 's' : ''} before squawking again! 🦜`
+            message: `â³ Please wait ${waitSeconds} second${waitSeconds > 1 ? 's' : ''} before squawking again! ðŸ¦œ`
         };
     }
 
@@ -1512,7 +2161,7 @@ function validateForumPost(rawText, isStaff) {
     if (lastText && lastText.toLowerCase() === trimmed.toLowerCase()) {
         return {
             type: 'spam',
-            message: '❗ You just posted that exact message! Please share something new.'
+            message: 'â— You just posted that exact message! Please share something new.'
         };
     }
 
@@ -1520,7 +2169,7 @@ function validateForumPost(rawText, isStaff) {
     if (/(.)\1{5,}/iu.test(rawText)) {
         return {
             type: 'spam',
-            message: '❗ Please avoid typing more than 5 of the same character in a row.'
+            message: 'â— Please avoid typing more than 5 of the same character in a row.'
         };
     }
 
@@ -1529,7 +2178,7 @@ function validateForumPost(rawText, isStaff) {
     if (lettersOnly.length >= 4 && lettersOnly === lettersOnly.toUpperCase()) {
         return {
             type: 'spam',
-            message: "❗ Please don't shout in ALL CAPS! 🦜"
+            message: "â— Please don't shout in ALL CAPS! ðŸ¦œ"
         };
     }
 
@@ -1538,7 +2187,7 @@ function validateForumPost(rawText, isStaff) {
     if (urlPattern.test(rawText)) {
         return {
             type: 'spam',
-            message: '❗ Posting external web links or URLs is not allowed on this forum.'
+            message: 'â— Posting external web links or URLs is not allowed on this forum.'
         };
     }
 
@@ -1550,7 +2199,7 @@ function validateForumPost(rawText, isStaff) {
     if (standardEmailPattern.test(rawText) || providerPattern.test(rawText) || directProviderDomain.test(rawText)) {
         return {
             type: 'spam',
-            message: '❗ Posting personal email addresses is not allowed for privacy and safety.'
+            message: 'â— Posting personal email addresses is not allowed for privacy and safety.'
         };
     }
 
@@ -1572,19 +2221,19 @@ function openDeleteModal(postId, postAuthor, postText, isOwnPostOnly = false, se
     if (!modal) return;
 
     if (previewEl) {
-        previewEl.textContent = `“${postText || ''}”`;
+        previewEl.textContent = `â€œ${postText || ''}â€`;
     }
     if (authorEl) {
-        authorEl.textContent = `👤 Author: ${postAuthor || 'Unknown'}`;
+        authorEl.textContent = `ðŸ‘¤ Author: ${postAuthor || 'Unknown'}`;
     }
 
     if (isOwnPostOnly) {
-        if (modalTitle) modalTitle.textContent = `🗑️ Delete Post #${seqNumber}`;
-        if (singleBtn) singleBtn.textContent = '🗑️ Delete My Post';
+        if (modalTitle) modalTitle.textContent = `ðŸ—‘ï¸ Delete Post #${seqNumber}`;
+        if (singleBtn) singleBtn.textContent = 'ðŸ—‘ï¸ Delete My Post';
         if (allUserBtn) allUserBtn.style.display = 'none';
     } else {
-        if (modalTitle) modalTitle.textContent = `🛡️ Moderate Post #${seqNumber}`;
-        if (singleBtn) singleBtn.textContent = '🗑️ Delete This Post';
+        if (modalTitle) modalTitle.textContent = `ðŸ›¡ï¸ Moderate Post #${seqNumber}`;
+        if (singleBtn) singleBtn.textContent = 'ðŸ—‘ï¸ Delete This Post';
         if (allUserBtn) allUserBtn.style.display = 'block';
     }
 
@@ -1644,7 +2293,7 @@ async function deleteSinglePost() {
     await renderForum();
 
     if (deleteError) {
-        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
+        alert("âš ï¸ Cloud Delete Notice:\nYour cloud database blocked the delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
     }
 }
 
@@ -1654,12 +2303,12 @@ async function deleteAllPostsFromUser() {
     const author = pendingPostToDelete.author;
 
     // Safety guard: Cannot bulk delete official Website Host welcome messages
-    if (author === '👑 Website Host') {
-        alert('❗ You cannot bulk delete official Website Host messages.');
+    if (author === 'ðŸ‘‘ Website Host') {
+        alert('â— You cannot bulk delete official Website Host messages.');
         return;
     }
 
-    if (!confirm(`💥 ARE YOU SURE?\n\nThis will permanently delete ALL messages posted by "${author}" across the entire forum!`)) {
+    if (!confirm(`ðŸ’¥ ARE YOU SURE?\n\nThis will permanently delete ALL messages posted by "${author}" across the entire forum!`)) {
         return;
     }
 
@@ -1704,7 +2353,7 @@ async function deleteAllPostsFromUser() {
     await renderForum();
 
     if (deleteError) {
-        alert("⚠️ Cloud Delete Notice:\nYour cloud database blocked the bulk delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
+        alert("âš ï¸ Cloud Delete Notice:\nYour cloud database blocked the bulk delete because of security rules.\n\nPlease make sure you have run the Supabase Security Setup script in your Supabase SQL Editor.");
     }
 }
 
@@ -1722,7 +2371,7 @@ async function renderForum() {
     if (rawPosts.length === 0) {
         postsContainer.innerHTML = `
             <div style="text-align: center; padding: 40px 20px; color: #777; background: var(--card-bg); border-radius: 12px; box-shadow: var(--shadow);">
-                <div style="font-size: 2.2rem; margin-bottom: 8px;">🦜💬</div>
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">ðŸ¦œðŸ’¬</div>
                 <h3 style="color: var(--primary); margin-bottom: 6px;">No posts yet!</h3>
                 <p style="font-size: 0.95rem;">Be the first bird lover to post a message above.</p>
             </div>
@@ -1743,13 +2392,13 @@ async function renderForum() {
         
         let authorHTML = `<span class="post-author-tag">${escapeHtml(post.author)}</span>`;
         if (post.isHost) {
-            authorHTML = `<span class="post-author-tag host-badge">👑 Website Host</span>`;
+            authorHTML = `<span class="post-author-tag host-badge">ðŸ‘‘ Website Host</span>`;
         } else if (post.isAdmin) {
-            authorHTML = `<span class="post-author-tag admin-badge">🛡️ Forum Admin</span>`;
+            authorHTML = `<span class="post-author-tag admin-badge">ðŸ›¡ï¸ Forum Admin</span>`;
         }
 
         const testTagHTML = post.isTest
-            ? `<span class="post-test-tag">🧪 Test Message</span>`
+            ? `<span class="post-test-tag">ðŸ§ª Test Message</span>`
             : '';
 
         // Default Welcome post (#1) is completely protected from deletion
@@ -1758,7 +2407,7 @@ async function renderForum() {
         const canDelete = (isStaff || isOwnPost) && !isWelcomePost;
 
         const deleteBtnHTML = canDelete ? `
-            <button class="post-delete-btn" data-post-id="${post.id}" data-seq-number="${post.seqNumber}" data-post-author="${escapeHtml(post.author)}" data-post-text="${escapeHtml(post.text)}" data-is-own="${isOwnPost && !isStaff}" title="${isOwnPost && !isStaff ? 'Delete your post' : 'Delete options for Staff'}">🗑️ Delete</button>
+            <button class="post-delete-btn" data-post-id="${post.id}" data-seq-number="${post.seqNumber}" data-post-author="${escapeHtml(post.author)}" data-post-text="${escapeHtml(post.text)}" data-is-own="${isOwnPost && !isStaff}" title="${isOwnPost && !isStaff ? 'Delete your post' : 'Delete options for Staff'}">ðŸ—‘ï¸ Delete</button>
         ` : '';
 
         postCard.innerHTML = `
@@ -1837,8 +2486,8 @@ async function submitForumPost() {
 
     const isTest = forumState.mode === 'test';
     let authorHandle = currentUser ? currentUser.parrotId : 'Guest';
-    if (isHostActive) authorHandle = '👑 Website Host';
-    if (isAdminActive) authorHandle = '🛡️ Forum Admin';
+    if (isHostActive) authorHandle = 'ðŸ‘‘ Website Host';
+    if (isAdminActive) authorHandle = 'ðŸ›¡ï¸ Forum Admin';
 
     // Record rate-limiting tracker for non-staff
     if (!isStaff) {
@@ -1894,7 +2543,7 @@ async function submitForumPost() {
     const posts = await getStoredPosts();
     const nextId = posts.length > 0 ? posts[posts.length - 1].id + 1 : 1;
     const now = new Date();
-    const timeFormatted = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + now.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    const timeFormatted = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' Â· ' + now.toLocaleDateString([], { month: 'short', day: 'numeric' });
 
     const newPost = {
         id: nextId,
@@ -1919,7 +2568,7 @@ function updateForumInputMode() {
     if (!inputEl || !submitBtn) return;
 
     if (forumState.mode === 'test') {
-        inputEl.placeholder = "🧪 [Test Mode] Type a test message here...";
+        inputEl.placeholder = "ðŸ§ª [Test Mode] Type a test message here...";
         inputEl.classList.add('test-mode');
         submitBtn.textContent = "Post Test";
     } else {
@@ -2110,8 +2759,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Quiz Buttons
+    const quizStartBtn = document.getElementById('quiz-start-btn');
+    if (quizStartBtn) {
+        quizStartBtn.addEventListener('click', startQuiz);
+    }
+    const quizRestartBtn = document.getElementById('quiz-restart-btn');
+    if (quizRestartBtn) {
+        quizRestartBtn.addEventListener('click', startQuiz);
+    }
+
     updateForumInputMode();
 });
+
+// Side-Scroll Navigation Buttons
+const tabNav = document.getElementById('main-tab-nav');
+const tabPrevBtn = document.getElementById('tab-nav-prev');
+const tabNextBtn = document.getElementById('tab-nav-next');
+
+if (tabNav && tabPrevBtn && tabNextBtn) {
+    tabPrevBtn.addEventListener('click', () => {
+        tabNav.scrollBy({ left: -220, behavior: 'smooth' });
+    });
+    tabNextBtn.addEventListener('click', () => {
+        tabNav.scrollBy({ left: 220, behavior: 'smooth' });
+    });
+}
 
 // Tab Switching
 const tabLinks = document.querySelectorAll('.tab-link');
@@ -2127,6 +2800,9 @@ tabLinks.forEach(link => {
         if (targetTab) {
             targetTab.classList.add('active');
         }
+
+        // Center active tab in horizontal scroll view
+        link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     });
 });
 
@@ -2147,3 +2823,209 @@ filterBtns.forEach(btn => {
         }
     });
 });
+
+// ==========================================
+// PARROT QUIZ ENGINE (10-Question Randomizer)
+// ==========================================
+const quizState = {
+    activeQuestions: [],
+    currentIndex: 0,
+    results: [], // boolean true/false for each question
+    isAnswerLocked: false
+};
+
+function shuffleArray(array) {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+function startQuiz() {
+    const bank = staticData.quizBank || [];
+    if (bank.length === 0) {
+        alert("No questions available in the quiz bank.");
+        return;
+    }
+
+    // Pick 10 random non-repeating questions and randomize option positions
+    const shuffled = shuffleArray(bank);
+    quizState.activeQuestions = shuffled.slice(0, Math.min(10, shuffled.length)).map(q => {
+        const correctText = q.options[q.answer];
+        const randomizedOptions = shuffleArray(q.options);
+        return {
+            ...q,
+            options: randomizedOptions,
+            answer: randomizedOptions.indexOf(correctText)
+        };
+    });
+    quizState.currentIndex = 0;
+    quizState.results = [];
+    quizState.isAnswerLocked = false;
+
+    // Toggle screens
+    const startScreen = document.getElementById('quiz-start-screen');
+    const arenaScreen = document.getElementById('quiz-active-arena');
+    const resultsScreen = document.getElementById('quiz-results-screen');
+
+    if (startScreen) startScreen.style.display = 'none';
+    if (resultsScreen) resultsScreen.style.display = 'none';
+    if (arenaScreen) arenaScreen.style.display = 'block';
+
+    // Reset all 10 progress bar segments
+    const segments = document.querySelectorAll('.quiz-bar-segment');
+    segments.forEach((seg, idx) => {
+        seg.className = 'quiz-bar-segment';
+        seg.style.display = idx < quizState.activeQuestions.length ? 'block' : 'none';
+    });
+
+    renderCurrentQuizQuestion();
+}
+
+function renderCurrentQuizQuestion() {
+    const qIndex = quizState.currentIndex;
+    const qData = quizState.activeQuestions[qIndex];
+    if (!qData) {
+        finishQuiz();
+        return;
+    }
+
+    quizState.isAnswerLocked = false;
+
+    // Update Progress Bars: Question you are on is Yellow
+    const segments = document.querySelectorAll('.quiz-bar-segment');
+    segments.forEach((seg, idx) => {
+        if (idx === qIndex) {
+            seg.className = 'quiz-bar-segment active'; // Yellow
+        } else if (idx > qIndex) {
+            seg.className = 'quiz-bar-segment'; // Default gray
+        }
+    });
+
+    // Update Question Info
+    const stepEl = document.getElementById('quiz-step-indicator');
+    const badgeEl = document.getElementById('quiz-question-badge');
+    const textEl = document.getElementById('quiz-question-text');
+    const optionsContainer = document.getElementById('quiz-options-container');
+
+    if (stepEl) stepEl.textContent = `Question ${qIndex + 1} of ${quizState.activeQuestions.length}`;
+    if (badgeEl) badgeEl.textContent = `Question #${qIndex + 1}`;
+    if (textEl) textEl.textContent = qData.question;
+
+    if (optionsContainer) {
+        optionsContainer.innerHTML = '';
+        const letters = ['A', 'B', 'C', 'D'];
+
+        qData.options.forEach((optText, optIdx) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-option-btn';
+            btn.innerHTML = `
+                <span class="option-letter">${letters[optIdx] || optIdx + 1}</span>
+                <span class="option-text">${optText}</span>
+            `;
+
+            btn.addEventListener('click', () => {
+                handleQuizAnswer(optIdx, qData.answer, btn);
+            });
+
+            optionsContainer.appendChild(btn);
+        });
+    }
+}
+
+function handleQuizAnswer(selectedIndex, correctIndex, clickedBtn) {
+    if (quizState.isAnswerLocked) return;
+    quizState.isAnswerLocked = true;
+
+    const isCorrect = (selectedIndex === correctIndex);
+    quizState.results.push(isCorrect);
+
+    // Lock and style all option buttons
+    const allBtns = document.querySelectorAll('.quiz-option-btn');
+    allBtns.forEach((btn, idx) => {
+        btn.classList.add('disabled');
+        if (idx === correctIndex) {
+            btn.classList.add('selected-correct');
+        }
+    });
+
+    if (!isCorrect && clickedBtn) {
+        clickedBtn.classList.add('selected-wrong');
+    }
+
+    // Update current progress bar segment: Green or Red
+    const segments = document.querySelectorAll('.quiz-bar-segment');
+    const currentSegment = segments[quizState.currentIndex];
+    if (currentSegment) {
+        currentSegment.classList.remove('active'); // Remove Yellow
+        if (isCorrect) {
+            currentSegment.classList.add('correct'); // Green
+        } else {
+            currentSegment.classList.add('wrong'); // Red
+        }
+    }
+
+    // Advance to next question after 850ms
+    setTimeout(() => {
+        quizState.currentIndex++;
+        if (quizState.currentIndex < quizState.activeQuestions.length) {
+            renderCurrentQuizQuestion();
+        } else {
+            finishQuiz();
+        }
+    }, 850);
+}
+
+function finishQuiz() {
+    const arenaScreen = document.getElementById('quiz-active-arena');
+    const resultsScreen = document.getElementById('quiz-results-screen');
+    if (arenaScreen) arenaScreen.style.display = 'none';
+    if (resultsScreen) resultsScreen.style.display = 'block';
+
+    const total = quizState.activeQuestions.length;
+    const correctCount = quizState.results.filter(r => r === true).length;
+    const percentage = Math.round((correctCount / total) * 100);
+
+    const scoreDisplay = document.getElementById('quiz-score-display');
+    const titleDisplay = document.getElementById('quiz-result-title');
+    const iconDisplay = document.getElementById('quiz-result-icon');
+    const messageDisplay = document.getElementById('quiz-result-message');
+    const summaryTrack = document.getElementById('quiz-results-bars-summary');
+
+    if (scoreDisplay) {
+        scoreDisplay.textContent = `You got ${correctCount} out of ${total} correct! (${percentage}%)`;
+    }
+
+    if (titleDisplay && iconDisplay && messageDisplay) {
+        if (correctCount === 10) {
+            iconDisplay.textContent = 'ðŸ†';
+            titleDisplay.textContent = 'Flock Legend! Perfect 10/10!';
+            messageDisplay.textContent = 'Incredible! You have the ultimate avian wisdom. Even an African Grey would be impressed!';
+        } else if (correctCount >= 8) {
+            iconDisplay.textContent = 'ðŸ¦œ';
+            titleDisplay.textContent = 'Master Birder!';
+            messageDisplay.textContent = 'Outstanding job! You truly know your feathered companions inside and out.';
+        } else if (correctCount >= 5) {
+            iconDisplay.textContent = 'ðŸª¶';
+            titleDisplay.textContent = 'Avian Enthusiast!';
+            messageDisplay.textContent = 'Great effort! You know quite a bit about parrots. Keep reading our profiles to learn even more!';
+        } else {
+            iconDisplay.textContent = 'ðŸ£';
+            titleDisplay.textContent = 'Fledgling Explorer!';
+            messageDisplay.textContent = 'A good first flight! Check out our Care & Health guides and Fun Facts tab to brush up on parrot trivia.';
+        }
+    }
+
+    // Render results summary mini-bars
+    if (summaryTrack) {
+        summaryTrack.innerHTML = '';
+        quizState.results.forEach((res, i) => {
+            const bar = document.createElement('div');
+            bar.className = `quiz-bar-segment ${res ? 'correct' : 'wrong'}`;
+            bar.title = `Question ${i + 1}: ${res ? 'Correct' : 'Incorrect'}`;
+            summaryTrack.appendChild(bar);
+        });
+    }
+}
